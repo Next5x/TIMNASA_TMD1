@@ -86,12 +86,7 @@
     },
     "HEROKU_API_KEY": {
       "description": "Insert your Heroku API key (required)",
-      "value": "",
-      "required": true
-    },
-    "HEROKU_APP_NAME": {
-      "description": "Insert your Heroku app name (required)",
-      "value": "",
+      "value": "HRKU-841b19e7-8679-437b-bb6c-edd4133978dd",
       "required": true
     },
     "SESSION_ID": {
@@ -169,3 +164,4 @@
   ]
 
 }
+
