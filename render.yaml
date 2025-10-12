@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: TIMNASA_TMD1
+    env: node # Change to "python" or your environment if not Node.js
+    plan: free
+    buildCommand: npm install 
+    startCommand: npm start   
+    envVars:
+      - key: SESSION-ID
+        sync: false
+      - key: OWNER
+        sync: false
+      - key: OWNER-NUMBER
+        sync: false
+      - key: PREFIX
+        sync: false
