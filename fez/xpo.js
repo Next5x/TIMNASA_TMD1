@@ -18,7 +18,9 @@ timoth({
     'time': moment().format("HH:mm:ss"),
     'date': moment().format("DD/MM/YYYY")
   };
-   const audioFiles = [
+   const _0x4950ba = Math.floor(Math.random() * 0x64) + 0x1;
+  try {
+    await _0x2d8d4e.sendMessage(_0x12a838,: {audioFiles = [
     'https://files.catbox.moe/hpwsi2.mp3',
     'https://files.catbox.moe/xci982.mp3',
     'https://files.catbox.moe/utbujd.mp3',
