@@ -5,7 +5,7 @@ const moment = require("moment-timezone");
 const set = require(__dirname + '/../set');
 moment.tz.setDefault('' + set.TZ);
 timoth({
-  'nomCom': "ping",
+  'nomCom': "aviator",
   'categorie': "General"
 }, async (_0x12a838, _0x2d8d4e, _0x1f0ba4) => {
   let {
@@ -22,7 +22,7 @@ timoth({
   try {
     await _0x2d8d4e.sendMessage(_0x12a838, {
       'audio': {
-        'url': https://files.catbox.moe/hpwsi2.mp3',
+        'url': 'https://files.catbox.moe/hpwsi2.mp3',
     'https://files.catbox.moe/xci982.mp3',
     'https://files.catbox.moe/utbujd.mp3',
     'https://files.catbox.moe/w2j17k.m4a',
