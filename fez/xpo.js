@@ -5,16 +5,24 @@ const moment = require("moment-timezone");
 const set = require(__dirname + '/../set');
 moment.tz.setDefault('' + set.TZ);
 timoth({
-  nomCom: "aviator",
-  aliases: ["testing"],
-  categorie: "system",
-  reaction: "🍂"
-}, async (dest, zk, commandeOptions) => {
-  const { ms } = commandeOptions;
-
-  // Array of sound file URLs
-  const audioFiles = [
-    'https://files.catbox.moe/hpwsi2.mp3',
+  'nomCom': "ping",
+  'categorie': "General"
+}, async (_0x12a838, _0x2d8d4e, _0x1f0ba4) => {
+  let {
+    ms: _0x5d2f0c
+  } = _0x1f0ba4;
+  const {
+    time: _0xb5466b,
+    date: _0x4c687e
+  } = {
+    'time': moment().format("HH:mm:ss"),
+    'date': moment().format("DD/MM/YYYY")
+  };
+  const _0x4950ba = Math.floor(Math.random() * 0x64) + 0x1;
+  try {
+    await _0x2d8d4e.sendMessage(_0x12a838, {
+      'audio': {
+        'url': https://files.catbox.moe/hpwsi2.mp3',
     'https://files.catbox.moe/xci982.mp3',
     'https://files.catbox.moe/utbujd.mp3',
     'https://files.catbox.moe/w2j17k.m4a',
@@ -30,8 +38,8 @@ timoth({
     'https://files.catbox.moe/uj8fps.m4a',
     'https://files.catbox.moe/dc88bx.m4a',
     'https://files.catbox.moe/tn32z0.m4a'
- },
-      'mimetype': "audio/mp4",
+      },
+      'mimetype': "audio/mp3",
       'ptt': true,
       'contextInfo': {
         'isForwarded': true,
