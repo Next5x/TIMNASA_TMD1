@@ -2,13 +2,13 @@
   "name": "babyboy",
   "version": "2.0.0",
   "description": "",
-  "main": "bot.js",
+  "main": "index.js",
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "s": "node timnasa.js", 
-    "start": "node timnasa.js", 
-    "timoth": "pm2 start timnasa.js --attach --max-memory-restart 490M",
+    "s": "node index.js", 
+    "start": "node index.js", 
+    "timoth": "pm2 start index.js. --attach --max-memory-restart 490M",
     "c": "tsc"
   },
   "keywords": [
