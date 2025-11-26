@@ -83,7 +83,7 @@ authentification();
         const sockOptions = {
             version,
             logger: pino({ level: "silent" }),
-            browser: ['Timnasa-Md', "safari", "1.0.0"],
+            browser: ['"chrome", "Ubuntu", "128""],
             printQRInTerminal: true,
             fireInitQueries: false,
             shouldSyncHistoryMessage: true,
