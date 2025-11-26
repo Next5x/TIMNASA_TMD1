@@ -1,4 +1,4 @@
-  <a href="https://timnasax-whatsapp-bot-tmd-skills.onrender.com"><img title="GET-SESSION ID HERE" src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=blue&style=for-the-badge&logo=nike" width="230" height="38.45"/></a></p>
+  <a href="https://timnasa-xmd-2026-whatsapp-pair.onrender.com/pair"><img title="GET-SESSION ID HERE" src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=blue&style=for-the-badge&logo=nike" width="230" height="38.45"/></a></p>
 </p>
 
 
@@ -7,7 +7,7 @@
 
 <a><img src='https://i.imgur.com/LyHic3i.gif'/></a><a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 <p align="left">
-<a href="https://timnasax-whatsapp-bot-tmd-skills.onrender.com"><img src="https://img.shields.io/badge/Pair%20session%20code-white" alt="𝗽𝗮𝗶𝗿 𝘀𝗲𝘀𝘀𝗶𝗼𝗻 𝗶𝗱 𝟮" width="300"></a>
+<a href="https://timnasa-xmd-2026-whatsapp-pair.onrender.com/pair"><img src="https://img.shields.io/badge/Pair%20session%20code-white" alt="𝗽𝗮𝗶𝗿 𝘀𝗲𝘀𝘀𝗶𝗼𝗻 𝗶𝗱 𝟮" width="300"></a>
 <a><img src='https://i.imgur.com/LyHic3i.gif'/></a><a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 
 <p align="center">
@@ -15,7 +15,7 @@
   <img src="https://github-readme-stats.vercel.app/api?username=Qartde&show_icons=true&hide_title=true&count_private=true&hide=prs&theme=radical" alt="GitHub Repo Stats" width="800">
 
   <!-- Repo Activity Stats Screen -->
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=Next5x&repo=Next5x/timnasa" alt="Pinned GitHub Repo Activity" width="800"> 
+  
   # ☉︎𝚃𝙸𝙼𝙽𝙰𝚂𝙰 𝚃𝙴𝙲𝙷☉︎ ©𝟸𝟶𝟸𝟻
   █▄▄ ███ █▄▄█▄▄ ███ █▄▄
   █▄▄ ███ █▄▄█▄▄ ███ █▄▄
