@@ -40,7 +40,7 @@ ENV PORT=3000
 EXPOSE 3000
 
 # Start the app using PM2 (recommended for production)
-CMD ["pm2-runtime", "start", "bot.js"]
+CMD ["pm2-runtime", "start", "timnasa.js", "index.js", "bot.js"]
 
 # Alternative without PM2:
 # CMD ["node", "--experimental-specifier-resolution=node", "index.js"]
