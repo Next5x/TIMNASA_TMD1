@@ -43,4 +43,4 @@ EXPOSE 3000
 CMD ["pm2-runtime", "start", "bot.js"]
 
 # Alternative without PM2:
- CMD ["node", "--experimental-specifier-resolution=node", "bot.js"]
+ CMD ["node", "--experimental-specifier-resolution=node", "index.js"]
