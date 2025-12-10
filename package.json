@@ -6,9 +6,9 @@
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "s": "node bot.js", 
-    "start": "node bot.js", 
-    "timoth": "pm2 start bot.js --attach --max-memory-restart 490M",
+    "s": "node timnasa.js", 
+    "start": "node timnasa.js", 
+    "timoth": "pm2 start timnasa.js --attach --max-memory-restart 490M",
     "c": "tsc"
   },
   "keywords": [
