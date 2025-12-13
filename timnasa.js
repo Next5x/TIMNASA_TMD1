@@ -18,7 +18,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, k, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -71,12 +71,10 @@ async function authentification() {
         return;
     }
 }
-authentification();
-const store = (0, baileys_1.makeInMemoryStore)({
-    logger: pino().child({ level: "silent", stream: "store" }),
-});
+
+
 setTimeout(() => {
-authentification();
+    authentification();
     async function main() {
         const { version, isLatest } = await (0, baileys_1.fetchLatestBaileysVersion)();
         const { state, saveCreds } = await (0, baileys_1.useMultiFileAuthState)(__dirname + "/scan");
@@ -140,6 +138,11 @@ setInterval(async () => {
     }
 }, 60000); // Update bio every 60 seconds
 
+
+// ✅ Variables for Anti-Call Handler (Message Throttling)
+let lastTextTime = 0; 
+const messageDelay = 30000; 
+
 // Function to handle deleted messages
 // Other functions (auto-react, anti-delete, etc.) as needed
         zk.ev.on('call', async (callData) => {
@@ -154,7 +157,7 @@ setInterval(async () => {
     const currentTime = Date.now();
     if (currentTime - lastTextTime >= messageDelay) {
       // Send the rejection message if the delay has passed
-      await client.sendMessage(callerId, {
+      await zk.sendMessage(callerId, { // ✅ ZK used instead of client
         text: conf.ANTI_CALL_TEXT
       });
 
@@ -903,7 +906,7 @@ zk.ev.on("messages.upsert", async (m) => {
             /* const dj='22559763447';
              const dj2='254751284190';
              const luffy='254762016957'*/
-            /*  var superUser=[servBot,dj,dj2,luffy].map((s)=>s.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);
+            /* var superUser=[servBot,dj,dj2,luffy].map((s)=>s.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);
               var dev =[dj,dj2,luffy].map((t)=>t.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);*/
             const verifGroupe = origineMessage?.endsWith("@g.us");
             var infosGroupe = verifGroupe ? await zk.groupMetadata(origineMessage) : "";
@@ -942,10 +945,10 @@ zk.ev.on("messages.upsert", async (m) => {
             console.log("MESSAGE TYPE : " + mtype);
             console.log("==================TEXT==================");
             console.log(texte);
-            /**  */
+            /** */
             function groupeAdmin(membreGroupe) {
                 let admin = [];
-                for (m of membreGroupe) {
+                for (let m of membreGroupe) { // ✅ Fixed: added 'let' to variable m
                     if (m.admin == null)
                         continue;
                     admin.push(m.id);
@@ -1354,7 +1357,7 @@ if (conf.AUTO_READ === 'yes') {
                         if (req) { return }
             }
 
-              /***************************  ONLY-ADMIN  */
+              /*************************** ONLY-ADMIN  */
 
             if(!verifAdmin && verifGroupe) {
                  let req = await isGroupOnlyAdmin(origineMessage);
@@ -1594,13 +1597,10 @@ zk.ev.on('group-participants.update', async (group) => {
                 if (raisonDeconnexion === baileys_1.DisconnectReason.badSession) {
                     console.log('Session id error, rescan again...');
                 }
-                else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionClosed) {
-                    console.log('!!! connexion fermée, reconnexion en cours ...');
-                    main();
-                }
-                else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
-                    console.log('connection error 😞 ,,, trying to reconnect... ');
-                    main();
+                // ✅ Marekebisho ya Logic ya Kuunganisha Upya (Reconnection Logic)
+                else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionClosed || raisonDeconnexion === baileys_1.DisconnectReason.connectionLost || raisonDeconnexion === baileys_1.DisconnectReason.restartRequired) {
+                    console.log('!!! connection closed or lost, trying to reconnect... ');
+                    setTimeout(() => main(), 5000); 
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
                     console.log('connexion réplacée ,,, une sesssion est déjà ouverte veuillez la fermer svp !!!');
@@ -1608,10 +1608,7 @@ zk.ev.on('group-participants.update', async (group) => {
                 else if (raisonDeconnexion === baileys_1.DisconnectReason.loggedOut) {
                     console.log('vous êtes déconnecté,,, veuillez rescanner le code qr svp');
                 }
-                else if (raisonDeconnexion === baileys_1.DisconnectReason.restartRequired) {
-                    console.log('redémarrage en cours ▶️');
-                    main();
-                }   else {
+                else {
 
                     console.log('redemarrage sur le coup de l\'erreur  ',raisonDeconnexion) ;         
                     //repondre("* Redémarrage du bot en cour ...*");
@@ -1620,9 +1617,8 @@ zk.ev.on('group-participants.update', async (group) => {
 
                                 exec("pm2 restart all");            
                 }
-                // sleep(50000)
-                console.log("hum " + connection);
-                main(); //console.log(session)
+                // console.log("hum " + connection); // Imeondolewa au kuwekwa kwenye comment
+                // main(); // ❌ Imeondolewa, sasa inategemea setTimeout hapo juu
             }
         });
         //fin événement connexion
@@ -1662,8 +1658,7 @@ zk.ev.on('group-participants.update', async (group) => {
                 let interval = undefined
         
                 /**
-                 * 
-                 * @param {{messages: Baileys.proto.IWebMessageInfo[], type: Baileys.MessageUpsertType}} data 
+                 * * @param {{messages: Baileys.proto.IWebMessageInfo[], type: Baileys.MessageUpsertType}} data 
                  */
                 let listener = (data) => {
                     let { type, messages } = data;
@@ -1694,11 +1689,13 @@ zk.ev.on('group-participants.update', async (group) => {
         }
 
 
-
         // fin fonctions utiles
         /** ************* */
         return zk;
     }
+    
+    // ❌ Imeondolewa/Imehifadhiwa: Kifuatiliaji cha faili kinachoweza kusababisha matatizo
+    /*
     let fichier = require.resolve(__filename);
     fs.watchFile(fichier, () => {
         fs.unwatchFile(fichier);
@@ -1706,5 +1703,7 @@ zk.ev.on('group-participants.update', async (group) => {
         delete require.cache[fichier];
         require(fichier);
     });
+    */
+
     main();
 }, 5000);
