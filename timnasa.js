@@ -1609,16 +1609,12 @@ zk.ev.on('group-participants.update', async (group) => {
                     console.log('vous êtes déconnecté,,, veuillez rescanner le code qr svp');
                 }
                 else {
-
+                    // <===== MAREKEBISHO HAPA (Badala ya pm2 restart all)
                     console.log('redemarrage sur le coup de l\'erreur  ',raisonDeconnexion) ;         
-                    //repondre("* Redémarrage du bot en cour ...*");
-
-                                const {exec}=require("child_process") ;
-
-                                exec("pm2 restart all");            
+                    console.log('hum close');
+                    console.log('!!! Unknown error or transient connection issue. Trying to reconnect in 5 seconds... ');
+                    setTimeout(() => main(), 5000); 
                 }
-                // console.log("hum " + connection); // Imeondolewa au kuwekwa kwenye comment
-                // main(); // ❌ Imeondolewa, sasa inategemea setTimeout hapo juu
             }
         });
         //fin événement connexion
