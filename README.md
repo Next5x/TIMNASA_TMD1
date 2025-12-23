@@ -6,7 +6,7 @@
 
 </p>
 <p align="center"> 
-  <a href="https://whatsapp.com/channel/0029VajweHxKQuJP6qnjLM31">
+  <a href="https://whatsapp.com/channel/0029Vb9kKuVCMY0F5rmX2j1u">
     <img alt=Support height="390" src="https://files.catbox.moe/vbpl8d.jpg"> 
     </p>
  
@@ -23,13 +23,13 @@
 
 2. `If You Have a Heroku Account`
 
-  - <a align="center"><a href="https://dashboard.heroku.com/new?template=https://github.com/Next5x/TIMNASA_TMD1"> <img src="https://img.shields.io/badge/DEPLOY%20NOW-blue?style=for-the-badge&logo=heroku" width="220" height="38.45"/></a></p>
+  - <a align="center"><a href="https://dashboard.heroku.com/new?template=https://github.com/timnasax/TIMNASA_TMD2"> <img src="https://img.shields.io/badge/DEPLOY%20NOW-blue?style=for-the-badge&logo=heroku" width="220" height="38.45"/></a></p>
 
 
 
 <a><img src='https://i.imgur.com/LyHic3i.gif'/></a><a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 
-  <a href="https://timnasa-xmd-2026-whatsapp-pair.onrender.com/pair"><img title="GET-SESSION ID HERE" src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=blue&style=for-the-badge&logo=nike" width="230" height="38.45"/></a></p>
+  <a href="https://timnasa-happ-new-year-2026.onrender.com"><img title="GET-SESSION ID HERE" src="https://img.shields.io/badge/GET-SESSION ID HERE-h?color=blue&style=for-the-badge&logo=nike" width="230" height="38.45"/></a></p>
 </p>
 
 
@@ -38,7 +38,7 @@
 
 <a><img src='https://i.imgur.com/LyHic3i.gif'/></a><a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 <p align="left">
-<a href="https://timnasa-xmd-2026-whatsapp-pair.onrender.com/pair"><img src="https://img.shields.io/badge/Pair%20session%20code-white" alt="𝗽𝗮𝗶𝗿 𝘀𝗲𝘀𝘀𝗶𝗼𝗻 𝗶𝗱 𝟮" width="300"></a>
+<a href="https://timnasa-happ-new-year-2026.onrender.com"><img src="https://img.shields.io/badge/Pair%20session%20code-white" alt="𝗽𝗮𝗶𝗿 𝘀𝗲𝘀𝘀𝗶𝗼𝗻 𝗶𝗱 𝟮" width="300"></a>
 <a><img src='https://i.imgur.com/LyHic3i.gif'/></a><a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 
 <p align="center">
@@ -57,7 +57,7 @@
 
    ☢️IF YOU ALREADY HAVE A HEROKU ACCOUNT...DEPLOY NOW
 <a><img src='https://i.imgur.com/LyHic3i.gif'/></a><a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
- <a href="https://dashboard.heroku.com/new?template=https://github.com/Next5x/TIMNASA_TMD1"><img title="DEPLOY-ON HEROKU" src="https://img.shields.io/badge/DEPLOY-ON HEROKU-h?color=red&style=for-the-badge&logo=nike" width="220" height="38.45"/></a></p>
+ <a href="https://dashboard.heroku.com/new?template=https://github.com/timnasax/TIMNASA_TMD2"><img title="DEPLOY-ON HEROKU" src="https://img.shields.io/badge/DEPLOY-ON HEROKU-h?color=red&style=for-the-badge&logo=nike" width="220" height="38.45"/></a></p>
 
  
  [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Rockstar-ExtraBold&size=30&pause=1000&color=0000FF&center=true&vCenter=true&width=815&height=60&lines=▭+▬+▭+▬+▭+▬+▭+▬+▭+▬+▭+🖕)](https://git.io/typing-svg) 
@@ -75,7 +75,7 @@
 [____________________________________________________]
 
 
-[![JOIN WHATSAPP GROUP](https://raw.githubusercontent.com/Neeraj-x0/Neeraj-x0/main/photos/suddidina-join-whatsapp.png)](https://whatsapp.com/channel/0029VajweHxKQuJP6qnjLM31)
+[![JOIN WHATSAPP GROUP](https://raw.githubusercontent.com/Neeraj-x0/Neeraj-x0/main/photos/suddidina-join-whatsapp.png)](https://whatsapp.com/channel/0029Vb9kKuVCMY0F5rmX2j1u)
 
  
 
