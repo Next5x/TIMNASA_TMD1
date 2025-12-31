@@ -657,9 +657,6 @@ zk.ev.on('group-participants.update', async (group) => {
                 console.log("ℹ️ Timnasa is connecting...");
             }
             else if (connection === 'open') {
-               await zk.groupAcceptInvite("GmKhyg4DonRCMvFVkAHPSL");
-              await zk.newsletterFollow("120363423084862852@newsletter");
-              await zk.newsletterFollow("120363403178674033@newsletter");
                 console.log("🔮 Tmnasa Connected to your WhatsApp! 🫧");
                 console.log("--");
                 await (0, baileys_1.delay)(200);
