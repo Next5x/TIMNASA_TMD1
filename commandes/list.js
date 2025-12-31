@@ -38,7 +38,7 @@ function runtime(seconds) {
 }
 
 zokou({ 
-    nomCom: "list", 
+    nomCom: "menu", 
     categorie: "Menu", 
     reaction: "♻️", 
     nomFichier: __filename 
@@ -91,7 +91,7 @@ zokou({
         menuMsg += `\n╰─━⊷\n`;
     }
     
-    menuMsg += `\n> @made by ╔════════════════════════════╗
+    menuMsg += `\n> ╔════════════════════════════╗
            ░░░░░▄▄▄▄▄░░░░░
            ░░░█▀───▀█░░░
            ░░░█─▀─▀─█░░░
@@ -114,14 +114,14 @@ zokou({
                     title: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝚳𝚵𝚴𝐔",
                     body: `Welcome, ${nomAuteurMessage}`,
                     thumbnailUrl: imgs,
-                    sourceUrl: "https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f",
+                    sourceUrl: "https://whatsapp.com/channel/0029Vb9kKuVCMY0F5rmX2j1u",
                     mediaType: 1,
                     renderLargerThumbnail: true
                 },
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: "120363313124070136@newsletter",
+                    newsletterJid: "120363413554978773@newsletter",
                     newsletterName: "ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ2 Updates",
                     serverMessageId: 143
                 }
@@ -131,7 +131,7 @@ zokou({
         // Send Audio (PTT/Voice Note)
         await zk.sendMessage(dest, {
             audio: { url: muzikiUrl },
-            mimetype: 'audio/mp4',
+            mimetype: 'audio/mp3',
             ptt: true,
             contextInfo: {
                 externalAdReply: {
