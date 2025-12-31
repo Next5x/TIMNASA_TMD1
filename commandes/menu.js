@@ -4,7 +4,7 @@ const os = require("os");
 const moment = require("moment-timezone");
 const s = require(__dirname + "/../set");
 
-zokou({ nomCom: "menu", categorie: "General" }, async (dest, zk, commandeOptions) => {
+zokou({ nomCom: "menu", categorie: "MENU" }, async (dest, zk, commandeOptions) => {
     let { ms, repondre, prefixe, mybotpic } = commandeOptions;
     
     // Muhimu: Tunaita 'cm' moja kwa moja kutoka kwenye framework
