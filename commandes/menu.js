@@ -27,7 +27,7 @@ const toFancyLowercaseFont = (text) => {
 zokou({ 
     nomCom: "menu", 
     categorie: "Menu", 
-    reaction: "☢️", 
+    reaction: "🇹🇿", 
     nomFichier: __filename 
 }, async (dest, zk, commandeOptions) => {
     const { repondre, prefixe, nomAuteurMessage } = commandeOptions;
@@ -91,7 +91,7 @@ zokou({
             contextInfo: {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: "120363313124070136@newsletter",
+                    newsletterJid: "120363413554978773@newsletter",
                     newsletterName: "@ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ",
                     serverMessageId: -1
                 },
@@ -100,7 +100,7 @@ zokou({
                     title: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝚳𝚵𝚴𝐔",
                     body: "🗡️ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ Commands List",
                     thumbnailUrl: imgs,
-                    sourceUrl: "https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f",
+                    sourceUrl: "https://whatsapp.com/channel/0029Vb9kKuVCMY0F5rmX2j1u",
                     mediaType: 1,
                     renderLargerThumbnail: true
                 }
