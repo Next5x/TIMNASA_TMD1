@@ -39,8 +39,8 @@ function runtime(seconds) {
 
 zokou({ 
     nomCom: "list", 
-    categorie: "Fredi-Menu", 
-    reaction: "☢️", 
+    categorie: "Menu", 
+    reaction: "♻️", 
     nomFichier: __filename 
 }, async (dest, zk, commandeOptions) => {
     const { repondre, prefixe, ms, nomAuteurMessage } = commandeOptions;
@@ -72,13 +72,13 @@ zokou({
     const infoMsg = `
 ╭┈┈┈┈━⊷
 *┋* *ʜᴇʟʟᴏ :* ${nomAuteurMessage}
-*┋* *ʙᴏᴛ :* *☢️LUCKY MD X-FORCE☢️*
+*┋* *ʙᴏᴛ :* *𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝚳𝚵𝚴𝐔*
 *┋* *ᴜᴘᴛɪᴍᴇ :* ${liveLog}
 *┋* *ʀᴀᴍ :* ${ram} MB
 *┋* *ᴘʀᴇғɪx :* [ ${s.PREFIXE} ]
 *┋* *ᴍᴏᴅᴇ :* ${mode}
 *┋* *ᴅᴀᴛᴇ :* ${date}
-*┋* *ᴏᴡɴᴇʀ :* FREDI
+*┋* *ᴏᴡɴᴇʀ :* timoth 
 ╰┈┈┈┈━⊷\n`;
     
     let menuMsg = ` *${greeting}* \n${readMore}`;
@@ -91,7 +91,18 @@ zokou({
         menuMsg += `\n╰─━⊷\n`;
     }
     
-    menuMsg += `\n> @made by FredieTech 2025\n`;
+    menuMsg += `\n> @made by ╔════════════════════════════╗
+           ░░░░░▄▄▄▄▄░░░░░
+           ░░░█▀───▀█░░░
+           ░░░█─▀─▀─█░░░
+           ░░░█──▄──█░░░
+           ░░░▀█▄▄▄█▀░░░
+╚════════════════════════════╝
+
+⚠️ OWNER ⚠️:
+┏━━━ ✨ »𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝚳𝚵𝚴𝐔« ✨ ━━━┓
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+\n`;
 
     try {
         // Send Menu with Image
@@ -100,7 +111,7 @@ zokou({
             caption: infoMsg + menuMsg,
             contextInfo: {
                 externalAdReply: {
-                    title: "☢️LUCKY MD X-FORCE☢️",
+                    title: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝚳𝚵𝚴𝐔",
                     body: `Welcome, ${nomAuteurMessage}`,
                     thumbnailUrl: imgs,
                     sourceUrl: "https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f",
@@ -111,7 +122,7 @@ zokou({
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: "120363313124070136@newsletter",
-                    newsletterName: "FredieTech Updates",
+                    newsletterName: "ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ2 Updates",
                     serverMessageId: 143
                 }
             }
@@ -124,7 +135,7 @@ zokou({
             ptt: true,
             contextInfo: {
                 externalAdReply: {
-                    title: "Lucky MD Music Player",
+                    title: "₮ł₥₦₳₴₳ ₮₥Đ ₥Ɇ₦Ʉ ₱Ⱡ₳Ɏ",
                     body: `Playing Theme for ${nomAuteurMessage}`,
                     thumbnailUrl: imgs,
                     mediaType: 1
