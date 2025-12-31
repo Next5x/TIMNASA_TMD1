@@ -1,48 +1,64 @@
-const nationList = [
-  { name: "tanzania", code: "255", flag: "🇹🇿", song: "https://files.catbox.moe/e4c48n.mp3" },
-  { name: "kenya", code: "254", flag: "🇰🇪", song: "https://files.catbox.moe/e4c48n.mp3" },
-  { name: "uganda", code: "256", flag: "🇺🇬", song: "https://files.catbox.moe/e4c48n.mp3" },
-  { name: "somalia", code: "252", flag: "🇸🇴", song: "https://files.catbox.moe/e4c48n.mp3" },
-  { name: "southafrica", code: "27", flag: "🇿🇦", song: "https://files.catbox.moe/e4c48n.mp3" },
-  { name: "nigeria", code: "234", flag: "🇳🇬", song: "https://files.catbox.moe/e4c48n.mp3" },
-  { name: "usa", code: "1", flag: "🇺🇸", song: "https://files.catbox.moe/e4c48n.mp3" },
-  { name: "zambia", code: "260", flag: "🇿🇲", song: "https://files.catbox.moe/e4c48n.mp3" },
-  { name: "zimbabwe", code: "263", flag: "🇿🇼", song: "https://files.catbox.moe/e4c48n.mp3" },
-  { name: "rwanda", code: "250", flag: "🇷🇼", song: "https://files.catbox.moe/e4c48n.mp3" },
-  { name: "burundi", code: "257", flag: "🇧🇮", song: "https://files.catbox.moe/e4c48n.mp3" }
-];
+const { zokou } = require("../framework/zokou");
 
-nationList.forEach((country) => {
-  zokou({ nomCom: country.name, categorie: "Group" }, async (dest, zk, commandeOptions) => {
-    const { ms, repondre, arg, verifGroupe, infosGroupe, nomAuteurMessage, verifAdmin, superUser } = commandeOptions;
+// 1. DATA YA MATAIFA (Nimeongeza Pakistan na Zimbabwe)
+const nationData = {
+  "tanzania": { flag: "🇹🇿", code: "255", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "kenya": { flag: "🇰🇪", code: "254", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "uganda": { flag: "🇺🇬", code: "256", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "southafrica": { flag: "🇿🇦", code: "27", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "nigeria": { flag: "🇳🇬", code: "234", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "usa": { flag: "🇺🇸", code: "1", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "rwanda": { flag: "🇷🇼", code: "250", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "burundi": { flag: "🇧🇮", code: "257", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "zambia": { flag: "🇿🇲", code: "260", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "somalia": { flag: "🇸🇴", code: "252", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "pakistan": { flag: "🇵🇰", code: "92", song: "https://files.catbox.moe/e4c48n.mp3" },
+  "zimbabwe": { flag: "🇿🇼", code: "263", song: "https://files.catbox.moe/e4c48n.mp3" }
+};
 
-    if (!verifGroupe) return repondre("Command hii ni ya makundi pekee!");
-    if (!(verifAdmin || superUser)) return repondre("Ni Admins pekee wanaweza kutag Taifa!");
+// 2. FUNCTION KUU YA KUTAG
+async function executeNationTag(dest, zk, commandeOptions, countryKey) {
+  const { ms, repondre, arg, verifGroupe, infosGroupe, nomAuteurMessage, verifAdmin, superUser } = commandeOptions;
 
-    // Weka bendera kama reaction
-    await zk.sendMessage(dest, { react: { text: country.flag, key: ms.key } });
+  if (!verifGroupe) return repondre("✋🏿 Amri hii ni ya makundi pekee!");
+  if (!(verifAdmin || superUser)) return repondre("❌ Ni Admins pekee wanaoweza kutag Taifa!");
 
-    let membresGroupe = await infosGroupe.participants;
-    let raia = membresGroupe.filter(m => m.id.startsWith(country.code));
+  const country = nationData[countryKey];
+  
+  // Weka reaction ya bendera
+  await zk.sendMessage(dest, { react: { text: country.flag, key: ms.key } });
 
-    if (raia.length === 0) {
-      return repondre(`Hakuna namba za ${country.name.toUpperCase()} kwenye kundi hili!`);
-    }
+  let membresGroupe = await infosGroupe.participants;
+  // Chuja namba za nchi husika
+  let raia = membresGroupe.filter(m => m.id.startsWith(country.code));
 
-    let ujumbe = arg && arg.join(' ') ? arg.join(' ') : `Amkeni watu wa ${country.name.toUpperCase()}! ${country.flag}`;
+  if (raia.length === 0) {
+    return repondre(`Hakuna raia wa ${countryKey.toUpperCase()} (+${country.code}) kwenye kundi hili!`);
+  }
 
-    let tag = `╭─────────────━┈⊷ 
-│ ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ ${country.name.toUpperCase()} ${country.flag}
+  let mess = arg && arg.join(' ') ? arg.join(' ') : `Amkeni Taifa la ${countryKey.toUpperCase()}! ${country.flag}`;
+
+  let tag = `╭─────────────━┈⊷ 
+│ ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ ${countryKey.toUpperCase()} ${country.flag}
 ╰─────────────━┈⊷ 
-│🏛️ *Taifa* : ${country.name.toUpperCase()}
-│👑 *Kiongozi* : *${nomAuteurMessage}* │📢 *Tangazo* : *${ujumbe}* ╰─────────────━┈⊷\n\n`;
+│👑 *Kiongozi* : *${nomAuteurMessage}*
+│📢 *Ujumbe* : *${mess}* ╰─────────────━┈⊷\n\n`;
 
-    for (const membre of raia) {
-      tag += `${country.flag} @${membre.id.split("@")[0]}\n`;
+  for (const membre of raia) {
+    tag += `${country.flag} @${membre.id.split("@")[0]}\n`;
+  }
+
+  // Tuma Tag na Wimbo
+  await zk.sendMessage(dest, { text: tag, mentions: raia.map(i => i.id) }, { quoted: ms });
+  await zk.sendMessage(dest, { audio: { url: country.song }, mimetype: 'audio/mp4', ptt: true }, { quoted: ms });
+}
+
+// 3. KUSAJILI COMMANDS KWENYE ZOKOU
+Object.keys(nationData).forEach((countryName) => {
+  zokou(
+    { nomCom: countryName, categorie: "Group", reaction: nationData[countryName].flag },
+    async (dest, zk, commandeOptions) => {
+      await executeNationTag(dest, zk, commandeOptions, countryName);
     }
-
-    // Tuma Tag na Wimbo
-    await zk.sendMessage(dest, { text: tag, mentions: raia.map((i) => i.id) }, { quoted: ms });
-    await zk.sendMessage(dest, { audio: { url: country.song }, mimetype: 'audio/mp4', ptt: true }, { quoted: ms });
-  });
+  );
 });
