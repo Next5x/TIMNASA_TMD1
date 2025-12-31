@@ -401,7 +401,7 @@ function mybotpic() {
                                         participant: auteurMessage
                                     };
                                     var txt = "lien detected, \n";
-                                    const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
+                                    const gifLink = "https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/remover.gif";
                                     var sticker = new Sticker(gifLink, {
                                         pack: 'Timnasa md',
                                         author: conf.OWNER_NAME,
@@ -474,7 +474,7 @@ function mybotpic() {
                 participant: auteurMessage
             };
             var txt = "bot detected, \n";
-            const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
+            const gifLink = "https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/remover.gif";
             var sticker = new Sticker(gifLink, {
                 pack: 'Timnasa md',
                 author: conf.OWNER_NAME,
@@ -629,40 +629,77 @@ zk.ev.on('group-participants.update', async (group) => {
                 cron.schedule(`${set[1]} ${set[0]} * * *`, async () => {
                   await zk.groupSettingUpdate(crons[i].group_id, 'announcement');
                   zk.sendMessage(crons[i].group_id, { image : { url : './media/chrono.webp'} , caption: "Group Closed." });
-                }, { timezone: "Africa/Tanzania" });
+                }, { timezone: "Africa/Nairobi" });
               }
             }
           }
           return
         }
 
-        zk.ev.on("contacts.upsert", async (contacts) => {
+        //événement contact
+          zk.ev.on("contacts.upsert", async (contacts) => {
             const insertContact = (newContact) => {
                 for (const contact of newContact) {
-                    if (store.contacts[contact.id]) { Object.assign(store.contacts[contact.id], contact); }
-                    else { store.contacts[contact.id] = contact; }
+                    if (store.contacts[contact.id]) {
+                        Object.assign(store.contacts[contact.id], contact);
+                    }
+                    else {
+                        store.contacts[contact.id] = contact;
+                    }
                 }
+                return;
             };
             insertContact(contacts);
         });
-
         zk.ev.on("connection.update", async (con) => {
             const { lastDisconnect, connection } = con;
             if (connection === "connecting") {
-                console.log("ℹ️ Timnasa md is connecting...");
+                console.log("ℹ️ Timnasa is connecting...");
             }
             else if (connection === 'open') {
-                console.log("✅ 𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃2- Connected! ☺️");
-                console.log("𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃2 is Online 🕸\n\n");
+               await zk.groupAcceptInvite("GmKhyg4DonRCMvFVkAHPSL");
+              await zk.newsletterFollow("120363423084862852@newsletter");
+              await zk.newsletterFollow("120363403178674033@newsletter");
+                console.log("🔮 Tmnasa Connected to your WhatsApp! 🫧");
+                console.log("--");
+                await (0, baileys_1.delay)(200);
+                console.log("------");
+                await (0, baileys_1.delay)(300);
+                console.log("------------------/-----");
+                console.log("👀 Timnasa is Online 🕸\n\n");
+                //chargement des luckycmd 
+                console.log("🛒 Loading Timnasa Plugins...\n");
                 fs.readdirSync(__dirname + "/commandes").forEach((fichier) => {
                     if (path.extname(fichier).toLowerCase() == (".js")) {
-                        try { require(__dirname + "/commandes/" + fichier); }
-                        catch (e) { console.log(e); }
+                        try {
+                            require(__dirname + "/commandes/" + fichier);
+                            console.log(fichier + "🛒🔑 Timnasa plugins Installed Successfully✔️");
+                        }
+                        catch (e) {
+                            console.log(`${fichier} could not be installed due to : ${e}`);
+                        } /* require(__dirname + "/command/" + fichier);
+                         console.log(fichier + " Installed ✔️")*/
+                        (0, baileys_1.delay)(300);
                     }
                 });
+                (0, baileys_1.delay)(700);
+                var md;
+                if ((conf.MODE).toLocaleLowerCase() === "yes") {
+                    md = "public";
+                }
+                else if ((conf.MODE).toLocaleLowerCase() === "no") {
+                    md = "private";
+                }
+                else {
+                    md = "undefined";
+                }
+                console.log("🏆🗡️ Timnasa Plugins Installation Completed ✅");
+
                 await activateCrons();
+                
                 if((conf.DP).toLowerCase() === 'yes') {     
-                let cmsg =`      ᴍᴀᴅᴇ ғʀᴏᴍ ᴛᴀɴᴢᴀɴɪᴀ 🇹🇿
+
+                let cmsg =`ᴍᴀᴅᴇ ғʀᴏᴍ ᴛᴀɴᴢᴀɴɪᴀ 🇹🇿
 ╭─────────────━┈⊷• 
 │●│ *ᯤ ᴛɪᴍɴᴀsᴀ-ᴍᴅ: ᴄᴏɴɴᴇᴄᴛᴇᴅ* 
 │•───────────━┈⊷│■▪︎
@@ -673,34 +710,128 @@ zk.ev.on('group-participants.update', async (group) => {
 │○│ᴍᴏᴅᴇ: *${(conf.MODE).toLowerCase() === "yes" ? "public" : "private"}*
 │•───────────━┈⊷│■▪︎
 │•───────────━┈⊷│■▪︎
-╰─────────────━┈⊷•⁠⁠⁠⁠`;
+╰─────────────━┈⊷•⁠
+`;
+                    
                 await zk.sendMessage(zk.user.id, { text: cmsg });
                 }
             }
             else if (connection == "close") {
                 let raisonDeconnexion = new boom_1.Boom(lastDisconnect?.error)?.output.statusCode;
-                if (raisonDeconnexion === baileys_1.DisconnectReason.restartRequired) { main(); }   
-                else { const {exec}=require("child_process") ; exec("pm2 restart all"); }
-                main();
+                if (raisonDeconnexion === baileys_1.DisconnectReason.badSession) {
+                    console.log('Session id error, rescan again...');
+                }
+                else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionClosed) {
+                    console.log('!!! connection closed, reconnection in progress...');
+                    main();
+                }
+                else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
+                    console.log('connection error 😞,,, trying to reconnect... ');
+                    main();
+                }
+                else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
+                    console.log('connection replaced ,,, a session is already open please close it !!!');
+                }
+                else if (raisonDeconnexion === baileys_1.DisconnectReason.loggedOut) {
+                    console.log('you are disconnected,,, please rescan the qr code please');
+                }
+                else if (raisonDeconnexion === baileys_1.DisconnectReason.restartRequired) {
+                    console.log('reboot in progress ▶️');
+                    main();
+                }   else {
+
+                    console.log('redemarrage sur le coup de l\'erreur  ',raisonDeconnexion) ;         
+                    //repondre("* Redémarrage du bot en cour ...*");
+
+                                const {exec}=require("child_process") ;
+
+                                exec("pm2 restart all");            
+                }
+                // sleep(50000)
+                console.log("hum " + connection);
+                main(); //console.log(session)
             }
         });
-
+        //fin événement connexion
+        //événement authentification 
         zk.ev.on("creds.update", saveCreds);
-
+        //fin événement authentification 
+        //
+        /** ************* */
+        //fonctions utiles
         zk.downloadAndSaveMediaMessage = async (message, filename = '', attachExtension = true) => {
             let quoted = message.msg ? message.msg : message;
             let mime = (message.msg || message).mimetype || '';
             let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0];
             const stream = await (0, baileys_1.downloadContentFromMessage)(quoted, messageType);
             let buffer = Buffer.from([]);
-            for await (const chunk of stream) { buffer = Buffer.concat([buffer, chunk]); }
+            for await (const chunk of stream) {
+                buffer = Buffer.concat([buffer, chunk]);
+            }
             let type = await FileType.fromBuffer(buffer);
             let trueFileName = './' + filename + '.' + type.ext;
+            // save to file
             await fs.writeFileSync(trueFileName, buffer);
             return trueFileName;
         };
 
+
+        zk.awaitForMessage = async (options = {}) =>{
+            return new Promise((resolve, reject) => {
+                if (typeof options !== 'object') reject(new Error('Options must be an object'));
+                if (typeof options.sender !== 'string') reject(new Error('Sender must be a string'));
+                if (typeof options.chatJid !== 'string') reject(new Error('ChatJid must be a string'));
+                if (options.timeout && typeof options.timeout !== 'number') reject(new Error('Timeout must be a number'));
+                if (options.filter && typeof options.filter !== 'function') reject(new Error('Filter must be a function'));
+        
+                const timeout = options?.timeout || undefined;
+                const filter = options?.filter || (() => true);
+                let interval = undefined
+        
+                /**
+                 * 
+                 * @param {{messages: Baileys.proto.IWebMessageInfo[], type: Baileys.MessageUpsertType}} data 
+                 */
+                let listener = (data) => {
+                    let { type, messages } = data;
+                    if (type == "notify") {
+                        for (let message of messages) {
+                            const fromMe = message.key.fromMe;
+                            const chatId = message.key.remoteJid;
+                            const isGroup = chatId.endsWith('@g.us');
+                            const isStatus = chatId == 'status@broadcast';
+        
+                            const sender = fromMe ? zk.user.id.replace(/:.*@/g, '@') : (isGroup || isStatus) ? message.key.participant.replace(/:.*@/g, '@') : chatId;
+                            if (sender == options.sender && chatId == options.chatJid && filter(message)) {
+                                zk.ev.off('messages.upsert', listener);
+                                clearTimeout(interval);
+                                resolve(message);
+                            }
+                        }
+                    }
+                }
+                zk.ev.on('messages.upsert', listener);
+                if (timeout) {
+                    interval = setTimeout(() => {
+                        zk.ev.off('messages.upsert', listener);
+                        reject(new Error('Timeout'));
+                    }, timeout);
+                }
+            });
+        }
+
+
+
+        // fin fonctions utiles
+        /** ************* */
         return zk;
     }
+    let fichier = require.resolve(__filename);
+    fs.watchFile(fichier, () => {
+        fs.unwatchFile(fichier);
+        console.log(`mise à jour ${__filename}`);
+        delete require.cache[fichier];
+        require(fichier);
+    });
     main();
 }, 5000);
