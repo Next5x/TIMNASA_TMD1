@@ -131,7 +131,7 @@ zokou({
         // Send Audio (PTT/Voice Note)
         await zk.sendMessage(dest, {
             audio: { url: muzikiUrl },
-            mimetype: 'audio/mp3',
+            mimetype: 'audio/mp4',
             ptt: true,
             contextInfo: {
                 externalAdReply: {
