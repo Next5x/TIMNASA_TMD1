@@ -36,42 +36,42 @@ zokou({ nomCom: "menu", categorie: "General" }, async (dest, zk, commandeOptions
     if (hour >= 0 && hour < 12) {
         greeting = "🌅 GOOD MORNING";
         myPictures = [
-            "https://telegra.ph/file/morning_1.jpg",
-            "https://telegra.ph/file/morning_2.jpg",
-            "https://telegra.ph/file/morning_3.jpg",
-            "https://telegra.ph/file/morning_4.jpg",
-            "https://telegra.ph/file/morning_5.jpg",
-            "https://telegra.ph/file/morning_6.jpg"
+            "https://files.catbox.moe/qf6u89.jpg",
+            "https://files.catbox.moe/936pyq.jpg",
+            "https://files.catbox.moe/bt0dns.jpg",
+            "https://files.catbox.moe/zgp1hn.jpg",
+            "https://files.catbox.moe/qf6u89.jpg",
+            "https://files.catbox.moe/bt0dns.jpg"
         ];
     } else if (hour >= 12 && hour < 15) {
         greeting = "☀️ GOOD AFTERNOON";
         myPictures = [
-            "https://telegra.ph/file/afternoon_1.jpg",
-            "https://telegra.ph/file/afternoon_2.jpg",
-            "https://telegra.ph/file/afternoon_3.jpg",
-            "https://telegra.ph/file/afternoon_4.jpg",
-            "https://telegra.ph/file/afternoon_5.jpg",
-            "https://telegra.ph/file/afternoon_6.jpg"
+            "https://files.catbox.moe/bt0dns.jpg",
+            "https://files.catbox.moe/bt0dns.jpg",
+            "https://files.catbox.moe/qf6u89.jpg",
+            "https://files.catbox.moe/zgp1hn.jpg",
+            "https://files.catbox.moe/936pyq.jpg",
+            "https://files.catbox.moe/zgp1hn.jpg"
         ];
     } else if (hour >= 15 && hour < 19) {
         greeting = "🌆 GOOD EVENING";
         myPictures = [
-            "https://telegra.ph/file/evening_1.jpg",
-            "https://telegra.ph/file/evening_2.jpg",
-            "https://telegra.ph/file/evening_3.jpg",
-            "https://telegra.ph/file/evening_4.jpg",
-            "https://telegra.ph/file/evening_5.jpg",
-            "https://telegra.ph/file/evening_6.jpg"
+            "https://files.catbox.moe/bt0dns.jpg",
+            "https://files.catbox.moe/936pyq.jpg",
+            "https://files.catbox.moe/zgp1hn.jpg",
+            "https://files.catbox.moe/936pyq.jpg",
+            "https://files.catbox.moe/bt0dns.jpg",
+            "https://files.catbox.moe/qf6u89.jpg"
         ];
     } else {
         greeting = "🌃 GOOD NIGHT";
         myPictures = [
-            "https://telegra.ph/file/night_1.jpg",
-            "https://telegra.ph/file/night_2.jpg",
-            "https://telegra.ph/file/night_3.jpg",
-            "https://telegra.ph/file/night_4.jpg",
-            "https://telegra.ph/file/night_5.jpg",
-            "https://telegra.ph/file/night_6.jpg"
+            "https://files.catbox.moe/bt0dns.jpg",
+            "https://files.catbox.moe/936pyq.jpg",
+            "https://files.catbox.moe/zgp1hn.jpg",
+            "https://files.catbox.moe/936pyq.jpg",
+            "https://files.catbox.moe/bt0dns.jpg",
+            "https://files.catbox.moe/qf6u89.jpg"
         ];
     }
 
@@ -100,7 +100,12 @@ ${readmore}`;
         }
     }
 
-    menuMsg += `\n\n*POWERED BY TIMNASA TMD2*`;
+    menuMsg += `\n\n*​🚁▬▬▬.◙.▬▬▬🚁
+═▂▄▄▓▄▄▂
+◢◤ █▀▀████▄▄▄▄◢◤
+█▄ █ █▄ ███▀▀▀▀▀▀▀╬
+◥█████◤
+══╩══╩══ *`;
 
     const sendMenu = async () => {
         let messageOptions = {
