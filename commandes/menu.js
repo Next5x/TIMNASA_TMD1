@@ -26,7 +26,7 @@ const toFancyLowercaseFont = (text) => {
 
 zokou({ 
     nomCom: "menu", 
-    categorie: "Fredi-Menu", 
+    categorie: "Menu", 
     reaction: "☢️", 
     nomFichier: __filename 
 }, async (dest, zk, commandeOptions) => {
@@ -58,7 +58,7 @@ zokou({
 
     const infoMsg = `
 ╭┈┈┈┈━⊷
-*┋* *ʙᴏᴛ ɴᴀᴍᴇ :*  *☢️LUCKY MD X-FORCE☢️*
+*┋* *ʙᴏᴛ ɴᴀᴍᴇ :*  *𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝚳𝚵𝚴𝐔*
 *┋* *ᴘʀᴇғɪx :* [ ${s.PREFIXE} ]
 *┋* *ᴍᴏᴅᴇ :* ${mode}
 *┋* *ᴅᴀᴛᴇ  :* ${date}
@@ -82,7 +82,7 @@ zokou({
     }
     
     menuMsg += `
-> @made by FredieTech 2025\n`;
+> @made by ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ\n`;
 
     try {
         await zk.sendMessage(dest, { 
@@ -92,13 +92,13 @@ zokou({
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: "120363313124070136@newsletter",
-                    newsletterName: "@FrediEzra",
+                    newsletterName: "@ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ",
                     serverMessageId: -1
                 },
                 forwardingScore: 999,
                 externalAdReply: {
-                    title: "☢️LUCKY MD X-FORCE☢️",
-                    body: "🗡️FredieTech Commands List",
+                    title: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝚳𝚵𝚴𝐔",
+                    body: "🗡️ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ Commands List",
                     thumbnailUrl: imgs,
                     sourceUrl: "https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f",
                     mediaType: 1,
