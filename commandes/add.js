@@ -18,7 +18,7 @@ const sendTimnasaExtras = async (zk, dest, ms) => {
 };
 
 // --- ADD MEMBERS COMMAND ---
-zokou({ nomCom: "add", categorie: 'Group', reaction: "➕" }, async (dest, zk, commandeOptions) => {
+zokou({ nomCom: "add2", categorie: 'Group', reaction: "➕" }, async (dest, zk, commandeOptions) => {
   const { ms, repondre, arg, verifGroupe, verifAdmin, superUser, idBot } = commandeOptions;
 
   // 1. Ensure the command is used in a group
