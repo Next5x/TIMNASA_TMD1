@@ -8,7 +8,10 @@ const s = require(__dirname + "/../set");
 const more = String.fromCharCode(8206)
 const readmore = more.repeat(4001)
 
-zokou({ nomCom: "menu", categorie: "Menu" }, async (dest, zk, commandeOptions) => {
+// ==========================================
+// MENU COMMAND
+// ==========================================
+zokou({ nomCom: "menu", categorie: "General" }, async (dest, zk, commandeOptions) => {
     let { ms, repondre ,prefixe,nomAuteurMessage,mybotpic} = commandeOptions;
     let { cm } = require(__dirname + "/../framework/zokou");
     var coms = {};
@@ -24,9 +27,8 @@ zokou({ nomCom: "menu", categorie: "Menu" }, async (dest, zk, commandeOptions) =
     const temps = moment().format('HH:mm:ss');
     const date = moment().format('DD/MM/YYYY');
 
-    // Muonekano mpya wa Menu (Clean & Modern)
     let menuMsg = `
-╔════『 **𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃2** ════╗
+╔═══════『 **𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃2** 』═══════╗
 ┃
 ┃  👤 **USER**: ${s.OWNER_NAME}
 ┃  🕒 **TIME**: ${temps}
@@ -34,7 +36,7 @@ zokou({ nomCom: "menu", categorie: "Menu" }, async (dest, zk, commandeOptions) =
 ┃  ⚙️ **MODE**: ${mode}
 ┃  🔋 **RAM**: ${format(os.totalmem() - os.freemem())}/${format(os.totalmem())}
 ┃
-╚══════════════════════════╝
+╚═════════════════════════════╝
 
 ${readmore}`;
 
@@ -49,11 +51,10 @@ ${readmore}`;
 
     var lien = mybotpic();
 
-    // Kutuma ujumbe wenye picha/video na View Channel tag
     const sendMenu = async () => {
         let messageOptions = {
             caption: menuMsg,
-            footer: "Bonyeza hapa kujiunga na channel",
+            footer: "Click here to join channel",
             contextInfo: {
                 forwardingScore: 999,
                 isForwarded: true,
@@ -77,16 +78,40 @@ ${readmore}`;
 
     try {
         await sendMenu();
-        
-        // Kutuma Muziki mwishoni
         await zk.sendMessage(dest, { 
             audio: { url: "https://files.catbox.moe/lqx6sp.mp3" }, 
             mimetype: 'audio/mp4', 
-            ptt: false // Ikitumwa kama audio file ya kawaida
+            ptt: false 
         }, { quoted: ms });
-
     } catch (e) {
         console.log("Menu Error: " + e);
-        repondre("Hitilafu imetokea: " + e);
+        repondre("An error occurred: " + e);
+    }
+});
+
+// ==========================================
+// BASE64 COMMANDS (ADDED)
+// ==========================================
+
+// 1. Encode Command (Text to Base64)
+zokou({ nomCom: "encode", categorie: "Conversion" }, async (dest, zk, commandeOptions) => {
+    let { repondre, arg } = commandeOptions;
+    if (!arg[0]) return repondre("Please provide the text you want to encode to Base64.");
+    
+    let text = arg.join(" ");
+    let encoded = Buffer.from(text).toString('base64');
+    repondre(`*ENCODED RESULT:*\n\n${encoded}`);
+});
+
+// 2. Decode Command (Base64 to Text)
+zokou({ nomCom: "decode", categorie: "Conversion" }, async (dest, zk, commandeOptions) => {
+    let { repondre, arg } = commandeOptions;
+    if (!arg[0]) return repondre("Please provide the Base64 string you want to decode.");
+    
+    try {
+        let decoded = Buffer.from(arg.join(" "), 'base64').toString('utf-8');
+        repondre(`*DECODED RESULT:*\n\n${decoded}`);
+    } catch (e) {
+        repondre("⚠️ Error! Please make sure you provided a valid Base64 string.");
     }
 });
