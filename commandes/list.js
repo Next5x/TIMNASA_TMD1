@@ -6,7 +6,7 @@ const s = require("../set");
 
 const readMore = String.fromCharCode(8206).repeat(4001);
 
-// Function to convert text to fancy uppercase font
+// Function to convert text to fancy fonts
 const toFancyUppercaseFont = (text) => {
     const fonts = {
         'A': '𝐀', 'B': '𝐁', 'C': '𝐂', 'D': '𝐃', 'E': '𝐄', 'F': '𝐅', 'G': '𝐆', 'H': '𝐇', 'I': '𝐈', 'J': '𝐉', 'K': '𝐊', 'L': '𝐋', 'M': '𝐌',
@@ -15,7 +15,6 @@ const toFancyUppercaseFont = (text) => {
     return text.split('').map(char => fonts[char] || char).join('');
 };
 
-// Function to convert text to fancy lowercase font
 const toFancyLowercaseFont = (text) => {
     const fonts = {
         'a': 'ᴀ', 'b': 'ʙ', 'c': 'ᴄ', 'd': 'ᴅ', 'e': 'ᴇ', 'f': 'ғ', 'g': 'ɢ', 'h': 'ʜ', 'i': 'ɪ', 'j': 'ᴊ', 'k': 'ᴋ', 'l': 'ʟ', 'm': 'ᴍ',
@@ -24,20 +23,30 @@ const toFancyLowercaseFont = (text) => {
     return text.split('').map(char => fonts[char] || char).join('');
 };
 
+// Function to calculate bot runtime
+function runtime(seconds) {
+    seconds = Number(seconds);
+    var d = Math.floor(seconds / (3600 * 24));
+    var h = Math.floor(seconds % (3600 * 24) / 3600);
+    var m = Math.floor(seconds % 3600 / 60);
+    var s = Math.floor(seconds % 60);
+    var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
+    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " min, " : " mins, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " sec" : " secs") : "";
+    return dDisplay + hDisplay + mDisplay + sDisplay;
+}
+
 zokou({ 
     nomCom: "list", 
     categorie: "Fredi-Menu", 
     reaction: "☢️", 
     nomFichier: __filename 
 }, async (dest, zk, commandeOptions) => {
-    const { repondre, prefixe, nomAuteurMessage } = commandeOptions;
+    const { repondre, prefixe, ms, nomAuteurMessage } = commandeOptions;
     const { cm } = require("../framework/zokou");
     let coms = {};
-    let mode = "public";
-    
-    if ((s.MODE).toLocaleLowerCase() != "yes") {
-        mode = "private";
-    }
+    let mode = (s.MODE).toLocaleLowerCase() != "yes" ? "Private" : "Public";
 
     cm.map(async (com) => {
         if (!coms[com.categorie]) coms[com.categorie] = [];
@@ -46,78 +55,85 @@ zokou({
 
     moment.tz.setDefault("Africa/Dar_es_Salaam");
     const hour = moment().hour();
-    let greeting = "ɢᴏᴏᴅ ᴍᴏʀɴɪɴɢ";
-    if (hour >= 12 && hour < 18) greeting = "ɢᴏᴏᴅ ᴀғᴛᴇʀɴᴏᴏɴ!";
-    else if (hour >= 18) greeting = "ɢᴏᴏᴅ ᴇᴠᴇɴɪɴɢ!";
-    else if (hour >= 22 || hour < 5) greeting = "ɢᴏᴏᴅ ɴɪɢʜᴛ";
+    let greeting = "Good Morning";
+    if (hour >= 12 && hour < 18) greeting = "Good Afternoon";
+    else if (hour >= 18) greeting = "Good Evening";
+    else if (hour >= 22 || hour < 5) greeting = "Good Night";
 
-    const temps = moment().format('HH:mm:ss');
     const date = moment().format('DD/MM/YYYY');
-    const img = 'https://files.catbox.moe/3o37c5.jpeg';
-    const imgs = 'https://files.catbox.moe/uw4l17.jpeg';
-    const muziki = 'https://files.catbox.moe/e4c48n.mp3'; // URL ya muziki wako
+    const time = moment().format('HH:mm:ss');
+    const liveLog = runtime(process.uptime());
+    const ram = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
+
+    const img = 'https://files.catbox.moe/tq4mph.jpg';
+    const imgs = 'https://files.catbox.moe/qsu6xe.jpg';
+    const muzikiUrl = 'https://files.catbox.moe/e4c48n.mp3';
 
     const infoMsg = `
 ╭┈┈┈┈━⊷
-*┋* *ʙᴏᴛ ɴᴀᴍᴇ :* *☢️LUCKY MD X-FORCE☢️*
+*┋* *ʜᴇʟʟᴏ :* ${nomAuteurMessage}
+*┋* *ʙᴏᴛ :* *☢️LUCKY MD X-FORCE☢️*
+*┋* *ᴜᴘᴛɪᴍᴇ :* ${liveLog}
+*┋* *ʀᴀᴍ :* ${ram} MB
 *┋* *ᴘʀᴇғɪx :* [ ${s.PREFIXE} ]
 *┋* *ᴍᴏᴅᴇ :* ${mode}
-*┋* *ᴅᴀᴛᴇ  :* ${date}
-*┋* *ᴘʟᴀᴛғᴏʀᴍ :* ${os.platform()}
-*┋* *ᴏᴡɴᴇʀ ɪs : FREDI*
-*┋* *ᴘʟᴜɢɪɴs ᴄᴍᴅ :* ${cm.length}
+*┋* *ᴅᴀᴛᴇ :* ${date}
+*┋* *ᴏᴡɴᴇʀ :* FREDI
 ╰┈┈┈┈━⊷\n`;
     
-    let menuMsg = ` *${greeting}*`;
+    let menuMsg = ` *${greeting}* \n${readMore}`;
     
     for (const cat in coms) {
-        menuMsg += `
-*「 ${toFancyUppercaseFont(cat)} 」*
-╭─━⊷ `;
+        menuMsg += `\n*「 ${toFancyUppercaseFont(cat)} 」*\n╭─━⊷`;
         for (const cmd of coms[cat]) {
-            menuMsg += `          
-*┋* ${toFancyLowercaseFont(cmd)}`;   
+            menuMsg += `\n*┋* ${toFancyLowercaseFont(cmd)}`;   
         }
-        menuMsg += `
-╰─━⊷`;
+        menuMsg += `\n╰─━⊷\n`;
     }
     
-    menuMsg += `
-> @made by FredieTech 2025\n`;
+    menuMsg += `\n> @made by FredieTech 2025\n`;
 
     try {
-        // Tuma Picha na Maelezo ya Menu
+        // Send Menu with Image
         await zk.sendMessage(dest, { 
             image: { url: img },
             caption: infoMsg + menuMsg,
             contextInfo: {
-                isForwarded: true,
-                forwardedNewsletterMessageInfo: {
-                    newsletterJid: "120363313124070136@newsletter",
-                    newsletterName: "@FrediEzra",
-                    serverMessageId: -1
-                },
-                forwardingScore: 999,
                 externalAdReply: {
                     title: "☢️LUCKY MD X-FORCE☢️",
-                    body: "🗡️FredieTech Commands List",
+                    body: `Welcome, ${nomAuteurMessage}`,
                     thumbnailUrl: imgs,
                     sourceUrl: "https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f",
                     mediaType: 1,
                     renderLargerThumbnail: true
+                },
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: "120363313124070136@newsletter",
+                    newsletterName: "FredieTech Updates",
+                    serverMessageId: 143
                 }
             }
-        });
+        }, { quoted: ms });
 
-        // Tuma Muziki (Audio)
+        // Send Audio (PTT/Voice Note)
         await zk.sendMessage(dest, {
-            audio: { url: muziki },
+            audio: { url: muzikiUrl },
             mimetype: 'audio/mp4',
-            ptt: true // Badili kuwa false kama unataka ionekane kama file la kawaida na si voice note
-        }, { quoted: commandeOptions.ms });
+            ptt: true,
+            contextInfo: {
+                externalAdReply: {
+                    title: "Lucky MD Music Player",
+                    body: `Playing Theme for ${nomAuteurMessage}`,
+                    thumbnailUrl: imgs,
+                    mediaType: 1
+                }
+            }
+        }, { quoted: ms });
 
-      } catch (error) {
-        console.error("Menu error: ", error);
-        repondre("🥵🥵 Menu error: " + error);
+    } catch (error) {
+        console.error("Menu Error: ", error);
+        repondre("An error occurred: " + error);
     }
 });
