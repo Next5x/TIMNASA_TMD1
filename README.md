@@ -13,13 +13,6 @@
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=1BAFBAFF&center=true&width=810&height=100&lines=+TIMNASA-TIMOTH" alt="Typing SVG" /></a>
   </p>
   
-
-  
-----
-
-<img src="" height="100" width="100%">
-<img src="" height="110" width="100%">
-
  ## README.MD 
  <a><img src='https://i.imgur.com/LyHic3i.gif'/></a><a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 ## 𝑇𝛭𝐷 𝑊𝛨𝛥𝑇𝑆𝛥𝛲𝛲 𝐵𝛩𝑇 ##
