@@ -53,8 +53,8 @@ zokou({
 
     const temps = moment().format('HH:mm:ss');
     const date = moment().format('DD/MM/YYYY');
-    const img = 'https://files.catbox.moe/3o37c5.jpeg';
-    const imgs = 'https://files.catbox.moe/uw4l17.jpeg';
+    const img = 'https://files.catbox.moe/tq4mph.jpg';
+    const imgs = 'https://files.catbox.moe/qsu6xe.jpg';
 
     const infoMsg = `
 ╭┈┈┈┈━⊷
@@ -63,7 +63,7 @@ zokou({
 *┋* *ᴍᴏᴅᴇ :* ${mode}
 *┋* *ᴅᴀᴛᴇ  :* ${date}
 *┋* *ᴘʟᴀᴛғᴏʀᴍ :* ${os.platform()}
-*┋* *ᴏᴡɴᴇʀ ɪs : FREDI*
+*┋* *ᴏᴡɴᴇʀ ɪs : timoth*
 *┋* *ᴘʟᴜɢɪɴs ᴄᴍᴅ :* ${cm.length}
 ╰┈┈┈┈━⊷\n`;
     
