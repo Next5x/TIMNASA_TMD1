@@ -26,7 +26,7 @@ zokou({ nomCom: "menu", categorie: "Menu" }, async (dest, zk, commandeOptions) =
 
     // Muonekano mpya wa Menu (Clean & Modern)
     let menuMsg = `
-╔═══════『 **𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃2** 』═══════╗
+╔════『 **𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃2** ════╗
 ┃
 ┃  👤 **USER**: ${s.OWNER_NAME}
 ┃  🕒 **TIME**: ${temps}
@@ -34,7 +34,7 @@ zokou({ nomCom: "menu", categorie: "Menu" }, async (dest, zk, commandeOptions) =
 ┃  ⚙️ **MODE**: ${mode}
 ┃  🔋 **RAM**: ${format(os.totalmem() - os.freemem())}/${format(os.totalmem())}
 ┃
-╚═════════════════════════════╝
+╚══════════════════════════╝
 
 ${readmore}`;
 
