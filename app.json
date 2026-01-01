@@ -3,7 +3,7 @@
   "description":"Best whatsapp bot💥 developed by   ᴛɪᴍɴᴀsᴀ ᴍᴜʟᴛɪᴘʟᴇ ᴅᴇᴠɪᴄᴇ ʙᴏᴛ ",
   "keywords":["timnasa","node","baileys","whatsapp"],
   "logo":"https://files.catbox.moe/t1rw0x.jpg",
-    "repository": "https://github.com/timnasax/TIMNASA_TMD2",
+    "repository": "https://github.com/Next5x/TIMNASA_TMD1",
   "succes_url": "/",
   "stack": "container",
 
@@ -86,7 +86,7 @@
     },
     "HEROKU_API_KEY": {
       "description": "Insert your Heroku API key (required)",
-      "value": "ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ2",
+      "value": "",
       "required": true
     },
     "HEROKU_APP_NAME": {
