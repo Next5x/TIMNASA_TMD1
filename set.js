@@ -1,68 +1,76 @@
-"use strict";
 const fs = require('fs-extra');
-const path = require("path");
-if (fs.existsSync('set.env')) {
+const { Sequelize } = require('sequelize');
+if (fs.existsSync('set.env'))
     require('dotenv').config({ path: __dirname + '/set.env' });
-}
-
+const path = require("path");
 const databasePath = path.join(__dirname, './database.db');
 const DATABASE_URL = process.env.DATABASE_URL === undefined
     ? databasePath
     : process.env.DATABASE_URL;
-
-module.exports = {
-    // 1. CONNECTION & SESSION
-    session: process.env.SESSION_ID || 'zokk', // Your Session ID
-    PREFIXE: process.env.PREFIX || "+",
-    OWNER_NAME: process.env.OWNER_NAME || "chugastan",
-    NUMERO_OWNER: process.env.NUMERO_OWNER || "255622286792",
-    NOM_OWNER: process.env.OWNER_NAME || "chugastan",
-
-    // 2. CHANNEL & SUPPORT SETTINGS
-    CHANNEL_ID: process.env.CHANNEL_ID || "120363xxxxxx@newsletter", // Put your Channel JID here
-    CHANNEL_NAME: process.env.CHANNEL_NAME || "TIMNASA-MD-SUPPORT",
-    SUPPORT_GROUP: process.env.SUPPORT_GROUP || "https://chat.whatsapp.com/xxxx",
-
-    // 3. AUTOMATION FEATURES (AUTO-MODES)
-    AUTO_READ_STATUS: process.env.AUTO_READ_STATUS || "yes", // Auto views statuses
-    AUTO_DOWNLOAD_STATUS: process.env.AUTO_DOWNLOAD_STATUS || 'no', // Saves status to your gallery
-    AUTOREACT_STATUS: process.env.AUTOREACT_STATUS || 'yes', // Reacts to status with emojis
-    AUTO_READ_MESSAGES: process.env.AUTO_READ_MESSAGES || "no", // Auto blue ticks
-    AUTO_TYPING: process.env.AUTO_TYPING || "no", // Shows "typing..." always
-    AUTO_RECORDING: process.env.AUTO_RECORDING || "no", // Shows "recording..." always
-    AUTO_BLOCK_212: process.env.AUTO_BLOCK_212 || "no", // Blocks +212 (foreign spam) numbers
-
-    // 4. SECURITY & PROTECTION (ANTIS)
-    ANTILIEN: process.env.ANTILIEN || "yes", // Anti-link (removes link senders)
-    ANTIBOT: process.env.ANTIBOT || "yes", // Anti-bot (kicks other bots)
-    ANTICALL: process.env.ANTICALL || "no", // Auto-block callers
-    ANTIDELETE: process.env.ANTI_DELETE_MESSAGE || 'yes', // Shows deleted messages
-    PM_PERMIT: process.env.PM_PERMIT || 'no', // Blocks people from DMing bot without permission
-
-    // 5. BOT APPEARANCE & PRESENCE
-    BOT_NAME: process.env.BOT_NAME || 'MATELEE TMD',
-    URL: process.env.BOT_MENU_LINKS || 'https://files.catbox.moe/ejm45q.jpg', // Menu image
-    MODE: process.env.PUBLIC_MODE || "yes", // 'yes' for Public, 'no' for Private
-    DP: process.env.STARTING_BOT_MESSAGE || "yes", // Uptime message on start
-    ETAT: process.env.PRESENCE || '1', // 1: Online, 2: Typing, 3: Recording, 0: Invisible
-
-    // 6. ADMIN & WARNING LIMITS
-    WARN_COUNT: process.env.WARN_COUNT || '3', // Warning limit before kick
-    ADM: process.env.ANTI_DELETE_MESSAGE || 'yes',
-
-    // 7. DATABASE & CLOUD CONFIGURATION
-    HEROKU_APP_NAME: process.env.HEROKU_APP_NAME || '',
-    HEROKU_APY_KEY: process.env.HEROKU_APY_KEY || '',
-    DATABASE_URL: DATABASE_URL,
-    // PostgreSQL Database Link
-    DATABASE: process.env.DATABASE || "postgres://db_7xp9_user:6hwmTN7rGPNsjlBEHyX49CXwrG7cDeYi@dpg-cj7ldu5jeehc73b2p7g0-a.oregon-postgres.render.com/db_7xp9"
+module.exports = { session: process.env.SESSION_ID || 'zokk',
+    PREFIXE: process.env.PREFIX || ".",
+    GITHUB : process.env.GITHUB|| 'https://files.catbox.moe/xtkghn.jpg',
+    OWNER_NAME : process.env.OWNER_NAME || "TimnasaTech",
+    NUMERO_OWNER : process.env.NUMERO_OWNER || "255784766591", 
+              
+    AUTO_READ_STATUS: process.env.AUTO_READ_STATUS || "yes",
+   AUTO_SAVE_CONTACTS : process.env.AUTO_SAVE_CONTACTS || 'yes',
+    AUTO_DOWNLOAD_STATUS: process.env.AUTO_DOWNLOAD_STATUS || 'no',
+    AUTO_REACT: process.env.AUTO_REACTION || "no",  
+    URL: process.env.URL || "https://files.catbox.moe/xtkghn.jpg",  
+    AUTO_REACT_STATUS: process.env.AUTO_REACT_STATUS || 'yes',              
+    CHAT_BOT: process.env.CHAT_BOT || "yes",
+    AUDIO_REPLY: process.env.AUDIO_REPLY || "yes",
+    AUTO_READ_MESSAGES: process.env.AUTO_READ_MESSAGES || "yes",
+    ANTI_BUG : process.env.ANTI_BUG || "no",
+    ANTI_MENTION_GROUP : process.env.ANTI_MENTION_GROUP || "on",
+    ANTI_TAG : process.env.ANTI_TAG || "on",
+    ANTI_BAD : process.env.ANTI_BAD || "on",
+    ANTI_SHARE_GROUP : process.env.ANTI_SHARE_GROUP || "yes",
+    AUTO_BLOCK: process.env.AUTO_BLOCK || 'no', 
+    GCF: process.env.GROUP_HANDLE || 'no', 
+    AUTO_REPLY : process.env.AUTO_REPLY || "ye", 
+    AUTO_STATUS_TEXT: process.env.AUTO_STATUS_TEXT || 'viewed by timnasa tmd',   
+    AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || 'yes',
+    AUTO_BIO: process.env.AUTO_BIO || 'yes',       
+    ANTI_CALL_TEXT : process.env.ANTI_CALL_MESSAGE || 'yes',             
+    GURL: process.env.GURL  || "https://whatsapp.com/channel/0029VajweHxKQuJP6qnjLM31",
+    WEBSITE :process.env.GURL || "https://whatsapp.com/channel/0029VajweHxKQuJP6qnjLM31",
+    CAPTION : process.env.CAPTION || "TIMNASA-TMD",
+    BOT : process.env.BOT_NAME || 'TIMNASA-TMD⁠',
+    MODE: process.env.PUBLIC_MODE || "no",              
+    TIMEZONE: process.env.TIMEZONE || "Africa/Dodoma", 
+    PM_PERMIT: process.env.PM_PERMIT || 'no',
+    HEROKU_APP_NAME : process.env.HEROKU_APP_NAME || null,
+    HEROKU_API_KEY : process.env.HEROKU_API_KEY || null,
+    WARN_COUNT : process.env.WARN_COUNT || '3' ,
+    ETAT : process.env.PRESENCE || '1',
+    DP : process.env.STARTING_BOT_MESSAGE || "yes",
+    LUCKY_ADM : process.env.ANTI_DELETE_MESSAGE || 'yes',
+    ANTI_CALL: process.env.ANTI_CALL || 'yes',
+    DATABASE_URL,
+    DATABASE: DATABASE_URL === databasePath
+        ? "postgres://db_7xp9_user:6hwmTN7rGPNsjlBEHyX49CXwrG7cDeYi@dpg-cj7ldu5jeehc73b2p7g0-a.oregon-postgres.render.com/db_7xp9" : "postgres://db_7xp9_user:6hwmTN7rGPNsjlBEHyX49CXwrG7cDeYi@dpg-cj7ldu5jeehc73b2p7g0-a.oregon-postgres.render.com/db_7xp9",
+    /* new Sequelize({
+     dialect: 'sqlite',
+     storage: DATABASE_URL,
+     logging: false,
+})
+: new Sequelize(DATABASE_URL, {
+     dialect: 'postgres',
+     ssl: true,
+     protocol: 'postgres',
+     dialectOptions: {
+         native: true,
+         ssl: { require: true, rejectUnauthorized: false },
+     },
+     logging: false,
+}),*/
 };
-
-// Hot Reloading (Watching for changes)
 let fichier = require.resolve(__filename);
 fs.watchFile(fichier, () => {
     fs.unwatchFile(fichier);
-    console.log(`Settings updated in: ${__filename}`);
+    console.log(`mise à jour ${__filename}`);
     delete require.cache[fichier];
     require(fichier);
 });
