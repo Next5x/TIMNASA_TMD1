@@ -2,7 +2,7 @@ const { zokou } = require("../framework/zokou");
 const conf = require("../set");
 
 zokou({
-    nomCom: "antistatus",
+    nomCom: "antitag",
     reaction: "🛡️",
     categorie: "Group"
 }, async (dest, zk, reponse) => {
@@ -15,7 +15,7 @@ zokou({
 
     if (!arg[0]) {
         return zk.sendMessage(dest, { 
-            text: `*ANTISTATUS PROTECT*\n\nStatus: *${conf.ANTISTATUS || "off"}*\n\n🔹 *.antistatus on* - Enable Protect\n🔹 *.antistatus off* - Disable Protect\n\nChannel: https://whatsapp.com/channel/0029VaF39946H4YhS6u8Yt3q` 
+            text: `*ANTISTATUS PROTECT*\n\nStatus: *${conf.ANTISTATUS || "off"}*\n\n🔹 *.antistatus on* - Enable Protect\n🔹 *.antistatus off* - Disable Protect\n\: ` 
         }, { quoted: ms });
     }
 
