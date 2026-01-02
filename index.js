@@ -213,32 +213,55 @@ if (conf.AUTOREACT_STATUS=== "yes") {
             console.log(texte);
 
             // ================== CHATBOT (AUTO-REPLY & AUDIO) LOGIC ==================
-            if (conf.CHATBOT === "on" && !ms.key.fromMe) {
-                const query = texte.toLowerCase().trim();
-                
-                // --- Text Replies ---
-                let textReply = "";
-                if (query === "mambo" || query === "hi") textReply = `Safi sana ${nomAuteurMessage}, mzima?`;
-                else if (query === "bot") textReply = "Mimi hapa kiongozi!";
-                
-                if (textReply) await zk.sendMessage(origineMessage, { text: textReply }, { quoted: ms });
+if (conf.CHATBOT === "on" && !ms.key.fromMe) {
+    const query = texte.toLowerCase().trim();
+    const senderName = ms.pushName || "Boss";
 
-                // --- Audio Replies ---
-                let audioUrl = "";
-                if (query === "timnasa") {
-                    audioUrl = "https://files.catbox.moe/e4c48n.mp3"; // WEKA LINK YAKO HAPA
-                } else if (query === "oyee") {
-                    audioUrl = "https://files.catbox.moe/p88m0u.mp3"; // WEKA LINK YAKO HAPA
-                }
+    // --- Text Replies Logic ---
+    let textReply = "";
+    if (query === "hello" || query === "hi" || query === "mambo") {
+        textReply = `Hello ${senderName}, how are you doing today?`;
+    } else if (query === "bot" || query === "zokou") {
+        textReply = "I am active and online! How can I help you, Boss?";
+    } else if (query === "how are you") {
+        textReply = "I'm doing great! Thanks for asking. How about you?";
+    } else if (query === "good morning") {
+        textReply = "Good morning! Have a productive day ahead.";
+    } else if (query === "goodnight") {
+        textReply = "Goodnight! Sweet dreams.";
+    } else if (query === "who created you") {
+        textReply = "I am a Zokou Bot, created to make your life easier!";
+    }
 
-                if (audioUrl) {
-                    await zk.sendMessage(origineMessage, { 
-                        audio: { url: audioUrl }, 
-                        mimetype: 'audio/mp4', 
-                        ptt: true 
-                    }, { quoted: ms });
-                }
-            }
+    if (textReply) {
+        // Show "typing..." status for 2 seconds
+        await zk.sendPresenceUpdate('composing', origineMessage);
+        await new Promise(resolve => setTimeout(resolve, 2000)); 
+        await zk.sendMessage(origineMessage, { text: textReply }, { quoted: ms });
+    }
+
+    // --- Audio Replies Logic ---
+    let audioUrl = "";
+    if (query === "timnasa") {
+        audioUrl = "https://files.catbox.moe/e4c48n.mp3"; 
+    } else if (query === "oyee") {
+        audioUrl = "https://files.catbox.moe/p88m0u.mp3"; 
+    } else if (query === "laugh") {
+        audioUrl = "https://files.catbox.moe/example.mp3"; // Add your audio link here
+    }
+
+    if (audioUrl) {
+        // Show "recording..." status for 3 seconds
+        await zk.sendPresenceUpdate('recording', origineMessage);
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        await zk.sendMessage(origineMessage, { 
+            audio: { url: audioUrl }, 
+            mimetype: 'audio/mp4', 
+            ptt: true 
+        }, { quoted: ms });
+    }
+}
+
             // =========================================================================
             
             function groupeAdmin(membreGroupe) {
