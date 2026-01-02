@@ -17,7 +17,7 @@ zokou({
     if (!arg[0]) {
         const status = conf.CHATBOT === "on" ? "ENABLED ✅" : "DISABLED ❌";
         return zk.sendMessage(dest, { 
-            text: `*ZOKOU CHATBOT SETTINGS*\n\n` +
+            text: `*TIMNASA-TMD1 CHATBOT SETTINGS*\n\n` +
                  `Current Status: *${status}*\n\n` +
                  `*Commands:*\n` +
                  `🔹 *.chatbot on* - Turn on auto-reply\n` +
@@ -39,7 +39,7 @@ zokou({
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: channelJid,
-                    newsletterName: "Zokou Official Updates",
+                    newsletterName: "Timnasa Official Updates",
                     serverMessageId: 1
                 }
             }
