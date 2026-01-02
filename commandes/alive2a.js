@@ -6,83 +6,94 @@ const moment = require("moment-timezone");
 
 zokou({
     nomCom: "alive2",
-    categorie: "General",
+    categorie: "Menu",
     reaction: "⏳"
 },
 async (dest, zk, commandeOptions) => {
     const { ms, repondre, prefixe, nomAuteurCom, listesCommandes, auteurMessage } = commandeOptions;
 
     try {
-        // 1. Loading Animation
-        const { key } = await zk.sendMessage(dest, { text: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 Loading... 0%" }, { quoted: ms });
+        // 1. Loading Animation (English)
+        const { key } = await zk.sendMessage(dest, { text: "📥 𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐋𝐨𝐚𝐝𝐢𝐧𝐠... 0%" }, { quoted: ms });
         
-        const loadingSteps = ["0%", "05", "25%", "50%", "85%", "100%"];
+        const loadingSteps = ["35%", "70%", "100%"];
         for (let step of loadingSteps) {
             await new Promise(resolve => setTimeout(resolve, 400));
-            await zk.sendMessage(dest, { text: `𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 Loading... ${step}`, edit: key });
+            await zk.sendMessage(dest, { text: `📥 𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐋𝐨𝐚𝐝𝐢𝐧𝐠... ${step}`, edit: key });
         }
 
-        // 2. Maandalizi ya Muda na Tarehe
+        // 2. Date and Time (EAT)
         const date = moment().tz("Africa/Nairobi").format("DD/MM/YYYY");
         const day = moment().tz("Africa/Nairobi").format("dddd");
         const time = moment().tz("Africa/Nairobi").format("HH:mm:ss");
 
-        // 3. Maelezo mengine
-        const totalCommands = listesCommandes.length;
-        const userTag = auteurMessage.split("@")[0]; // Kwa ajili ya ku-tag
+        // 3. Organize Commands Automatically
+        const organizedCmds = {};
+        listesCommandes.forEach(cmd => {
+            if (!organizedCmds[cmd.categorie]) {
+                organizedCmds[cmd.categorie] = [];
+            }
+            organizedCmds[cmd.categorie].push(cmd.nomCom);
+        });
 
-        const menuText = `
-┏━━━━━━━⚡━━━━━━┓
-   *𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝚳𝚵𝚴𝐔*
-┗━━━━━━━⚡━━━━━━┛
+        const userTag = auteurMessage.split("@")[0];
+        
+        let menuBody = `┏━━━━━━━━━━━━━━━━━┓
+   🌀 *𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝚳𝚵𝚴𝐔* 🌀
+┗━━━━━━━━━━━━━━━━━┛
 
-*👋 Habari @${userTag}*
+👋 𝐇𝐞𝐥𝐥𝐨 @${userTag}
 
-*📅 Leo ni:* ${day}
-*📆 Tarehe:* ${date}
-*⌚ Saa:* ${time}
-*📊 Commands:* ${totalCommands}
-*⌨️ Prefix:* ${prefixe}
-*🛰️ JID:* 120363413554978773@newsletter
+📅 𝐃𝐚𝐲: ${day}
+📆 𝐃𝐚𝐭𝐞: ${date}
+⌚ 𝐓𝐢𝐦𝐞: ${time}
+📊 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬: ${listesCommandes.length}
+⌨️ 𝐏𝐫𝐞𝐟𝐢𝐱: ${prefixe}
+🛰️ 𝐉𝐈𝐃: 120363413554978773@newsletter
 
---- *Orodha ya Huduma* ---
+--- 📥 𝐀𝐋𝐋 𝐂𝐎𝐌𝐌𝐀𝐍𝐃𝐒 📥 ---
+`;
 
-*1. General Commands*
-   - ${prefixe}alive : Hali ya Bot
-   - ${prefixe}menu  : Orodha hii
-   - ${prefixe}owner : Mmiliki
+        for (const category in organizedCmds) {
+            // Transform category into Bold Unicode
+            const blueCategory = category.toUpperCase().replace(/[A-Z]/g, char => {
+                const fonts = {'A':'𝐀','B':'𝐁','C':'𝐂','D':'𝐃','E':'𝐄','F':'𝐅','G':'𝐆','H':'𝐇','I':'𝐈','J':'𝐉','K':'𝐊','L':'𝐋','M':'𝐌','N':'𝐍','O':'𝐎','P':'𝐏','Q':'𝐐','R':'𝐑','S':'𝐒','T':'𝐓','U':'𝐔','V':'𝐕','W':'𝐖','X':'𝐗','Y':'𝐘','Z':'𝐙'};
+                return fonts[char] || char;
+            });
 
-*2. Multimedia*
-   - ${prefixe}play  : Muziki
-   - ${prefixe}video : Pakua Video
+            menuBody += `\n🔹 *╭─── 「 ${blueCategory} 」*`;
+            for (const cmd of organizedCmds[category]) {
+                menuBody += `\n🔹 *│* ⚡ ${prefixe}${cmd}`;
+            }
+            menuBody += `\n🔹 *╰───────────────*\n`;
+        }
 
-> Powered by 𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃
-        `;
+        menuBody += `\n> 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃`;
 
-        // 4. Tuma Menu na Tag
+        // 4. Send Menu with Image Thumbnail
         await zk.sendMessage(dest, { 
-            text: menuText,
-            mentions: [auteurMessage], // Hii inafanya tag ifanye kazi
+            text: menuBody,
+            mentions: [auteurMessage],
             contextInfo: {
                 forwardingScore: 999,
                 isForwarded: true,
                 externalAdReply: {
-                    title: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 SYSTEM",
-                    body: `Mtumiaji: ${nomAuteurCom}`,
-                    thumbnailUrl: "https://files.catbox.moe/lqx6sp.mp3", 
+                    title: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐒𝐘𝐒𝐓𝐄𝐌 𝐕𝟑",
+                    body: `User: ${nomAuteurCom}`,
+                    thumbnailUrl: "https://files.catbox.moe/tq4mph.jpg",
                     sourceUrl: "https://whatsapp.com/channel/0029Vat3f9S8qIzp9wS0S03u",
                     mediaType: 1,
                     renderLargerThumbnail: true
                 },
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: "120363413554978773@newsletter",
-                    newsletterName: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 Support",
+                    newsletterName: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 Updates",
                     serverMessageId: 143
                 }
             }
         }, { quoted: ms });
 
-        // Tuma Audio
+        // Send Audio
         await zk.sendMessage(dest, { 
             audio: { url: "https://files.catbox.moe/lqx6sp.mp3" }, 
             mimetype: 'audio/mp4', 
@@ -90,6 +101,6 @@ async (dest, zk, commandeOptions) => {
         }, { quoted: ms });
 
     } catch (e) {
-        repondre("Hitilafu imetokea: " + e.message);
+        repondre("Error: " + e.message);
     }
 });
