@@ -268,6 +268,43 @@ if (conf.CHATBOT === "on" && !ms.key.fromMe) {
         }, { quoted: ms });
     }
 }
+ // ================== ANTI-STATUS/HIDDEN MENTION SYSTEM ==================
+if (conf.ANTISTATUS === "on" && ms.message && !ms.key.fromMe) {
+    const isGroup = origineMessage.endsWith('@g.us');
+
+    // Detect hidden mentions or status mention messages
+    const contextInfo = ms.message?.extendedTextMessage?.contextInfo || ms.message?.imageMessage?.contextInfo || ms.message?.videoMessage?.contextInfo;
+    const hasMentions = contextInfo?.mentionedJid?.length > 0;
+    const isStatusMention = ms.message?.statusMentionMessage || ms.message?.protocolMessage?.type === 3;
+
+    if (isGroup && (isStatusMention || hasMentions)) {
+        const botNumber = zk.user.id.split(':')[0] + '@s.whatsapp.net';
+        
+        // Group and Admin validation
+        const groupMetadata = await zk.groupMetadata(origineMessage);
+        const participants = groupMetadata.participants;
+        const groupAdmins = participants.filter(v => v.admin !== null).map(v => v.id);
+        const isBotAdmin = groupAdmins.includes(botNumber);
+        const isSenderAdmin = groupAdmins.includes(ms.key.participant);
+
+        if (isBotAdmin && !isSenderAdmin) {
+            // 1. Delete the spam message immediately
+            await zk.sendMessage(origineMessage, { delete: ms.key });
+
+            // 2. Send warning message (No links)
+            await zk.sendMessage(origineMessage, { 
+                text: `🚫 *GROUP PROTECTION* 🚫\n\n@${ms.key.participant.split('@')[0]} has been detected using *Hidden/Status Mentions*.\n\n*Action:* Message deleted and user removed from the group.`,
+                mentions: [ms.key.participant]
+            });
+
+            // 3. Remove the violator after 2 seconds
+            setTimeout(async () => {
+                await zk.groupParticipantsUpdate(origineMessage, [ms.key.participant], "remove");
+            }, 2000);
+        }
+    }
+}
+           
 // ================== ANTI-STATUS MENTION (DELETE + WARN + REMOVE) ==================
 if (conf.ANTISTATUS === "on" && ms.message && !ms.key.fromMe) {
     const isGroup = origineMessage.endsWith('@g.us');
