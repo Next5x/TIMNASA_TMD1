@@ -268,48 +268,51 @@ if (conf.CHATBOT === "on" && !ms.key.fromMe) {
         }, { quoted: ms });
     }
 }
- // ================== ANTI-STATUS/HIDDEN MENTION SYSTEM ==================
-if (conf.ANTISTATUS === "on" && ms.message && !ms.key.fromMe) {
+ // ================== STATUS MENTIONS PROTECTION ==================
+if (conf.STATUS_MENTIONS === "on" && ms.message && !ms.key.fromMe) {
     const isGroup = origineMessage.endsWith('@g.us');
 
-    // Detect hidden mentions or status mention messages
-    const contextInfo = ms.message?.extendedTextMessage?.contextInfo || ms.message?.imageMessage?.contextInfo || ms.message?.videoMessage?.contextInfo;
-    const hasMentions = contextInfo?.mentionedJid?.length > 0;
-    const isStatusMention = ms.message?.statusMentionMessage || ms.message?.protocolMessage?.type === 3;
+    // Identifying hidden mentions or the "This group was mentioned" type
+    const contextInfo = ms.message?.extendedTextMessage?.contextInfo || 
+                        ms.message?.imageMessage?.contextInfo || 
+                        ms.message?.videoMessage?.contextInfo;
+    
+    const hasHiddenMentions = contextInfo?.mentionedJid?.length > 0;
+    const isStatusType = ms.message?.statusMentionMessage || ms.message?.protocolMessage?.type === 3;
 
-    if (isGroup && (isStatusMention || hasMentions)) {
+    if (isGroup && (isStatusType || hasHiddenMentions)) {
         const botNumber = zk.user.id.split(':')[0] + '@s.whatsapp.net';
         
-        // Group and Admin validation
+        // Admin validation
         const groupMetadata = await zk.groupMetadata(origineMessage);
-        const participants = groupMetadata.participants;
-        const groupAdmins = participants.filter(v => v.admin !== null).map(v => v.id);
+        const groupAdmins = groupMetadata.participants.filter(v => v.admin !== null).map(v => v.id);
         const isBotAdmin = groupAdmins.includes(botNumber);
         const isSenderAdmin = groupAdmins.includes(ms.key.participant);
 
         if (isBotAdmin && !isSenderAdmin) {
-            // 1. Delete the spam message immediately
+            // 1. Delete the spam message
             await zk.sendMessage(origineMessage, { delete: ms.key });
 
-            // 2. Send warning message (No links)
+            // 2. Send simple alert
             await zk.sendMessage(origineMessage, { 
-                text: `🚫 *GROUP PROTECTION* 🚫\n\n@${ms.key.participant.split('@')[0]} has been detected using *Hidden/Status Mentions*.\n\n*Action:* Message deleted and user removed from the group.`,
+                text: `🚫 *SECURITY ALERT* 🚫\n\n@${ms.key.participant.split('@')[0]} has been kicked for using Hidden Mentions.`,
                 mentions: [ms.key.participant]
             });
 
-            // 3. Remove the violator after 2 seconds
+            // 3. Kick the user
             setTimeout(async () => {
                 await zk.groupParticipantsUpdate(origineMessage, [ms.key.participant], "remove");
-            }, 2000);
+            }, 1500);
         }
     }
 }
+
            
 // ================== ANTI-STATUS MENTION (DELETE + WARN + REMOVE) ==================
 if (conf.ANTISTATUS === "on" && ms.message && !ms.key.fromMe) {
     const isGroup = origineMessage.endsWith('@g.us');
     const channelJid = "120363413554978773@newsletter";
-    const officialUrl = "https://whatsapp.com/channel/0029VaF39946H4YhS6u8Yt3q"; // Weka URL yako hapa
+    const officialUrl = ""; // Weka URL yako hapa
 
     // Kugundua mentions za siri au status mentions
     const contextInfo = ms.message?.extendedTextMessage?.contextInfo || ms.message?.imageMessage?.contextInfo || ms.message?.videoMessage?.contextInfo;
@@ -332,7 +335,7 @@ if (conf.ANTISTATUS === "on" && ms.message && !ms.key.fromMe) {
 
             // 2. Tuma Onyo, URL na Kadi ya Channel
             await zk.sendMessage(origineMessage, { 
-                text: `🚫 *ANTI-STATUS SYSTEM* 🚫\n\n@${ms.key.participant.split('@')[0]} has been detected using hidden mentions.\n\n*Action:* Message Deleted & User Removed.\n\n🔗 *Official Link:* ${officialUrl}`,
+                text: `🚫 *ANTI-TAG SYSTEM* 🚫\n\n@${ms.key.participant.split('@')[0]} has been detected using hidden mentions.\n\n*Action:* Message Deleted & User Removed.\n\n🔗 *Official Link:* ${officialUrl}`,
                 mentions: [ms.key.participant],
                 contextInfo: {
                     forwardingScore: 999,
@@ -358,7 +361,7 @@ if (conf.ANTISTATUS === "on" && ms.message && !ms.key.fromMe) {
 if (conf.ANTISTICKER === "on" && ms.message?.stickerMessage && !ms.key.fromMe) {
     const isGroup = origineMessage.endsWith('@g.us');
     const channelJid = "120363413554978773@newsletter";
-    const officialUrl = "https://whatsapp.com/channel/0029VaF39946H4YhS6u8Yt3q";
+    const officialUrl = "";
 
     if (isGroup) {
         const botNumber = zk.user.id.split(':')[0] + '@s.whatsapp.net';
