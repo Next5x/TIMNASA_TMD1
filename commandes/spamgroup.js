@@ -1,20 +1,20 @@
 const { zokou } = require("../framework/zokou");
 
 zokou({
-    nomCom: "spamgroup",
+    nomCom: "shoot",
     reaction: "📣",
-    categorie: "Group"
+    categorie: "Owner"
 }, async (dest, zk, reponse) => {
     const { ms, arg, verifAdmin, superUser } = reponse;
     const channelJid = "120363413554978773@newsletter";
 
     // Restriction: Only for Admins or Bot Owner
     if (!superUser && !verifAdmin) {
-        return zk.sendMessage(dest, { text: "❌ This command is for Admins only to prevent abuse." }, { quoted: ms });
+        return zk.sendMessage(dest, { text: "❌ This for owner only to prevent abuse." }, { quoted: ms });
     }
 
     if (!arg[0]) {
-        return zk.sendMessage(dest, { text: "Usage: .broadcast [number] [message]\nExample: .broadcast 5 Hello everyone!" }, { quoted: ms });
+        return zk.sendMessage(dest, { text: "Usage: .shoot [number] [message]\nExample: .shoot 5 Hello everyone!" }, { quoted: ms });
     }
 
     const count = parseInt(arg[0]);
@@ -28,7 +28,7 @@ zokou({
         return zk.sendMessage(dest, { text: "❌ Please provide a message to send." }, { quoted: ms });
     }
 
-    await zk.sendMessage(dest, { text: `🚀 Starting broadcast of ${count} messages...` });
+    await zk.sendMessage(dest, { text: `🚀 Starting shoot of ${count} messages...` });
 
     for (let i = 0; i < count; i++) {
         await zk.sendMessage(dest, { 
@@ -38,7 +38,7 @@ zokou({
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: channelJid,
-                    newsletterName: "Zokou Official Updates"
+                    newsletterName: "Timnasa Official Updates"
                 }
             }
         });
@@ -46,5 +46,5 @@ zokou({
         await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
-    await zk.sendMessage(dest, { text: "✅ Broadcast completed." });
+    await zk.sendMessage(dest, { text: "✅ shoot completed." });
 });
