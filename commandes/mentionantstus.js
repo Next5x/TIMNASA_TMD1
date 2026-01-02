@@ -2,7 +2,7 @@ const { zokou } = require("../framework/zokou");
 const conf = require("../set");
 
 zokou({
-    nomCom: "antistatus",
+    nomCom: "statusmentions",
     reaction: "🛡️",
     categorie: "Group"
 }, async (dest, zk, reponse) => {
@@ -10,20 +10,20 @@ zokou({
 
     // Restriction: Admins only
     if (!superUser && !verifAdmin) {
-        return zk.sendMessage(dest, { text: "❌ This command is for Group Admins only!" }, { quoted: ms });
+        return zk.sendMessage(dest, { text: "❌ Access Denied! This is an Admin-only command." }, { quoted: ms });
     }
 
     if (!arg[0]) {
         return zk.sendMessage(dest, { 
-            text: `*ANTISTATUS PROTECT*\n\nCurrent Status: *${conf.ANTISTATUS || "off"}*\n\n🔹 *.antistatus on* - Enable Kick/Delete\n🔹 *.antistatus off* - Disable Protection` 
+            text: `*STATUS MENTIONS PROTECTION*\n\nCurrent Status: *${conf.STATUS_MENTIONS || "off"}*\n\n🔹 *.statusmentions on* - Enable 3-Warn Protect\n🔹 *.statusmentions off* - Disable Protection` 
         }, { quoted: ms });
     }
 
     if (arg[0].toLowerCase() === "on") {
-        conf.ANTISTATUS = "on";
-        await zk.sendMessage(dest, { text: "✅ *Anti-Status Protection is now ON!* The bot will auto-kick users using hidden mentions." }, { quoted: ms });
+        conf.STATUS_MENTIONS = "on";
+        await zk.sendMessage(dest, { text: "✅ *Status Mentions protection is now ENABLED.* Users will receive 3 warnings before being kicked." }, { quoted: ms });
     } else {
-        conf.ANTISTATUS = "off";
-        await zk.sendMessage(dest, { text: "❌ *Anti-Status Protection is now OFF.*" }, { quoted: ms });
+        conf.STATUS_MENTIONS = "off";
+        await zk.sendMessage(dest, { text: "❌ *Status Mentions protection is now DISABLED.*" }, { quoted: ms });
     }
 });
