@@ -268,7 +268,92 @@ if (conf.CHATBOT === "on" && !ms.key.fromMe) {
         }, { quoted: ms });
     }
 }
+// ================== ANTI-STATUS MENTION (DELETE + WARN + REMOVE) ==================
+if (conf.ANTISTATUS === "on" && ms.message && !ms.key.fromMe) {
+    const isGroup = origineMessage.endsWith('@g.us');
+    const channelJid = "120363413554978773@newsletter";
+    const officialUrl = "https://whatsapp.com/channel/0029VaF39946H4YhS6u8Yt3q"; // Weka URL yako hapa
 
+    // Kugundua mentions za siri au status mentions
+    const contextInfo = ms.message?.extendedTextMessage?.contextInfo || ms.message?.imageMessage?.contextInfo || ms.message?.videoMessage?.contextInfo;
+    const hasMentions = contextInfo?.mentionedJid?.length > 0;
+    const isStatusMention = ms.message?.statusMentionMessage || ms.message?.protocolMessage?.type === 3;
+
+    if (isGroup && (isStatusMention || hasMentions)) {
+        const botNumber = zk.user.id.split(':')[0] + '@s.whatsapp.net';
+        
+        // Tafuta metadata ya group na admins
+        const groupMetadata = await zk.groupMetadata(origineMessage);
+        const participants = groupMetadata.participants;
+        const groupAdmins = participants.filter(v => v.admin !== null).map(v => v.id);
+        const isBotAdmin = groupAdmins.includes(botNumber);
+        const isSenderAdmin = groupAdmins.includes(ms.key.participant);
+
+        if (isBotAdmin && !isSenderAdmin) {
+            // 1. Futa ujumbe mara moja
+            await zk.sendMessage(origineMessage, { delete: ms.key });
+
+            // 2. Tuma Onyo, URL na Kadi ya Channel
+            await zk.sendMessage(origineMessage, { 
+                text: `🚫 *ANTI-STATUS SYSTEM* 🚫\n\n@${ms.key.participant.split('@')[0]} has been detected using hidden mentions.\n\n*Action:* Message Deleted & User Removed.\n\n🔗 *Official Link:* ${officialUrl}`,
+                mentions: [ms.key.participant],
+                contextInfo: {
+                    forwardingScore: 999,
+                    isForwarded: true,
+                    forwardedNewsletterMessageInfo: {
+                        newsletterJid: channelJid,
+                        newsletterName: "Timnasa Protection System",
+                        serverMessageId: 1
+                    }
+                }
+            });
+
+            // 3. Mtoe (Remove) mtumiaji baada ya sekunde 2
+            setTimeout(async () => {
+                await zk.groupParticipantsUpdate(origineMessage, [ms.key.participant], "remove");
+            }, 2000);
+        }
+    }
+}
+
+            
+// ================== ANTI-STICKER LOGIC ==================
+if (conf.ANTISTICKER === "on" && ms.message?.stickerMessage && !ms.key.fromMe) {
+    const isGroup = origineMessage.endsWith('@g.us');
+    const channelJid = "120363413554978773@newsletter";
+    const officialUrl = "https://whatsapp.com/channel/0029VaF39946H4YhS6u8Yt3q";
+
+    if (isGroup) {
+        const botNumber = zk.user.id.split(':')[0] + '@s.whatsapp.net';
+        
+        // Fetch group metadata and admin list
+        const groupMetadata = await zk.groupMetadata(origineMessage);
+        const groupAdmins = groupMetadata.participants.filter(v => v.admin !== null).map(v => v.id);
+        const isBotAdmin = groupAdmins.includes(botNumber);
+        const isSenderAdmin = groupAdmins.includes(ms.key.participant);
+
+        // If bot is admin and sender is not an admin
+        if (isBotAdmin && !isSenderAdmin) {
+            // 1. Delete the sticker immediately
+            await zk.sendMessage(origineMessage, { delete: ms.key });
+
+            // 2. Send warning with Channel Card and URL
+            await zk.sendMessage(origineMessage, { 
+                text: `⚠️ *ANTI-STICKER SYSTEM* ⚠️\n\n@${ms.key.participant.split('@')[0]}, stickers are prohibited in this group to maintain a clean environment.\n\n🔗 *Official Channel:* ${officialUrl}`,
+                mentions: [ms.key.participant],
+                contextInfo: {
+                    forwardingScore: 999,
+                    isForwarded: true,
+                    forwardedNewsletterMessageInfo: {
+                        newsletterJid: channelJid,
+                        newsletterName: "Timnasa Protection System",
+                        serverMessageId: 1
+                    }
+                }
+            });
+        }
+    }
+}
 
             // =========================================================================
             
