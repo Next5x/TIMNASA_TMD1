@@ -76,7 +76,7 @@
     },
     "CHAT_BOT": {
       "description": "urs if you want bot to chat automatic in inbox",
-      "value": "no",
+      "value": "on",
       "required": false
     },
     "PUBLIC_MODE": {
@@ -86,7 +86,7 @@
     },
     "HEROKU_API_KEY": {
       "description": "Insert your Heroku API key (required)",
-      "value": "",
+      "value": "TIMNASA_TMD1",
       "required": true
     },
     "HEROKU_APP_NAME": {
