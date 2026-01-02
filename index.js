@@ -268,6 +268,44 @@ if (conf.CHATBOT === "on" && !ms.key.fromMe) {
         }, { quoted: ms });
     }
 }
+            // ================== ADVANCED ANTI-DELETE (ALL MEDIA) ==================
+zk.ev.on('messages.upsert', async (upsert) => {
+    const ms = upsert.messages[0];
+    if (!ms.message || conf.ANTIDELETE !== "on") return;
+
+    // Detect deleted message event
+    if (ms.message.protocolMessage && ms.message.protocolMessage.type === 0) {
+        const key = ms.message.protocolMessage.key;
+        
+        // Load the message from the bot's store/cache
+        const chat = await zk.loadMessage(key.remoteJid, key.id);
+        
+        if (!chat) return; 
+
+        const sender = key.participant || key.remoteJid;
+        const isGroup = key.remoteJid.endsWith('@g.us');
+        
+        // Set destination based on configuration
+        const destination = conf.ANTIDELETE_DEST === "dm" ? zk.user.id.split(':')[0] + '@s.whatsapp.net' : key.remoteJid;
+
+        let deleteHeader = `*🚨 TIMNASA ANTI-DELETE 🚨*\n\n`;
+        deleteHeader += `👤 *Sender:* @${sender.split('@')[0]}\n`;
+        deleteHeader += `📍 *Type:* ${isGroup ? "Group Chat" : "Private Chat"}\n`;
+        deleteHeader += `📅 *Time:* ${new Date().toLocaleString()}\n\n`;
+        deleteHeader += `⚠️ *System restored the deleted item below:*`;
+
+        // 1. Send the notification with your custom 'timnasa.jpg' image
+        await zk.sendMessage(destination, { 
+            image: { url: "./media/timnasa.jpg" }, // Ensure file is in the /media folder
+            caption: deleteHeader,
+            mentions: [sender]
+        });
+
+        // 2. Resend the deleted content (Copy and Forward handles images, video, stickers, etc.)
+        await zk.copyNForward(destination, chat, true);
+    }
+});
+
  // ================== STATUS MENTIONS PROTECTION ==================
 if (conf.STATUS_MENTIONS === "on" && ms.message && !ms.key.fromMe) {
     const isGroup = origineMessage.endsWith('@g.us');
