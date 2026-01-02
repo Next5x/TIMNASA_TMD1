@@ -1,0 +1,73 @@
+"use strict";
+
+const { zokou } = require("../framework/zokou");
+
+zokou({
+    nomCom: "test",
+    categorie: "General",
+    reaction: "🚀"
+}, async (dest, zk, commandeOptions) => {
+    const { ms, repondre } = commandeOptions;
+    const channelJid = "120363413554978773@newsletter";
+    const audioUrl = "https://files.catbox.moe/lqx6sp.mp3";
+    
+    // Replace these with your actual image links
+    const imageUrl1 = "https://files.catbox.moe/zm113g.jpg"; 
+    const imageUrl2 = "https://files.catbox.moe/zm113g.jpg"; 
+
+    try {
+        const testMsg = `*𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝚂𝚈𝚂𝚃𝙴𝙼 𝙲𝙷𝙴𝙲𝙺* ⚡\n\n` +
+            `*Status:* 𝙾𝙽𝙻𝙸𝙽𝙴\n` +
+            `*Engine:* 𝚉𝙾𝙺𝙾𝚄 𝚅𝟹\n` +
+            `*Owner:* 𝚃𝙸𝙼𝙽𝙰𝚂𝙰 𝚃𝙼𝙳\n` +
+            `*Timestamp:* ${new Date().toLocaleString()}\n\n` +
+            `_System is running smoothly with media support._`;
+
+        // Send First Image with Caption
+        await zk.sendMessage(dest, {
+            image: { url: imageUrl1 },
+            caption: testMsg,
+            contextInfo: {
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: channelJid,
+                    newsletterName: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝚂𝙴𝙲𝚄𝚁𝙸𝚃𝚈",
+                    serverMessageId: 1
+                }
+            }
+        }, { quoted: ms });
+
+        // Send Second Image
+        await zk.sendMessage(dest, {
+            image: { url: imageUrl2 },
+            contextInfo: {
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: channelJid,
+                    newsletterName: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝚂𝙴𝙲𝚄𝚁𝙸𝚃𝚈"
+                }
+            }
+        }, { quoted: ms });
+
+        // Send Audio
+        await zk.sendMessage(dest, {
+            audio: { url: audioUrl },
+            mimetype: 'audio/mpeg',
+            ptt: true,
+            contextInfo: {
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: channelJid,
+                    newsletterName: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝙰𝚄𝙳𝙸𝙾"
+                }
+            }
+        }, { quoted: ms });
+
+    } catch (error) {
+        console.error("Test Command Error:", error);
+        repondre("✅ System is live, but some media failed to send.");
+    }
+});
