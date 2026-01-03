@@ -5,43 +5,44 @@ const os = require("os");
 const moment = require("moment-timezone");
 
 zokou({
-    nomCom: "alive2",
+    nomCom: "menu2",
     categorie: "Menu",
     reaction: "⏳"
 },
 async (dest, zk, commandeOptions) => {
-    const { ms, repondre, prefixe, nomAuteurCom, listesCommandes, auteurMessage } = commandeOptions;
+    const { ms, repondre, prefixe, nomAuteurCom, auteurMessage } = commandeOptions;
 
-    // 1. Loading Animation (Safe Edit)
+    // 1. Decorative Loading Animation
     let { key } = await zk.sendMessage(dest, { text: "📥 𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐒𝐘𝐒𝐓𝐄𝐌 𝐋𝐨𝐚𝐝𝐢𝐧𝐠..." }, { quoted: ms });
     
     try {
-        const loadingSteps = ["40%", "80%", "100%"];
+        const loadingSteps = ["40%", "100%"];
         for (let step of loadingSteps) {
             await new Promise(resolve => setTimeout(resolve, 300));
             await zk.sendMessage(dest, { text: `📥 𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐋𝐨𝐚𝐝𝐢𝐧𝐠... ${step}`, edit: key }).catch(() => {});
         }
 
-        // 2. System Information (RAM, Platform, Speed)
+        // 2. System Information (RAM, Platform, Uptime)
         const totalRam = (os.totalmem() / 1024 / 1024 / 1024).toFixed(2);
         const freeRam = (os.freemem() / 1024 / 1024 / 1024).toFixed(2);
         const platform = os.platform();
-        const speed = process.uptime().toFixed(0);
+        const uptime = process.uptime().toFixed(0);
 
-        // 3. Date and Time
+        // 3. Date and Time (East Africa Time)
         const date = moment().tz("Africa/Nairobi").format("DD/MM/YYYY");
         const day = moment().tz("Africa/Nairobi").format("dddd");
         const time = moment().tz("Africa/Nairobi").format("HH:mm:ss");
 
-        // 4. Categorize Commands
+        // 4. Robust Command Fetching
+        // This targets the core registry 'zokou.cm' to ensure commands are found
+        const allCommands = zokou.cm || []; 
         const organizedCmds = {};
-        if (listesCommandes) {
-            listesCommandes.forEach(cmd => {
-                const cat = cmd.categorie || "Other";
-                if (!organizedCmds[cat]) organizedCmds[cat] = [];
-                organizedCmds[cat].push(cmd.nomCom);
-            });
-        }
+        
+        allCommands.forEach(cmd => {
+            const cat = cmd.categorie || "General";
+            if (!organizedCmds[cat]) organizedCmds[cat] = [];
+            organizedCmds[cat].push(cmd.nomCom);
+        });
 
         const userTag = auteurMessage ? auteurMessage.split("@")[0] : "User";
         
@@ -52,9 +53,9 @@ async (dest, zk, commandeOptions) => {
 👋 𝐇𝐞𝐥𝐥𝐨 @${userTag}
 
 🖥️ 𝐏𝐥𝐚𝐭𝐟𝐨𝐫𝐦: ${platform}
-🚀 𝐒𝐩𝐞𝐞𝐝: ${speed}s uptime
+🚀 𝐒𝐩𝐞𝐞𝐝: ${uptime}s uptime
 📟 𝐑𝐀𝐌: ${freeRam}GB / ${totalRam}GB
-📊 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬: ${listesCommandes ? listesCommandes.length : "0"}
+📊 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬: ${allCommands.length}
 ⌨️ 𝐏𝐫𝐞𝐟𝐢𝐱: ${prefixe}
 
 📅 𝐃𝐚𝐲: ${day}
@@ -65,13 +66,16 @@ async (dest, zk, commandeOptions) => {
 --- 📥 𝐀𝐋𝐋 𝐂𝐎𝐌𝐌𝐀𝐍𝐃𝐒 📥 ---
 `;
 
-        for (const category in organizedCmds) {
-            const blueCategory = category.toUpperCase().replace(/[A-Z]/g, char => {
+        // Sort categories and list commands
+        const categories = Object.keys(organizedCmds).sort();
+        for (const category of categories) {
+            // Stylized Blue Bold Category Fonts
+            const styledCategory = category.toUpperCase().replace(/[A-Z]/g, char => {
                 const fonts = {'A':'𝐀','B':'𝐁','C':'𝐂','D':'𝐃','E':'𝐄','F':'𝐅','G':'𝐆','H':'𝐇','I':'𝐈','J':'𝐉','K':'𝐊','L':'𝐋','M':'𝐌','N':'𝐍','O':'𝐎','P':'𝐏','Q':'𝐐','R':'𝐑','S':'𝐒','T':'𝐓','U':'𝐔','V':'𝐕','W':'𝐖','X':'𝐗','Y':'𝐘','Z':'𝐙'};
                 return fonts[char] || char;
             });
 
-            menuBody += `\n🔹 *╭─── 「 ${blueCategory} 」*`;
+            menuBody += `\n🔹 *╭─── 「 ${styledCategory} 」*`;
             organizedCmds[category].sort().forEach(cmd => {
                 menuBody += `\n🔹 *│* ⚡ ${prefixe}${cmd}`;
             });
@@ -80,7 +84,7 @@ async (dest, zk, commandeOptions) => {
 
         menuBody += `\n> 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃`;
 
-        // 5. Send Final Message with Image and Newsletter
+        // 5. Send Menu with Image Thumbnail & Newsletter Context
         await zk.sendMessage(dest, { 
             text: menuBody,
             mentions: [auteurMessage],
@@ -89,7 +93,7 @@ async (dest, zk, commandeOptions) => {
                 isForwarded: true,
                 externalAdReply: {
                     title: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐒𝐘𝐒𝐓𝐄𝐌 𝐕𝟑",
-                    body: `Server: ${platform} | Ram: ${freeRam}GB`,
+                    body: `Server: ${platform} | Active`,
                     thumbnailUrl: "https://files.catbox.moe/tq4mph.jpg",
                     sourceUrl: "https://whatsapp.com/channel/0029Vat3f9S8qIzp9wS0S03u",
                     mediaType: 1,
@@ -102,7 +106,7 @@ async (dest, zk, commandeOptions) => {
             }
         }, { quoted: ms });
 
-        // Safe Audio Send
+        // Play Intro Audio (Silent fail if link is down)
         zk.sendMessage(dest, { 
             audio: { url: "https://files.catbox.moe/lqx6sp.mp3" }, 
             mimetype: 'audio/mp4', 
@@ -110,7 +114,7 @@ async (dest, zk, commandeOptions) => {
         }, { quoted: ms }).catch(() => {});
 
     } catch (e) {
-        console.error("Menu Error: ", e);
-        repondre("⚠️ Menu encountered an error but recovered. Error: " + e.message);
+        console.error("Critical Menu Error:", e);
+        repondre("An error occurred while generating the menu: " + e.message);
     }
 });
