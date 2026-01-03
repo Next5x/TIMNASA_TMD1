@@ -3,71 +3,109 @@ const { zokou } = require(__dirname + "/../framework/zokou");
 const yts = require("yt-search");
 const fetch = require("node-fetch");
 
+// 1. COMMAND YA PLAY (AUDIO)
 zokou({
-    nomCom: "video",
-    categorie: "Download",
-    reaction: "🎥"
+    nomCom: "music",
+    categorie: "download",
+    reaction: "🎶"
 },
 async (dest, zk, commandeOptions) => {
-    const { ms, repondre, arg, nomAuteurCom } = commandeOptions;
+    const { ms, arg, repondre } = commandeOptions;
     const text = arg.join(" ");
 
-    if (!text) {
-        return repondre("Are you mute? Give me a video name. It's not rocket science.");
-    }
+    if (!text) return repondre("Please provide a song name or YouTube link.");
 
     try {
-        // Reaction ya kusubiri
         await zk.sendMessage(dest, { react: { text: '⏳', key: ms.key } });
 
         const searchResult = await yts(text);
         const video = searchResult.videos[0];
+        if (!video) return repondre(`I couldn't find anything for "${text}".`);
 
-        if (!video) {
-            return repondre(`Nothing found for "${text}".`);
-        }
-
-        // Kupata download link kutoka kwa API
-        const response = await fetch(`https://api.ootaizumi.web.id/downloader/youtube?url=${encodeURIComponent(video.url)}&format=720`);
+        const response = await fetch(`https://api.ootaizumi.web.id/downloader/youtube?url=${encodeURIComponent(video.url)}&format=mp3`);
         const data = await response.json();
 
         if (!data.status || !data.result || !data.result.download) {
-            throw new Error('API failed to provide download link.');
+            throw new Error('Failed to fetch audio link.');
         }
 
-        const videoUrl = data.result.download;
-        const title = data.result.title || video.title;
-
-        // Reaction ya kufanikiwa
-        await zk.sendMessage(dest, { react: { text: '✅', key: ms.key } });
-
-        // Tuma Video ikiwa na Context ya Newsletter JID
         await zk.sendMessage(dest, {
-            video: { url: videoUrl },
-            mimetype: "video/mp4",
-            caption: `*𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐕𝚰𝐃𝚵𝐎 𝐃𝐎𝐖𝚴𝐋𝐎𝚫𝐃*\n\n🎬 *Title:* ${title}\n🔗 *Url:* ${video.url}\n\n> Powered by 𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃`,
+            audio: { url: data.result.download },
+            mimetype: "audio/mp4",
             contextInfo: {
                 forwardingScore: 999,
                 isForwarded: true,
                 externalAdReply: {
-                    title: title,
-                    body: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐃𝐎𝐖𝚴𝐋𝐎𝚫𝐃𝚵𝐑",
+                    title: data.result.title || video.title,
+                    body: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐀𝐔𝐃𝐈𝐎 𝐏𝐋𝐀𝐘𝐄𝐑",
                     thumbnailUrl: video.thumbnail,
-                    sourceUrl: "https://whatsapp.com/channel/0029Vat3f9S8qIzp9wS0S03u",
+                    sourceUrl: video.url,
                     mediaType: 2,
                     renderLargerThumbnail: true,
                 },
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: "120363413554978773@newsletter",
-                    newsletterName: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 Updates",
-                    serverMessageId: 143
+                    newsletterName: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 Updates"
                 }
             }
         }, { quoted: ms });
 
-    } catch (error) {
-        console.error(error);
-        await zk.sendMessage(dest, { react: { text: '❌', key: ms.key } });
-        repondre("Download failed. The server might be busy. Error: " + error.message);
+        await zk.sendMessage(dest, { react: { text: '✅', key: ms.key } });
+    } catch (e) {
+        repondre("Error: " + e.message);
+    }
+});
+
+// 2. COMMAND YA VIDEO
+zokou({
+    nomCom: "video",
+    categorie: "download",
+    reaction: "🎥"
+},
+async (dest, zk, commandeOptions) => {
+    const { ms, arg, repondre } = commandeOptions;
+    const text = arg.join(" ");
+
+    if (!text) return repondre("Give me a video name or link.");
+
+    try {
+        await zk.sendMessage(dest, { react: { text: '⌛', key: ms.key } });
+
+        const searchResult = await yts(text);
+        const video = searchResult.videos[0];
+        if (!video) return repondre("Video not found.");
+
+        const response = await fetch(`https://api.ootaizumi.web.id/downloader/youtube?url=${encodeURIComponent(video.url)}&format=720`);
+        const data = await response.json();
+
+        if (!data.status || !data.result || !data.result.download) {
+            throw new Error('Failed to fetch video link.');
+        }
+
+        await zk.sendMessage(dest, {
+            video: { url: data.result.download },
+            mimetype: "video/mp4",
+            caption: `*𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐕𝚰𝐃𝚵𝐎*\n\n🎬 *Title:* ${data.result.title}\n🔗 *Url:* ${video.url}\n\n> Powered by 𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃`,
+            contextInfo: {
+                forwardingScore: 999,
+                isForwarded: true,
+                externalAdReply: {
+                    title: data.result.title,
+                    body: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 𝐃𝐎𝐖𝚴𝐋𝐎𝚫𝐃𝚵𝐑",
+                    thumbnailUrl: video.thumbnail,
+                    sourceUrl: video.url,
+                    mediaType: 2,
+                    renderLargerThumbnail: true,
+                },
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: "120363413554978773@newsletter",
+                    newsletterName: "𝚻𝚰𝚳𝚴𝚫𝐒𝚫 𝚻𝚳𝐃 Updates"
+                }
+            }
+        }, { quoted: ms });
+
+        await zk.sendMessage(dest, { react: { text: '✅', key: ms.key } });
+    } catch (e) {
+        repondre("Error: " + e.message);
     }
 });
