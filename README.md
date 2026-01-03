@@ -3,7 +3,9 @@
 </div>
 
 <p align="center">
-  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=500&color=8A2BE2&center=true&width=1000&height=100&lines=PLEASE+FORK+AND+STAR+🌟+REPO;BEST+WHATSAPP+BOT+2026;FAST+AND+RELIABLE" alt="Typing SVG" /></a>
+  <a href="https://git.io/typing-svg">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Black+Ops+One&size=45&pause=1000&color=8A2BE2&center=true&vCenter=true&width=1000&lines=PLEASE+FORK+AND+STAR+🌟+REPO;BEST+WHATSAPP+BOT+2026;KARIBU+KWENYE+CHANNEL+YETU+YA+WHATSAPP!" alt="Typing SVG" />
+  </a>
 </p>
 
 <p align="center">
@@ -11,7 +13,9 @@
 </p>
 
 <p align="center">
-  <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=55&pause=1000&color=1BAFBAFF&center=true&width=810&height=100&lines=+TIMNASA-TIMOTH" alt="Typing SVG" /></a>
+  <a href="https://git.io/typing-svg">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Black+Ops+One&size=55&pause=1000&color=1BAFBA&center=true&vCenter=true&width=800&height=100&lines=TIMNASA-TIMOTH+TECH" alt="Typing SVG" />
+  </a>
 </p>
 
 ---
