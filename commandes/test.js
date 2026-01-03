@@ -18,7 +18,7 @@ zokou({
     try {
         const testMsg = `*𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝚂𝚈𝚂𝚃𝙴𝙼 𝙲𝙷𝙴𝙲𝙺* ⚡\n\n` +
             `*Status:* 𝙾𝙽𝙻𝙸𝙽𝙴\n` +
-            `*Engine:* 𝚉𝙾𝙺𝙾𝚄 𝚅𝟹\n` +
+            `*Engine:* Timnasa 𝚅2\n` +
             `*Owner:* 𝚃𝙸𝙼𝙽𝙰𝚂𝙰 𝚃𝙼𝙳\n` +
             `*Timestamp:* ${new Date().toLocaleString()}\n\n` +
             `_System is running smoothly with media support._`;
@@ -54,7 +54,7 @@ zokou({
         // Send Audio
         await zk.sendMessage(dest, {
             audio: { url: audioUrl },
-            mimetype: 'audio/mpeg',
+            mimetype: 'audio/mp4,
             ptt: true,
             contextInfo: {
                 forwardingScore: 999,
