@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Black+Ops+One&size=45&pause=1000&color=8A2BE2&center=true&vCenter=true&width=1000&lines=PLEASE+FORK+AND+STAR+🌟+REPO;BEST+WHATSAPP+BOT+2026;KARIBU+KWENYE+CHANNEL+YETU+YA+WHATSAPP!" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.herokuapp.com?font=Black+Ops+One&size=35&pause=1000&color=8A2BE2&center=true&vCenter=true&width=1000&lines=PLEASE+FORK+AND+STAR+🌟+REPO;BEST+WHATSAPP+BOT+2026;KARIBU+KWENYE+CHANNEL+YETU+YA+WHATSAPP!" alt="Typing SVG" />
   </a>
 </p>
 
@@ -22,7 +22,7 @@
 
 ## 🔑 ɢᴇɴᴇʀᴀᴛᴇ sᴇssɪᴏɴ ɪᴅ
 <p align="center">
-  <a href="https://timnasa-pair.onrender.com">
+  <a href="https://timnasa-happ-new-year-2026.onrender">
     <img src="https://img.shields.io/badge/GENERATE-SESSION_ID-FF00FF?style=for-the-badge&logo=appveyor&logoColor=white" width="380" height="70"/>
   </a>
 </p>
@@ -64,7 +64,7 @@
 ## 📢 ᴄᴏɴɴᴇᴄᴛ ᴡɪᴛʜ ᴜs
 <p align="center">
   <img src="https://i.imgur.com/LyHic3i.gif" width="60">
-  <a href="https://whatsapp.com/channel/0029VajweHxKQuJP6qnjLM31">
+  <a href="https://whatsapp.com/channel/0029Vb9kKuVCMY0F5rmX2j1u">
     <img src="https://img.shields.io/badge/WHATSAPP-CHANNEL-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" width="280" height="55"/>
   </a>
   <img src="https://i.imgur.com/LyHic3i.gif" width="60">
@@ -77,7 +77,7 @@
 </p>
 
 <p align="center">
-  <a href="https://chat.whatsapp.com/your-group-link">
+  <a href="https://chat.whatsapp.com/JazGLNBxW5XDVEst3PN4kj">
     <img src="https://img.shields.io/badge/WHATSAPP-GROUP-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" width="280" height="55"/>
   </a>
 </p>
@@ -101,5 +101,5 @@
 </p>
 
 <p align="right">
-  <b>Built with Passion by TIMNASA-TIMOTH 🇹🇿</b>
+  <b>Built with Passion by ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ</b>
 </p>
