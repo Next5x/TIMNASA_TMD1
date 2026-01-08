@@ -268,42 +268,36 @@ if (conf.CHATBOT === "on" && !ms.key.fromMe) {
         }, { quoted: ms });
     }
 }
-            // ================== ADVANCED ANTI-DELETE (ALL MEDIA) ==================
-zk.ev.on('messages.upsert', async (upsert) => {
-    const ms = upsert.messages[0];
-    if (!ms.message || conf.ANTIDELETE !== "on") return;
+   const { getAntiDeleteSettings } = require("./bdd/antidelete");
 
-    // Detect deleted message event
-    if (ms.message.protocolMessage && ms.message.protocolMessage.type === 0) {
-        const key = ms.message.protocolMessage.key;
-        
-        // Load the message from the bot's store/cache
-        const chat = await zk.loadMessage(key.remoteJid, key.id);
-        
-        if (!chat) return; 
+zk.ev.on('messages.update', async (chatUpdate) => {
+    for (const { key, update } of chatUpdate) {
+        if (update.protocolMessage && update.protocolMessage.type === 0) {
+            const settings = await getAntiDeleteSettings();
+            if (settings.state !== "on") return;
 
-        const sender = key.participant || key.remoteJid;
-        const isGroup = key.remoteJid.endsWith('@g.us');
-        
-        // Set destination based on configuration
-        const destination = conf.ANTIDELETE_DEST === "dm" ? zk.user.id.split(':')[0] + '@s.whatsapp.net' : key.remoteJid;
+            try {
+                const oldMsg = await store.loadMessage(key.remoteJid, update.protocolMessage.key.id);
+                if (!oldMsg) return;
 
-        let deleteHeader = `*🚨 TIMNASA ANTI-DELETE 🚨*\n\n`;
-        deleteHeader += `👤 *Sender:* @${sender.split('@')[0]}\n`;
-        deleteHeader += `📍 *Type:* ${isGroup ? "Group Chat" : "Private Chat"}\n`;
-        deleteHeader += `📅 *Time:* ${new Date().toLocaleString()}\n\n`;
-        deleteHeader += `⚠️ *System restored the deleted item below:*`;
+                const myNumber = zk.user.id.split(':')[0] + '@s.whatsapp.net';
+                const target = (settings.destination === "group") ? key.remoteJid : myNumber;
+                const sender = update.protocolMessage.key.participant || update.protocolMessage.key.remoteJid;
 
-        // 1. Send the notification with your custom 'timnasa.jpg' image
-        await zk.sendMessage(destination, { 
-            image: { url: "./media/timnasa.jpg" }, // Ensure file is in the /media folder
-            caption: deleteHeader,
-            mentions: [sender]
-        });
+                let report = `*🚨 TIMNASA ANTI-DELETE 🚨*\n\n` +
+                             `👤 *From:* @${sender.split('@')[0]}\n` +
+                             `📍 *Type:* ${key.remoteJid.endsWith('@g.us') ? "Group" : "DM"}\n` +
+                             `📅 *Time:* ${new Date().toLocaleString()}\n` +
+                             `\n⚠️ *Restored Content:*`;
 
-        // 2. Resend the deleted content (Copy and Forward handles images, video, stickers, etc.)
-        await zk.copyNForward(destination, chat, true);
+                await zk.sendMessage(target, { text: report, mentions: [sender] });
+                await zk.copyNForward(target, oldMsg, true);
+            } catch (e) {
+                console.log("Anti-delete DB Error: " + e);
+            }
+        }
     }
+         
 });
 
  // ================== STATUS MENTIONS PROTECTION ==================
