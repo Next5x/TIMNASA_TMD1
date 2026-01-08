@@ -269,36 +269,50 @@ if (conf.CHATBOT === "on" && !ms.key.fromMe) {
     }
 }
    const { getAntiDeleteSettings } = require("./bdd/antidelete");
-
+// ================== POWERFUL ANTI-DELETE LOGIC (STRICT ENGLISH) ==================
 zk.ev.on('messages.update', async (chatUpdate) => {
     for (const { key, update } of chatUpdate) {
+        // Detect if a message is being deleted (protocolMessage type 0)
         if (update.protocolMessage && update.protocolMessage.type === 0) {
-            const settings = await getAntiDeleteSettings();
-            if (settings.state !== "on") return;
+            
+            // Check if Anti-delete is enabled in configuration
+            if (conf.ANTIDELETE !== "yes") return;
 
             try {
+                // Load the original message from the bot's memory (store)
                 const oldMsg = await store.loadMessage(key.remoteJid, update.protocolMessage.key.id);
                 if (!oldMsg) return;
 
                 const myNumber = zk.user.id.split(':')[0] + '@s.whatsapp.net';
-                const target = (settings.destination === "group") ? key.remoteJid : myNumber;
                 const sender = update.protocolMessage.key.participant || update.protocolMessage.key.remoteJid;
+                const isGroup = key.remoteJid.endsWith('@g.us');
+                
+                // Destination: Choose between Private DM or the Group itself
+                const destination = (conf.ANTIDELETE_DEST === "group") ? key.remoteJid : myNumber;
 
-                let report = `*🚨 TIMNASA ANTI-DELETE 🚨*\n\n` +
-                             `👤 *From:* @${sender.split('@')[0]}\n` +
-                             `📍 *Type:* ${key.remoteJid.endsWith('@g.us') ? "Group" : "DM"}\n` +
-                             `📅 *Time:* ${new Date().toLocaleString()}\n` +
-                             `\n⚠️ *Restored Content:*`;
+                let report = `*🚨 TIMNASA ANTI-DELETE DETECTED 🚨*\n\n`;
+                report += `👤 *Sender:* @${sender.split('@')[0]}\n`;
+                report += `📍 *Location:* ${isGroup ? "Group Chat" : "Private Chat"}\n`;
+                if (isGroup) {
+                    const metadata = await zk.groupMetadata(key.remoteJid);
+                    report += `🏘️ *Group Name:* ${metadata.subject}\n`;
+                }
+                report += `📅 *Time:* ${new Date().toLocaleString()}\n\n`;
+                report += `⚠️ *Restored Content below:*`;
 
-                await zk.sendMessage(target, { text: report, mentions: [sender] });
-                await zk.copyNForward(target, oldMsg, true);
-            } catch (e) {
-                console.log("Anti-delete DB Error: " + e);
+                // 1. Send the Alert
+                await zk.sendMessage(destination, { text: report, mentions: [sender] });
+
+                // 2. Restore the content (Handles Text, Image, Video, Sticker, Audio)
+                await zk.copyNForward(destination, oldMsg, true);
+
+            } catch (err) {
+                console.log("Anti-delete Error: " + err);
             }
         }
     }
-         
 });
+
 
  // ================== STATUS MENTIONS PROTECTION ==================
 if (conf.STATUS_MENTIONS === "on" && ms.message && !ms.key.fromMe) {
