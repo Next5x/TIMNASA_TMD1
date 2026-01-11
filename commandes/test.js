@@ -11,7 +11,7 @@ zokou({
     const channelJid = "120363413554978773@newsletter";
     const audioUrl = "https://files.catbox.moe/lqx6sp.mp3";
     
-    // Replace these with your actual image links
+    // Media Links
     const imageUrl1 = "https://files.catbox.moe/zm113g.jpg"; 
     const imageUrl2 = "https://files.catbox.moe/zm113g.jpg"; 
 
@@ -23,7 +23,7 @@ zokou({
             `*Timestamp:* ${new Date().toLocaleString()}\n\n` +
             `_System is running smoothly with media support._`;
 
-        // Send First Image with Caption
+        // 1. Send First Image with Caption
         await zk.sendMessage(dest, {
             image: { url: imageUrl1 },
             caption: testMsg,
@@ -38,7 +38,7 @@ zokou({
             }
         }, { quoted: ms });
 
-        // Send Second Image
+        // 2. Send Second Image
         await zk.sendMessage(dest, {
             image: { url: imageUrl2 },
             contextInfo: {
@@ -51,10 +51,10 @@ zokou({
             }
         }, { quoted: ms });
 
-        // Send Audio
+        // 3. Send Audio (FIXED: Added the missing closing quote for mimetype)
         await zk.sendMessage(dest, {
             audio: { url: audioUrl },
-            mimetype: 'audio/mp4,
+            mimetype: 'audio/mp4',
             ptt: true,
             contextInfo: {
                 forwardingScore: 999,
@@ -68,6 +68,6 @@ zokou({
 
     } catch (error) {
         console.error("Test Command Error:", error);
-        repondre("✅ System is live, but some media failed to send.");
+        repondre("❌ Error: " + error.message);
     }
 });
