@@ -27,7 +27,7 @@ zokou({
   const start = new Date().getTime();
   
   // --- CONFIGURATION ---
-  const channelJid = "120363413554978773@newsletter"; 
+  const channelJid = "120363406146813524@newsletter"; 
   const audioUrl = "https://files.catbox.moe/e4c48n.mp3"; 
   const imageUrl = "https://files.catbox.moe/zm113g.jpg"; 
   // ---------------------
