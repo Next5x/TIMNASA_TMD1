@@ -91,7 +91,7 @@ zokou({
             contextInfo: {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: "120363413554978773@newsletter",
+                    newsletterJid: "120363406146813524@newsletter",
                     newsletterName: "@ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ",
                     serverMessageId: -1
                 },
