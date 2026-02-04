@@ -5,14 +5,14 @@ const conf = require("../set");
 const moment = require("moment-timezone");
 
 zokou({
-    nomCom: "help",
+    nomCom: "menu",
     aliases: ["help", "list"],
     categorie: "General",
     reaction: "👑"
 }, async (dest, zk, commandeOptions) => {
     const { ms, repondre, prefixe, nomAuteurMessage } = commandeOptions;
     const { cm } = require(__dirname + "/../framework/zokou"); 
-    const channelJid = "120363413554978773@newsletter";
+    const channelJid = "120363406146813524@newsletter";
     const audioUrl = "https://files.catbox.moe/lqx6sp.mp3"; 
 
     try {
