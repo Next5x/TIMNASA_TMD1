@@ -5,7 +5,7 @@ const moment = require("moment-timezone");
 const s = require(__dirname + "/../set");
 
 zokou({
-    nomCom: "alive",
+    nomCom: "alivex",
     categorie: "General",
     reaction: "⚡"
 },
@@ -65,7 +65,7 @@ _Type .menu to view all commands_`;
                     title: "TIMNASA TMD SYSTEM TEST",
                     body: "Status: Online & Stable",
                     thumbnailUrl: randomPic,
-                    sourceUrl: "https://whatsapp.com/channel/120363413554978773@newsletter",
+                    sourceUrl: "https://whatsapp.com/channel/120363406146813524@newsletter",
                     mediaType: 1,
                     renderLargerThumbnail: true
                 }
