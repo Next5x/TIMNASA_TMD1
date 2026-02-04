@@ -38,7 +38,7 @@ function runtime(seconds) {
 }
 
 zokou({ 
-    nomCom: "menu", 
+    nomCom: "help", 
     categorie: "Menu", 
     reaction: "♻️", 
     nomFichier: __filename 
@@ -121,7 +121,7 @@ zokou({
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                    newsletterJid: "120363413554978773@newsletter",
+                    newsletterJid: "120363406146813524@newsletter",
                     newsletterName: "ᴛɪᴍɴᴀsᴀ ᴛᴍᴅ2 Updates",
                     serverMessageId: 143
                 }
