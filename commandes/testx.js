@@ -4,13 +4,13 @@ const { zokou } = require("../framework/zokou"); // Changed to Zokou-MD framewor
 const { conf } = require('../set');
 
 // Configuration Constants
-const channelJid = "120363413554978773@newsletter";
+const channelJid = "120363406146813524@newsletter";
 const audioUrl = "https://files.catbox.moe/lqx6sp.mp3";
 const botLogo = "https://files.catbox.moe/bq7ym6.jpg";
 
 // COMMAND: TIMNASA-TMD
 zokou(
-    { nomCom: "TIMNASA-TMD", reaction: "👊", nomFichier: __filename },
+    { nomCom: "active", reaction: "👊", nomFichier: __filename },
     async (dest, zk, commandeOptions) => {
         console.log("TIMNASA-TMD command triggered!");
         
