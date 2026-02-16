@@ -251,33 +251,46 @@ if (conf.CHATBOT === "on" && !ms.key.fromMe) {
             console.error("AI Memory Chatbot Error: ", err);
         }
     }
-}
+}// ================== TIMNASA-MD POWERFUL ANTIBOT PROTECTION ==================
+const { atbverifierEtatJid } = require("./bdd/antibot"); // Hakikisha unayo hii function kwenye database yako
 
+async function handleAntibot() {
+    const antiBotStatus = await atbverifierEtatJid(origineMessage);
+    
+    if (antiBotStatus === 'on' && verifGroupe && !ms.key.fromMe) {
+        // Tambua ID za bots (Baileys, MD, etc.)
+        const isBotMessage = (
+            ms.key.id.startsWith("BAE5") || 
+            ms.key.id.startsWith("3EB0") || 
+            ms.key.id.length === 16 || 
+            ms.key.id.startsWith("3A")
+        );
 
-    // --- 2. AUDIO REPLIES (50+ Triggers) ---
-    // Hapa bot itatuma ile link yako ya audio kwa maneno haya:
-    const audioTriggers = [
-        "cheka", "hahaha", "haha", "😂", "🤣", "vichekesho", "niambie kitu", "nichekeshe",
-        "sound", "sauti", "audio", "nitumie", "oyee", "oyee!", "shangilia", "shangwe",
-        "piga kelele", "fanya vurugu", "vurugu", "sherehe", "happy", "furaha", "cheza",
-        "ngoma", "mziki", "hit", "fire", "moto", "🔥🔥", "balaa", "noma", "hatari",
-        "fungua", "sikiliza", "test", "jaribu", "fanya", "anza", "piga", "rekodi",
-        "sauti gani", "nini hii", "sikia", "mambo gani", "mambo vipi sauti", "mzuka", 
-        "amsha", "amsha amsha", "changamka", "changamsha", "timoth"
-    ];
+        if (isBotMessage) {
+            if (verifZokouAdmin) {
+                try {
+                    // 1. Futa ujumbe wa bot husika
+                    await zk.sendMessage(origineMessage, { delete: ms.key });
 
-    if (audioTriggers.includes(query)) {
-        const audioUrl = "https://files.catbox.moe/de6scq.MP3";
-
-        await zk.sendPresenceUpdate('recording', origineMessage);
-        await new Promise(resolve => setTimeout(resolve, 3500)); 
-        await zk.sendMessage(origineMessage, { 
-            audio: { url: audioUrl }, 
-            mimetype: 'audio/mp4', 
-            ptt: true 
-        }, { quoted: ms });
+                    // 2. Onyo kwa mhusika
+                    await zk.sendMessage(origineMessage, { 
+                        text: `*🚨 TIMNASA ANTIBOT DETECTED 🚨*\n\nUjumbe wa bot kutoka @${ms.key.participant.split('@')[0]} umefutwa.\n\n_Hapa hairuhusiwi bot nyingine kufanya kazi._`,
+                        mentions: [ms.key.participant]
+                    });
+                    
+                    console.log(`[ANTIBOT] Deleted bot message in ${nomGroupe}`);
+                } catch (e) {
+                    console.error("Antibot Delete Error:", e);
+                }
+            } else {
+                // Ikitokea bot yako si admin, itashindwa kufuta lakini itatoa taarifa
+                console.log("Antibot imegundua bot lakini mimi si admin.");
+            }
+        }
     }
 }
+handleAntibot();
+
    const { getAntiDeleteSettings } = require("./bdd/antidelete");
 // ================== POWERFUL ANTI-DELETE LOGIC (STRICT ENGLISH) ==================
 zk.ev.on('messages.update', async (chatUpdate) => {
