@@ -1,106 +1,44 @@
+"use strict";
 const { zokou } = require("../framework/zokou");
-const yts = require('yt-search');
-const axios = require('axios');
-const conf = require("../set");
+const axios = require("axios");
 
-// 1. COMMAND YA KUTAFUTA (SEARCH)
+// Memory ya muda kuhifadhi mazungumzo
+let userMemory = {};
+
 zokou({
-    nomCom: "play3",
-    categorie: "Download",
-    reaction: "🎵"
+    nomCom: "ai",
+    reaction: "🧠",
+    categorie: "AI"
 }, async (dest, zk, commandeOptions) => {
-    const { ms, repondre, arg, nomAuteurMessage } = commandeOptions;
+    const { arg, repondre, ms, auteurMessage } = commandeOptions;
 
-    if (!arg[0]) return repondre("❌ Tafadhali weka jina la wimbo!\nMfano: .play baby diamond");
-
-    try {
-        const search = await yts(arg.join(" "));
-        const video = search.videos[0]; // Tunachukua matokeo ya kwanza
-
-        if (!video) return repondre("🚫 Sijapata kitu.");
-
-        let ui = `╔══════════════════╗\n`;
-        ui += `     *TIMNASA TMD2 PLAYER* 📶\n`;
-        ui += `╚══════════════════╝\n\n`;
-        ui += `📝 *Title:* ${video.title}\n`;
-        ui += `⏳ *Time:* ${video.timestamp}\n`;
-        ui += `👁️ *Views:* ${video.views.toLocaleString()}\n`;
-        ui += `👤 *User:* ${nomAuteurMessage}\n\n`;
-        ui += `*Reply na:* \n1️⃣ *.song* (Audio)\n2️⃣ *.video* (Video)\n`;
-        ui += `───────────────────\n`;
-        ui += `🔗 *Link:* ${video.url}`;
-
-        await zk.sendMessage(dest, {
-            image: { url: video.thumbnail },
-            caption: ui,
-            contextInfo: {
-                externalAdReply: {
-                    title: "TIMNASA MULTIMEDIA",
-                    body: "Select your format below",
-                    thumbnail: { url: video.thumbnail },
-                    sourceUrl: video.url,
-                    mediaType: 1,
-                    renderLargerThumbnail: true
-                }
-            }
-        }, { quoted: ms });
-
-    } catch (e) {
-        repondre("⚠️ Error: " + e.message);
+    if (!arg || arg.length === 0) {
+        return repondre("Hujambo! Mimi ni TIMNASA-MD AI. Niulize chochote.\nMfano: .ai Niambie kuhusu Tanzania.");
     }
-});
 
-// 2. COMMAND YA AUDIO (SONG)
-zokou({
-    nomCom: "song",
-    categorie: "Download",
-    reaction: "🎶"
-}, async (dest, zk, commandeOptions) => {
-    const { ms, repondre, arg } = commandeOptions;
-    if (!arg[0]) return repondre("Weka link ya YouTube!");
+    const swali = arg.join(" ");
+    const apikey = "FREE-OKBCJB3N-Q9TC";
+
+    // Pata historia ya nyuma ya huyu mtumiaji au anza upya
+    let context = userMemory[auteurMessage] || "";
+    // Unganisha historia na swali jipya kwa ajili ya Blackbox
+    const fullPrompt = context ? `History: ${context}\nUser: ${swali}` : swali;
 
     try {
-        const link = arg[0];
-        const res = await axios.get(`https://noobs-api.top/dipto/ytDl3?link=${encodeURIComponent(link)}&format=mp3`);
+        const response = await axios.get(`https://mkzstyleee.vercel.app/ai/blackbox?text=${encodeURIComponent(fullPrompt)}&apikey=${apikey}`);
         
-        if (res.data && res.data.download_url) {
-            await zk.sendMessage(dest, { 
-                audio: { url: res.data.download_url }, 
-                mimetype: 'audio/mp4', 
-                ptt: false 
-            }, { quoted: ms });
+        if (response.data && response.data.result) {
+            const resultText = response.data.result;
+            
+            // Hifadhi historia fupi (tunaweka swali na jibu ili akumbuke)
+            userMemory[auteurMessage] = `User: ${swali}\nAI: ${resultText}`.slice(-500); // Tunatunza herufi 500 tu za mwisho
+
+            await zk.sendMessage(dest, { text: `*TIMNASA-MD AI* 🤖\n\n${resultText}` }, { quoted: ms });
         } else {
-            repondre("❌ Imeshindikana kupata audio.");
+            repondre("Samahani, sikufaulu kupata jibu kwa sasa.");
         }
     } catch (e) {
-        repondre("⚠️ Seva imekataa (Audio Error).");
-    }
-});
-
-// 3. COMMAND YA VIDEO
-zokou({
-    nomCom: "video",
-    categorie: "Download",
-    reaction: "🎥"
-}, async (dest, zk, commandeOptions) => {
-    const { ms, repondre, arg } = commandeOptions;
-    if (!arg[0]) return repondre("Weka link ya YouTube!");
-
-    try {
-        repondre("⏳ Inapakua video, tafadhali subiri...");
-        const link = arg[0];
-        const res = await axios.get(`https://noobs-api.top/dipto/ytDl3?link=${encodeURIComponent(link)}&format=mp4`);
-
-        if (res.data && res.data.download_url) {
-            await zk.sendMessage(dest, { 
-                video: { url: res.data.download_url }, 
-                caption: `🎬 *${res.data.title}*\n\nPowered by Timnasa_TMD2`,
-                mimetype: 'video/mp4' 
-            }, { quoted: ms });
-        } else {
-            repondre("❌ Imeshindikana kupata video.");
-        }
-    } catch (e) {
-        repondre("⚠️ Seva imekataa (Video Error).");
+        console.log("AI Error: " + e);
+        repondre("Kuna hitilafu kwenye mfumo wa AI.");
     }
 });
