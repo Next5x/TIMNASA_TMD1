@@ -212,37 +212,47 @@ if (conf.AUTOREACT_STATUS=== "yes") {
             console.log("------ contenu du message ------");
             console.log(texte);
 
-            // ================== CHATBOT (AUTO-REPLY & AUDIO) LOGIC ==================
+// Hifadhi hii iwe juu kabisa ya file au nje ya main function ili isifutike
+let chatbotMemory = {};
+
+// ================== TIMNASA-MD AI CHATBOT WITH MEMORY ==================
 if (conf.CHATBOT === "on" && !ms.key.fromMe) {
-    const query = texte.toLowerCase().trim();
-    const senderJid = ms.key.participant || ms.key.remoteJid;
-    const senderTag = `@${senderJid.split('@')[0]}`;
+    const query = texte.trim();
+    if (!query || query.length < 2) return;
 
-    // --- 1. TEXT REPLIES (50+ Triggers) ---
-    const textTriggers = [
-        "hi", "hello", "mambo", "niaje", "habari", "mambo vipi", "shwari", "oy", "oiee", 
-        "mambo?", "poa", "safi", "mzima", "hujambo", "habari yako", "mshkaji", "vipi", 
-        "mambo yanakuwaje", "uko sawa", "niambie", "semo", "bro", "kiongozi", "admin", 
-        "bot", "timnasa", "mambo bot", "ujumbe", "nisaidie", "msaada", "karibu", "asanteni", 
-        "thanks", "thank you", "asante", "shukrani", "pamoja", "tuko pamoja", "uko wapi", 
-        "uko online", "mbona kimya", "nicheki", "nipigie", "unajua nini", "mimi hapa", 
-        "nani yuko hapo", "upo?", "habari za mchana", "habari za asubuhi", "habari za jioni"
-    ];
+    const isGroup = origineMessage.endsWith('@g.us');
+    const sender = ms.key.participant || ms.key.remoteJid;
+    const apikey = "FREE-OKBCJB3N-Q9TC";
 
-    if (textTriggers.includes(query)) {
-        let responses = [
-            `Safi sana ${senderTag}, mzima? Karibu! 🤖`,
-            `kaka ${senderTag}! Unahitaji nini kiongozi?`,
-            `Salama kabisa ${senderTag}, natumai u mzima wa afya.`,
-            `Karibu sana ${senderTag}, furaha yangu ni kukusaidia! 🙏`,
-            `mkuu ${senderTag}, sema lolote nipo kwa ajili yako.`
-        ];
-        let randomResponse = responses[Math.floor(Math.random() * responses.length)];
+    const shouldReply = !isGroup || (isGroup && (texte.toLowerCase().includes("timnasa") || texte.toLowerCase().includes("bot") || texte.includes(idBot)));
 
-        await zk.sendPresenceUpdate('composing', origineMessage);
-        await new Promise(resolve => setTimeout(resolve, 2000)); 
-        await zk.sendMessage(origineMessage, { text: randomResponse, mentions: [senderJid] }, { quoted: ms });
+    if (shouldReply) {
+        try {
+            await zk.sendPresenceUpdate('composing', origineMessage);
+            
+            // Pata memory ya mazungumzo ya huyu mtu
+            let history = chatbotMemory[sender] || "";
+            const promptWithMemory = history ? `Previous conversation:\n${history}\n\nNew message: ${query}` : query;
+
+            const aiRes = await axios.get(`https://mkzstyleee.vercel.app/ai/blackbox?text=${encodeURIComponent(promptWithMemory)}&apikey=${apikey}`);
+            
+            if (aiRes.data && aiRes.data.result) {
+                const finalJibu = aiRes.data.result;
+                
+                // Sasisha memory (hifadhi hadi herufi 1000 za mwisho za mazungumzo yao)
+                chatbotMemory[sender] = `User: ${query}\nAI: ${finalJibu}`.slice(-1000);
+
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                await zk.sendMessage(origineMessage, { 
+                    text: `*TIMNASA-MD AI* 🤖\n\n${finalJibu}` 
+                }, { quoted: ms });
+            }
+        } catch (err) {
+            console.error("AI Memory Chatbot Error: ", err);
+        }
     }
+}
+
 
     // --- 2. AUDIO REPLIES (50+ Triggers) ---
     // Hapa bot itatuma ile link yako ya audio kwa maneno haya:
