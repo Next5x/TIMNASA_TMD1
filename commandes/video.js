@@ -3,100 +3,104 @@ const yts = require('yt-search');
 const axios = require('axios');
 const conf = require("../set");
 
+// 1. COMMAND YA KUTAFUTA (SEARCH)
 zokou({
-    nomCom: "song",
+    nomCom: "play3",
     categorie: "Download",
-    reaction: "🎬"
+    reaction: "🎵"
 }, async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg, nomAuteurMessage } = commandeOptions;
 
-    if (!arg || arg.length === 0) {
-        return repondre("❌ Tafadhali weka jina la wimbo au video!\n\nMfano: .play sigma boy");
-    }
-
-    const searchKeyword = arg.join(" ");
+    if (!arg[0]) return repondre("❌ Tafadhali weka jina la wimbo!\nMfano: .play baby diamond");
 
     try {
-        // 1. YouTube Search
-        const search = await yts(searchKeyword);
-        const results = search.videos.slice(0, 5);
+        const search = await yts(arg.join(" "));
+        const video = search.videos[0]; // Tunachukua matokeo ya kwanza
 
-        if (results.length === 0) {
-            return repondre("🚫 Sijapata matokeo yoyote kwa: " + searchKeyword);
-        }
+        if (!video) return repondre("🚫 Sijapata kitu.");
 
-        // 2. Kutengeneza Muonekano wa Kisasa (Modern UI Card)
-        let responseText = `╔══════════════════╗\n`;
-        responseText += `     *TIMNASA TMD2 PLAYER* 📶\n`;
-        responseText += `╚══════════════════╝\n\n`;
-        
-        responseText += `👤 *User:* ${nomAuteurMessage}\n`;
-        responseText += `🔍 *Search:* _${searchKeyword}_\n`;
-        responseText += `───────────────────\n\n`;
+        let ui = `╔══════════════════╗\n`;
+        ui += `     *TIMNASA TMD2 PLAYER* 📶\n`;
+        ui += `╚══════════════════╝\n\n`;
+        ui += `📝 *Title:* ${video.title}\n`;
+        ui += `⏳ *Time:* ${video.timestamp}\n`;
+        ui += `👁️ *Views:* ${video.views.toLocaleString()}\n`;
+        ui += `👤 *User:* ${nomAuteurMessage}\n\n`;
+        ui += `*Reply na:* \n1️⃣ *.song* (Audio)\n2️⃣ *.video* (Video)\n`;
+        ui += `───────────────────\n`;
+        ui += `🔗 *Link:* ${video.url}`;
 
-        results.forEach((vid, i) => {
-            responseText += `*${i + 1}️⃣  ${vid.title.toUpperCase()}*\n`;
-            responseText += `  ┕ ⏳ *Muda:* ${vid.timestamp}\n`;
-            responseText += `  ┕ 👁️ *Views:* ${vid.views.toLocaleString()}\n`;
-            responseText += `  ┕ 📅 *Uploaded:* ${vid.ago}\n`;
-            responseText += `  ┕ 🔗 *Link:* ${vid.url}\n\n`;
-        });
-
-        responseText += `───────────────────\n`;
-        responseText += `📌 *QUICK TIP:* Tumia command ya *.video [link]* ili kupata video unayotaka hapo juu.\n\n`;
-        responseText += `_All is for you to enjoy_ 🎈`;
-
-        // 3. Kutuma Ujumbe wenye Picha (Ad-Reply Style)
         await zk.sendMessage(dest, {
-            image: { url: results[0].thumbnail },
-            caption: responseText,
+            image: { url: video.thumbnail },
+            caption: ui,
             contextInfo: {
                 externalAdReply: {
-                    title: "YOUTUBE MULTIMEDIA SEARCH",
-                    body: "Timnasa_TMD2 High Speed System",
-                    thumbnail: { url: results[0].thumbnail },
-                    sourceUrl: conf.GURL || "https://youtube.com", // Inatumia link ya bot yako kutoka config
+                    title: "TIMNASA MULTIMEDIA",
+                    body: "Select your format below",
+                    thumbnail: { url: video.thumbnail },
+                    sourceUrl: video.url,
                     mediaType: 1,
-                    showAdAttribution: true,
                     renderLargerThumbnail: true
                 }
             }
         }, { quoted: ms });
 
-    } catch (error) {
-        console.error(error);
-        repondre("⚠️ Hitilafu: Nimeshindwa kuunganishwa na YouTube.");
+    } catch (e) {
+        repondre("⚠️ Error: " + e.message);
     }
 });
 
-// --- Command ya Video Downloader (Inayopokea link) ---
+// 2. COMMAND YA AUDIO (SONG)
+zokou({
+    nomCom: "song",
+    categorie: "Download",
+    reaction: "🎶"
+}, async (dest, zk, commandeOptions) => {
+    const { ms, repondre, arg } = commandeOptions;
+    if (!arg[0]) return repondre("Weka link ya YouTube!");
 
+    try {
+        const link = arg[0];
+        const res = await axios.get(`https://noobs-api.top/dipto/ytDl3?link=${encodeURIComponent(link)}&format=mp3`);
+        
+        if (res.data && res.data.download_url) {
+            await zk.sendMessage(dest, { 
+                audio: { url: res.data.download_url }, 
+                mimetype: 'audio/mp4', 
+                ptt: false 
+            }, { quoted: ms });
+        } else {
+            repondre("❌ Imeshindikana kupata audio.");
+        }
+    } catch (e) {
+        repondre("⚠️ Seva imekataa (Audio Error).");
+    }
+});
+
+// 3. COMMAND YA VIDEO
 zokou({
     nomCom: "video",
     categorie: "Download",
-    reaction: "📥"
+    reaction: "🎥"
 }, async (dest, zk, commandeOptions) => {
     const { ms, repondre, arg } = commandeOptions;
-
-    if (!arg[0]) return repondre("Weka link ya video unayotaka!");
+    if (!arg[0]) return repondre("Weka link ya YouTube!");
 
     try {
-        repondre("⏳ Inapakua video yako, tafadhali subiri...");
+        repondre("⏳ Inapakua video, tafadhali subiri...");
+        const link = arg[0];
+        const res = await axios.get(`https://noobs-api.top/dipto/ytDl3?link=${encodeURIComponent(link)}&format=mp4`);
 
-        const videoUrl = arg[0];
-        const apiUri = `https://noobs-api.top/dipto/ytDl3?link=${encodeURIComponent(videoUrl)}&format=mp4`;
-        const { data } = await axios.get(apiUri);
-
-        if (data && data.download_url) {
-            await zk.sendMessage(dest, {
-                video: { url: data.download_url },
-                caption: `🎬 *${data.title}*\n\nEnjoy your video!`,
-                mimetype: 'video/mp4'
+        if (res.data && res.data.download_url) {
+            await zk.sendMessage(dest, { 
+                video: { url: res.data.download_url }, 
+                caption: `🎬 *${res.data.title}*\n\nPowered by Timnasa_TMD2`,
+                mimetype: 'video/mp4' 
             }, { quoted: ms });
         } else {
-            repondre("❌ Nimeshindwa kupata video. Huenda link haina uwezo wa kudownload.");
+            repondre("❌ Imeshindikana kupata video.");
         }
-    } catch (err) {
-        repondre("⚠️ API Error: Seva imekataa muunganisho.");
+    } catch (e) {
+        repondre("⚠️ Seva imekataa (Video Error).");
     }
 });
