@@ -6,7 +6,7 @@ const os = require("os");
 const moment = require("moment-timezone");
 
 zokou({
-    nomCom: "list",
+    nomCom: "menu",
     aliases: ["help", "list"],
     categorie: "General",
     reaction: "👑"
