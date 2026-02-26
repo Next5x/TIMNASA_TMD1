@@ -2,9 +2,8 @@
   "name": "heroku-md",
   "version": "2.0.0",
   "description": "",
- "main": "index.js",
+  "main": "popkid.js",
   "scripts": {
-    "start": "node index.js"
     "test": "node index.js",
     "s": "node index.js",
     "toshtech": "pm2 start index.js --attach",
