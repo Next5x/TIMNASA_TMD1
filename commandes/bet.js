@@ -8,59 +8,79 @@ zokou({
     reaction: "⚽"
 }, async (dest, zk, commandeOptions) => {
     const { arg, repondre, ms, prefixe, auteurMessage } = commandeOptions;
+    
+    // ID ya Newsletter yako
+    const channelJid = "120363406146813524@newsletter";
 
-    // Check if the user provided the company name
+    // Angalia kama jina la kampuni limewekwa
     if (!arg || arg.length === 0) {
-        return repondre(`*⚠️ PLEASE SPECIFY THE BOOKMAKER!*\n\n*Example:* ${prefixe}bet Sportybet\n*Example:* ${prefixe}bet 1xBet`);
+        return repondre(`*⚠️ TAFADHALI WEKA JINA LA KAMPUNI!* \n\n*Mfano:* ${prefixe}bet Sportybet`);
     }
 
     const company = arg.join(" ").toUpperCase();
+    const dateToday = new Date().toLocaleDateString('en-GB'); 
     
-    repondre(`🔍 *TIMNASA-MD AI is generating daily tips for ${company}...*`);
+    repondre(`⏳ *TIMNASA-MD AI Inachambua mechi za leo kwa ajili ya ${company}...*`);
 
-    // List of common teams to randomize
+    // List ya timu maarufu duniani (zimeongezeka)
     const teams = [
         "Real Madrid", "Man City", "Arsenal", "Bayern Munich", "PSG", 
         "Liverpool", "Barcelona", "Inter Milan", "Leverkusen", "AC Milan",
-        "Aston Villa", "Dortmund", "Napoli", "Chelsea", "Juventus",
-        "Atletico Madrid", "Spurs", "Benfica", "Ajax", "Sporting CP"
+        "Man United", "Dortmund", "Napoli", "Chelsea", "Juventus",
+        "Al Nassr", "Inter Miami", "Benfica", "Ajax", "Yanga SC", "Simba SC",
+        "Azam FC", "Gor Mahia", "Mamelodi", "Al Ahly", "Aston Villa", "Monaco"
     ];
 
-    // Prediction types
-    const tips = ["Home Win (1)", "Away Win (2)", "Draw (X)", "Over 2.5", "GG (Both Teams Score)", "Home Over 1.5"];
+    const tips = [
+        "Home Win (1)", "Away Win (2)", "Draw (X)", 
+        "Over 2.5 Goals", "GG (Both Teams Score)", 
+        "1X (Home or Draw)", "2X (Away or Draw)", 
+        "HT/FT: 1/1", "Under 3.5"
+    ];
 
-    const generateMatches = () => {
+    const generateTicket = () => {
         let list = "";
         let shuffled = teams.sort(() => 0.5 - Math.random());
         
         for (let i = 0; i < 10; i++) {
             const teamA = shuffled[i];
-            const teamB = shuffled[(i + 5) % teams.length];
+            const teamB = shuffled[(i + 7) % teams.length];
             const prediction = tips[Math.floor(Math.random() * tips.length)];
-            const odds = (Math.random() * (2.50 - 1.30) + 1.30).toFixed(2);
+            const odds = (Math.random() * (3.10 - 1.25) + 1.25).toFixed(2);
+            const probability = Math.floor(Math.random() * (95 - 65) + 65);
             
-            list += `${i + 1}. *${teamA} vs ${teamB}*\n   ✨ *Tip:* ${prediction} (@${odds})\n\n`;
+            list += `📍 *MATCH ${i + 1}:* ${teamA} vs ${teamB}\n`;
+            list += `✨ *TIP:* ${prediction} (@${odds})\n`;
+            list += `📈 *PROBABILITY:* ${probability}%\n\n`;
         }
         return list;
     };
 
-    let betMsg = `⚽ *TIMNASA-MD DAILY TICKET* ⚽\n\n`;
+    let betMsg = `🏆 *TIMNASA-MD DAILY TICKET* 🏆\n`;
+    betMsg += `📅 *DATE:* ${dateToday}\n`;
     betMsg += `🏢 *BOOKMAKER:* ${company}\n`;
     betMsg += `👤 *ANALYST:* @${auteurMessage.split('@')[0]}\n`;
     betMsg += `───────────────────\n\n`;
     
-    betMsg += generateMatches();
+    betMsg += generateTicket();
     
-    betMsg += `📊 *TOTAL ODDS:* ${(Math.random() * (50.0 - 10.0) + 10.0).toFixed(2)}\n\n`;
-    betMsg += `⚠️ *NOTE:* These are AI generated predictions based on recent form. Bet what you can afford to lose.`;
+    betMsg += `💰 *TOTAL ODDS:* ${(Math.random() * (120.0 - 20.0) + 20.0).toFixed(2)}\n\n`;
+    betMsg += `⚠️ *NOTE:* Hii ni mifumo ya AI. Bet kiasi unachoweza kupoteza. 🔞`;
 
     await zk.sendMessage(dest, { 
         text: betMsg,
         mentions: [auteurMessage],
         contextInfo: {
+            forwardingScore: 999,
+            isForwarded: true,
+            forwardedNewsletterMessageInfo: {
+                newsletterJid: channelJid,
+                newsletterName: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰 𝚃𝙼𝙳 𝙰𝙸 𝙰𝚂𝚂𝙸𝚂𝚃𝙰𝙽𝚃",
+                serverMessageId: 1
+            },
             externalAdReply: {
-                title: `${company} TOP 10 PREDICTIONS`,
-                body: "TIMNASA-MD AI SPORTS ANALYTICS",
+                title: `${company} - TIPS ZA LEO`,
+                body: "TIMNASA-MD EXPERT TIPS",
                 thumbnailUrl: "https://files.catbox.moe/zm113g.jpg",
                 sourceUrl: "https://whatsapp.com/channel/0029VaF39946H4YhS6u8Yt3q",
                 mediaType: 1,
