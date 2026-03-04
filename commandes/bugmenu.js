@@ -35,7 +35,7 @@ _Use these to test WhatsApp resilience:_
 • \`\`\`${prefixe}heavy-wa\`\`\` - RAM Bombard
 
 *『 📞 𝚂𝚄𝙿𝙿𝙾𝚁𝚃 』*
-• *Owner:* wa.me/255743706043
+• *Owner:* wa.me/255784766591
 
 > *Warning:* These commands send heavy payloads. Use only for testing security protections.
 `;
@@ -55,7 +55,7 @@ _Use these to test WhatsApp resilience:_
                     title: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝙱𝚄𝙶 𝙼𝙴𝙽𝚄",
                     body: "System Vulnerability Testing",
                     thumbnailUrl: "https://files.catbox.moe/zm113g.jpg", 
-                    sourceUrl: "https://wa.me/255743706043",
+                    sourceUrl: "https://wa.me/255784766591",
                     mediaType: 1
                 }
             }
