@@ -1,76 +1,84 @@
 "use strict";
 
 const { zokou } = require("../framework/zokou");
-const conf = require("../set");
 
 zokou({
     nomCom: "bugmenu",
-    aliases: ["bug", "crashlist"],
-    categorie: "Bug",
+    aliases: ["bug", "crashlist", "buglist"],
+    categorie: "Bug-VIP",
     reaction: "☣️"
 }, async (dest, zk, commandeOptions) => {
-    const { ms, repondre, prefixe, superUser } = commandeOptions;
+    const { ms, repondre, prefixe, superUser, auteurMessage } = commandeOptions;
     
-    // Security: Only Owner can see the Bug Menu
+    // Ulinzi: Ni Owner pekee anayeweza kuona hii menu
     if (!superUser) return repondre("❌ Restricted to Bot Owner only.");
 
-    const channelJid = "120363413554978773@newsletter";
-    const bugUrl = "https://files.catbox.moe/lqx6sp.mp3"; // Resilience Test URL
+    const channelJid = "120363406146813524@newsletter";
+    const userName = auteurMessage.split('@')[0];
 
     try {
         let bugMsg = `
-╭─────────────━┈⊷•
-│ ☣️ *𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝙱𝚄𝙶 𝚂𝚈𝚂𝚃𝙴𝙼*
-│ 👤 *STATUS:* 𝙳𝙴𝙰𝚃𝙷-𝙼𝙾𝙳𝙴
-│ ⚡ *POWER:* 𝙼𝙰𝚇𝙸𝙼𝚄𝙼
-╰─────────────━┈⊷•
+┏━━━━━━━━━━━━━━━┓
+┃  ☣️ *𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝙴𝙻𝙸𝚃𝙴* ☣️
+┗━━━━━━━━━━━━━━━┛
+   *𝚃𝙴𝚁𝙼𝙸𝙽𝙰𝙻 𝚂𝚈𝚂𝚃𝙴𝙼 𝚅𝟸*
 
-*『 ⚠️ 𝚂𝚃𝚁𝙴𝚂𝚂 𝚃𝙴𝚂𝚃 𝙻𝙸𝚂𝚃 』*
-_Use these to test WhatsApp resilience:_
+👤 *USER:* @${userName}
+⚙️ *MODE:* 𝙳𝙴𝙰𝚃𝙷-𝚂𝚀𝚄𝙰𝙳
+📡 *SERVER:* 𝙾𝙽𝙻𝙸𝙽𝙴
 
-• \`\`\`${prefixe}crash\`\`\` - Lag Chat UI
-• \`\`\`${prefixe}bin\`\`\` - Binary Attack
-• \`\`\`${prefixe}ui-bug\`\`\` - Interface Glitch
-• \`\`\`${prefixe}total-freeze\`\`\` - VCF Death
-• \`\`\`${prefixe}heavy-wa\`\`\` - RAM Bombard
+*『 💣 𝚂𝙸𝙽𝙶𝙻𝙴 𝙰𝚃𝚃𝙰𝙲𝙺𝚂 』*
+_Target: ${prefixe}command [number]_
 
-*『 📞 𝚂𝚄𝙿𝙿𝙾𝚁𝚃 』*
-• *Owner:* wa.me/255784766591
+• ☣️ \`${prefixe}crash\`
+• 👾 \`${prefixe}bin\`
+• ⚠️ \`${prefixe}ui-bug\`
+• 🥶 \`${prefixe}total-freeze\`
+• 💣 \`${prefixe}heavy-wa\`
+• ⏳ \`${prefixe}lag\`
+• 💀 \`${prefixe}dark-web\`
+• 🌋 \`${prefixe}ram-kill\`
+• ♨️ \`${prefixe}cpu-heat\`
+• 👻 \`${prefixe}ghost-bug\`
+• 📡 \`${prefixe}payload-x\`
+• ☣️ \`${prefixe}kernel-error\`
+• 🌀 \`${prefixe}infinite-lag\`
+• 📂 \`${prefixe}internal-bug\`
+• ⚰️ \`${prefixe}death-point\`
 
-> *Warning:* These commands send heavy payloads. Use only for testing security protections.
-`;
+*『 ⚡ 𝚄𝙻𝚃𝙸𝙼𝙰𝚃𝙴 𝙲𝙾𝙼𝙱𝙾 』*
+• 💀 \`${prefixe}mega-bug\`
+_(Sends all 15 viruses at once)_
 
-        // Send with Newsletter Metadata
+───────────────────
+> *Warning:* These commands are for system resilience testing only. Use responsibly.
+───────────────────
+*Powered by 𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳*`;
+
         await zk.sendMessage(dest, {
             text: bugMsg,
+            mentions: [auteurMessage],
             contextInfo: {
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: channelJid,
-                    newsletterName: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝙴𝚇𝙿𝙻𝙾𝙸𝚃𝚂",
+                    newsletterName: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰 𝚃𝙼𝙳 𝙳𝙴𝙰𝚃𝙷-𝚂𝚀𝚄𝙰𝙳",
                     serverMessageId: 1
                 },
                 externalAdReply: {
-                    title: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝙱𝚄𝙶 𝙼𝙴𝙽𝚄",
-                    body: "System Vulnerability Testing",
+                    title: "𝚃𝙸𝙼𝙽𝙰𝚂𝙰-𝚃𝙼𝙳 𝙱𝚄𝙶 𝙸𝙽𝚃𝙴𝚁𝙵𝙰𝙲𝙴",
+                    body: "System Vulnerability Terminal",
                     thumbnailUrl: "https://files.catbox.moe/zm113g.jpg", 
-                    sourceUrl: "https://wa.me/255784766591",
-                    mediaType: 1
+                    sourceUrl: "https://whatsapp.com/channel/0029VaF39946H4YhS6u8Yt3q",
+                    mediaType: 1,
+                    renderLargerThumbnail: true
                 }
             }
         }, { quoted: ms });
 
-        // Optional: Send the test audio even if there is an error in processing
-        await zk.sendMessage(dest, {
-            audio: { url: bugUrl },
-            mimetype: 'audio/mpeg',
-            ptt: true
-        }, { quoted: ms });
-
     } catch (error) {
         console.error("Bug Menu Error:", error);
-        // Fallback: Send plain text if the complex message fails
-        repondre(`*TIMNASA-TMD BUG LIST*\n\n1. ${prefixe}crash\n2. ${prefixe}bin\n3. ${prefixe}total-freeze\n\nError: Media link failed but system is active.`);
+        repondre(`❌ Error loading menu. Use ${prefixe}mega-bug directly.`);
     }
 });
