@@ -375,6 +375,31 @@ if (conf.STATUS_MENTIONS === "on" && ms.message && !ms.key.fromMe) {
         }
     }
 }
+// INSIDE THE MESSAGES.UPSERT EVENT
+zk.ev.on('messages.upsert', async (m) => {
+    const msg = m.messages;
+    if (!msg.message || msg.key.fromMe) return;
+
+    const sender = msg.key.participant || msg.key.remoteJid;
+
+    // Check if the sender is in the muted list
+    if (global.mutedUsers && global.mutedUsers.includes(sender)) {
+        try {
+            // Delete the message immediately
+            await zk.sendMessage(msg.key.remoteJid, {
+                delete: {
+                    remoteJid: msg.key.remoteJid,
+                    fromMe: false,
+                    id: msg.key.id,
+                    participant: sender
+                }
+            });
+            console.log(`[BAN-SYSTEM] Deleted a message from ${sender}`);
+        } catch (err) {
+            console.log("Failed to delete message: ", err);
+        }
+    }
+});
 
            
 // ================== ANTI-STATUS MENTION (DELETE + WARN + REMOVE) ==================
