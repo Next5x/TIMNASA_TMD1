@@ -2,46 +2,54 @@
 
 const { zokou } = require("../framework/zokou");
 
-// Using a Global Array (Note: This clears if the bot restarts. Use a Database for permanent storage)
+// Hifadhi ya muda ya namba zilizozuiwa (RAM)
 global.mutedUsers = global.mutedUsers || [];
 
+// 1. AMRI YA KUZUIA MTU (BAN)
 zokou({
     nomCom: "ban-chat",
-    category: "Group",
+    categorie: "Group",
     reaction: "🚫"
 }, async (dest, zk, commandeOptions) => {
     const { ms, arg, repondre, isGroupAdmins, superUser, isBotGroupAdmins } = commandeOptions;
 
-    if (!isGroupAdmins && !superUser) return repondre("❌ This command is for Admins or Owner only.");
-    if (!isBotGroupAdmins) return repondre("❌ The Bot must be an Admin to delete messages.");
+    // Usalama: Admin au Owner pekee
+    if (!isGroupAdmins && !superUser) return repondre("❌ Samahani, amri hii ni kwa ajili ya Admins tu.");
+    if (!isBotGroupAdmins) return repondre("❌ Tafadhali nipe u-Admin kwanza ili niweze kufuta ujumbe.");
 
-    // Get the user JID (either by tagging them or providing the phone number)
+    // Kupata JID ya mtu aliye-tagiwa
     let user = ms.message.extendedTextMessage?.contextInfo?.mentionedJid?. || (arg ? arg.replace(/[^0-9]/g, '') + "@s.whatsapp.net" : null);
 
-    if (!user) return repondre("Please tag the user you want to ban from chatting.");
+    if (!user) return repondre("Tafadhali m-tag mtu unayetaka kumzuia asitume ujumbe.");
 
     if (!global.mutedUsers.includes(user)) {
         global.mutedUsers.push(user);
-        repondre(`✅ User @${user.split('@')} is now banned from chatting. Every message they send will be deleted immediately.`, { mentions: [user] });
+        repondre(`✅ Mtumiaji @${user.split('@')} amezuiliwa rasmi. Kila ujumbe atakaotuma utafutwa papo hapo.`, { mentions: [user] });
     } else {
-        repondre("This user is already on the banned list.");
+        repondre("Mtumiaji huyu tayari ameshazuiliwa.");
     }
 });
 
-// Command to Unban
+// 2. AMRI YA KURUHUSU MTU (UNBAN)
 zokou({
     nomCom: "unban-chat",
-    category: "Group",
+    categorie: "Group",
     reaction: "✅"
 }, async (dest, zk, commandeOptions) => {
-    const { arg, repondre, isGroupAdmins, superUser } = commandeOptions;
-    if (!isGroupAdmins && !superUser) return repondre("❌ Admins only.");
+    const { ms, arg, repondre, isGroupAdmins, superUser } = commandeOptions;
+    
+    if (!isGroupAdmins && !superUser) return repondre("❌ Amri hii ni kwa ajili ya Admins tu.");
 
-    let user = arg ? arg.replace(/[^0-9]/g, '') + "@s.whatsapp.net" : null;
+    let user = ms.message.extendedTextMessage?.contextInfo?.mentionedJid?. || (arg ? arg.replace(/[^0-9]/g, '') + "@s.whatsapp.net" : null);
+    
+    if (!user) return repondre("M-tag mtu unayetaka kumruhusu achat tena.");
+
     if (global.mutedUsers.includes(user)) {
         global.mutedUsers = global.mutedUsers.filter(u => u !== user);
-        repondre("✅ User is now allowed to chat again.");
+        repondre(`✅ Mtumiaji @${user.split('@')} ameruhusiwa kuchat tena.`, { mentions: [user] });
     } else {
-        repondre("This user is not in the banned list.");
+        repondre("Mtumiaji huyu hayupo kwenye orodha ya waliozuiliwa.");
     }
 });
+
+module.exports = { zokou };
