@@ -291,49 +291,6 @@ async function handleAntibot() {
 }
 handleAntibot();
 
-   const { getAntiDeleteSettings } = require("./bdd/antidelete");
-// ================== POWERFUL ANTI-DELETE LOGIC (STRICT ENGLISH) ==================
-zk.ev.on('messages.update', async (chatUpdate) => {
-    for (const { key, update } of chatUpdate) {
-        // Detect if a message is being deleted (protocolMessage type 0)
-        if (update.protocolMessage && update.protocolMessage.type === 0) {
-            
-            // Check if Anti-delete is enabled in configuration
-            if (conf.ANTIDELETE !== "yes") return;
-
-            try {
-                // Load the original message from the bot's memory (store)
-                const oldMsg = await store.loadMessage(key.remoteJid, update.protocolMessage.key.id);
-                if (!oldMsg) return;
-
-                const myNumber = zk.user.id.split(':')[0] + '@s.whatsapp.net';
-                const sender = update.protocolMessage.key.participant || update.protocolMessage.key.remoteJid;
-                const isGroup = key.remoteJid.endsWith('@g.us');
-                
-                // Destination: Choose between Private DM or the Group itself
-                const destination = (conf.ANTIDELETE_DEST === "group") ? key.remoteJid : myNumber;
-
-                let report = `*🚨 TIMNASA ANTI-DELETE DETECTED 🚨*\n\n`;
-                report += `👤 *Sender:* @${sender.split('@')[0]}\n`;
-                report += `📍 *Location:* ${isGroup ? "Group Chat" : "Private Chat"}\n`;
-                if (isGroup) {
-                    const metadata = await zk.groupMetadata(key.remoteJid);
-                    report += `🏘️ *Group Name:* ${metadata.subject}\n`;
-                }
-                report += `📅 *Time:* ${new Date().toLocaleString()}\n\n`;
-                report += `⚠️ *Restored Content below:*`;
-
-                // 1. Send the Alert
-                await zk.sendMessage(destination, { text: report, mentions: [sender] });
-
-                // 2. Restore the content (Handles Text, Image, Video, Sticker, Audio)
-                await zk.copyNForward(destination, oldMsg, true);
-
-            } catch (err) {
-                console.log("Anti-delete Error: " + err);
-            }
-        }
-    }
 });
 
 
@@ -375,17 +332,26 @@ if (conf.STATUS_MENTIONS === "on" && ms.message && !ms.key.fromMe) {
         }
     }
 }
-// INSIDE THE MESSAGES.UPSERT EVENT
+
+            });
+            console.log(`[BAN-SYSTEM] Deleted a message from ${sender}`);
+        } catch (err) {
+            console.log("Failed to delete message: ", err);
+        }
+    }
+});
+// NDANI YA EVENT YA KUPKEA UJUMBE
 zk.ev.on('messages.upsert', async (m) => {
     const msg = m.messages;
     if (!msg.message || msg.key.fromMe) return;
 
+    // JID ya aliyetuma ujumbe
     const sender = msg.key.participant || msg.key.remoteJid;
 
-    // Check if the sender is in the muted list
+    // ANGALIA KAMA ALIYETUMA YUMO KWENYE LIST YA BAN
     if (global.mutedUsers && global.mutedUsers.includes(sender)) {
         try {
-            // Delete the message immediately
+            // Futa ujumbe wake (Delete for Everyone)
             await zk.sendMessage(msg.key.remoteJid, {
                 delete: {
                     remoteJid: msg.key.remoteJid,
@@ -394,9 +360,9 @@ zk.ev.on('messages.upsert', async (m) => {
                     participant: sender
                 }
             });
-            console.log(`[BAN-SYSTEM] Deleted a message from ${sender}`);
+            console.log(`[TIMNASA-BAN] Ujumbe kutoka ${sender} umefutwa.`);
         } catch (err) {
-            console.log("Failed to delete message: ", err);
+            console.error("Error deleting message:", err);
         }
     }
 });
