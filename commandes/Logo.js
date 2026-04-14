@@ -2,7 +2,7 @@ const { zokou } = require("../framework/zokou");
 const mumaker = require("mumaker");
 
 // Global Channel JID Configuration
-const channelJid = "120363413554978773@newsletter";
+const channelJid = "120363406146813524@newsletter";
 const contextInfo = {
     forwardingScore: 999,
     isForwarded: true,
