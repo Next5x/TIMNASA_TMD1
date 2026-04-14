@@ -7,7 +7,7 @@ zokou({
     categorie: "Group"
 }, async (dest, zk, reponse) => {
     const { ms, arg, superUser, verifAdmin } = reponse;
-    const channelJid = "120363413554978773@newsletter";
+    const channelJid = "120363406146813524@newsletter";
 
     if (!superUser && !verifAdmin) {
         return zk.sendMessage(dest, { text: "❌ Admins only command!" }, { quoted: ms });
