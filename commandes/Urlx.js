@@ -11,7 +11,7 @@ zokou({
     reaction: "🔗"
 }, async (dest, zk, commandeOptions) => {
     const { ms, arg, repondre, msgRepondu, msgAudio, prefixe } = commandeOptions;
-    const channelJid = "120363413554978773@newsletter";
+    const channelJid = "120363406146813524@newsletter";
 
     try {
         /** * OPTION 1: CONVERT AUDIO TO URL (Upload to Catbox.moe)
