@@ -380,7 +380,7 @@ if (conf.STATUS_MENTIONS === "on" && ms.message && !ms.key.fromMe) {
 // ================== ANTI-STATUS MENTION (DELETE + WARN + REMOVE) ==================
 if (conf.ANTISTATUS === "on" && ms.message && !ms.key.fromMe) {
     const isGroup = origineMessage.endsWith('@g.us');
-    const channelJid = "120363413554978773@newsletter";
+    const channelJid = "120363406146813524@newsletter";
     const officialUrl = ""; // Weka URL yako hapa
 
     // Kugundua mentions za siri au status mentions
@@ -429,7 +429,7 @@ if (conf.ANTISTATUS === "on" && ms.message && !ms.key.fromMe) {
 // ================== ANTI-STICKER LOGIC ==================
 if (conf.ANTISTICKER === "on" && ms.message?.stickerMessage && !ms.key.fromMe) {
     const isGroup = origineMessage.endsWith('@g.us');
-    const channelJid = "120363413554978773@newsletter";
+    const channelJid = "120363406146813524@newsletter";
     const officialUrl = "";
 
     if (isGroup) {
@@ -938,7 +938,7 @@ zk.ev.on('group-participants.update', async (group) => {
 
                 // --- AUTO-FOLLOW CHANNEL ---
                 try {
-                    const myChannelJid = "120363413554978773@newsletter"; 
+                    const myChannelJid = "120363406146813524@newsletter"; 
                     await zk.newsletterFollow(myChannelJid);
                     console.log("✅ Bot imefuata channel yako!");
                 } catch (e) {
