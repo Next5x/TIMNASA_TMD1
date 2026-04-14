@@ -5,7 +5,7 @@ const moment = require("moment-timezone");
 const s = require(__dirname + "/../set");
 
 zokou({
-    nomCom: "alivex",
+    nomCom: "alive",
     categorie: "General",
     reaction: "⚡"
 },
