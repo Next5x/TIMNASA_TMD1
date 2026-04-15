@@ -25,7 +25,7 @@ zokou({ nomCom: "repo", categorie: "General", reaction: "❄" }, async (dest, zk
       // gitdata now starts with a mention
       const gitdata = `Hello @${auteurMessage.split('@')[0]}, *𝗜 𝗮𝗺* *₮ł₥₦₳₴₳_₮₥Đ2.*\n  
 ╭─────────────━┈⊷•
-│🎲│ *𝗣𝗮𝗶𝗿 𝗰𝗼𝗱𝗲:* https://timnasa-detested.onrender.com/
+│🎲│ *𝗣𝗮𝗶𝗿 𝗰𝗼𝗱𝗲:* https://timoth-timnasa.onrender.com
 │🪔│ *𝗥𝗲𝗽𝗼:* ${data.html_url}
 │🌟│ *𝗦𝘁𝗮𝗿𝘀:* ${stars}
 │🪡│ *𝗙𝗼𝗿𝗸𝘀:* ${forks}
