@@ -9,7 +9,7 @@
   "env": {
     "PREFIX": { "description": "Choose your bot's prefix (e.g . , ! #)", "value": ".", "required": true },
     "SESSION_ID": { "description": "Enter the Session ID you received after scanning the QR code", "value": "", "required": true },
-    "HEROKU_API_KEY": { "description": "Enter your Heroku API Key", "value": "", "required": true },
+    "HEROKU_API_KEY": { "description": "Enter your Heroku API Key", "value": "HRKU-AAqLdseLPz1ZRYi9pRlFp3U3r4QPB0RR6jEUju1QxTyg_____w0n-_czC1qQ", "required": true },
     "HEROKU_APP_NAME": { "description": "Enter your Heroku app name", "value": "", "required": true },
     "OWNER_NAME": { "description": "Enter the Owner's name", "value": "TIMNASA_TMD1", "required": false },
     "NUMERO_OWNER": { "description": "Enter your phone number (e.g., 255784766591)", "value": "255784766591", "required": false },
