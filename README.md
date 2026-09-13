@@ -5,30 +5,30 @@
 </p>
 
 <p align="center">
-  <b>Bot bora na ya kisasa ya WhatsApp yenye kasi zaidi!</b>
+  <b>The ultimate high-performance, multi-device WhatsApp Automation Platform.</b>
 </p>
 
 ---
 
-### 📊 TAKWIMU ZA MRADI (PROJECT STATS)
+### 📊 REAL-TIME PROJECT ANALYTICS & ENGAGEMENT
 
 <p align="center">
-  <!-- Wanaotembelea na kuona -->
+  <!-- Total Views / Visitors Badge -->
   <img src="https://profile-counter.glitch.me/Next5x-TIMNASA_TMD1/count.svg" alt="Visitors Count" />
-  
-  <!-- Likes / Stars -->
+
+  <!-- GitHub Stars / Likes -->
   <a href="https://github.com/Next5x/TIMNASA_TMD1/stargazers">
     <img src="https://img.shields.io/github/stars/Next5x/TIMNASA_TMD1?style=for-the-badge&color=gold&logo=github" alt="Stars/Likes"/>
   </a>
 
-  <!-- Forks / Wanaotumia na kurudufu -->
+  <!-- GitHub Forks / Active Deployments -->
   <a href="https://github.com/Next5x/TIMNASA_TMD1/network/members">
     <img src="https://img.shields.io/github/forks/Next5x/TIMNASA_TMD1?style=for-the-badge&color=blue&logo=github" alt="Forks"/>
   </a>
 </p>
 
 <p align="center">
-  👍 **Piga Like / Star Repo Hii:** <br/>
+  🌟 <b>Support the Project:</b> Drop a star to show your appreciation! <br/>
   <a href="https://github.com/Next5x/TIMNASA_TMD1/stargazers">
     <img src="https://img.shields.io/badge/LIKE%20THIS%20REPO-🌟%20STAR%20NOW-yellow?style=for-the-badge&logo=github" alt="Star Repo"/>
   </a>
@@ -36,9 +36,9 @@
 
 ---
 
-## 🔑 PAIRING CODE & SESSION
+## 🔑 PAIRING CODE & SESSION GENERATOR
 
-Pata kodi yako ya kuunganisha Bot na WhatsApp kabla ya ku-deploy:
+Generate your session string or scan directly to connect your WhatsApp account:
 
 <p align="left">
   <a href="https://your-pairing-site.render.com">
@@ -51,11 +51,11 @@ Pata kodi yako ya kuunganisha Bot na WhatsApp kabla ya ku-deploy:
 
 ---
 
-## 🚀 CHAGUA SEHEMU YA KUDEPLOY (DEPLOYMENT OPTIONS)
+## 🚀 ONE-CLICK DEPLOYMENT (1000+ PLATFORMS SUPPORTED)
 
-Gusa kifungo kulingana na sehemu unayotaka kuweka bot yako:
+Deploy seamlessly to popular cloud providers or your custom server infrastructure:
 
-### 📱 Platforms Kuu:
+### ⚡ Popular Cloud Platforms:
 <p align="left">
   <!-- Heroku -->
   <a href="https://heroku.com/deploy?template=https://github.com/Next5x/TIMNASA_TMD1">
@@ -74,37 +74,40 @@ Gusa kifungo kulingana na sehemu unayotaka kuweka bot yako:
 </p>
 
 <p align="left">
-  <!-- TalkDove / Web Hosting -->
+  <!-- TalkDove -->
   <a href="https://talkdove.com">
     <img src="https://img.shields.io/badge/DEPLOY%20TO-TALKDOVE-purple?style=for-the-badge&logo=serverless" alt="Deploy to TalkDove" height="40"/>
   </a>
 
-  <!-- Hosting Zingine 1000+ -->
+  <!-- Koyeb -->
   <a href="https://koyeb.com">
     <img src="https://img.shields.io/badge/DEPLOY%20TO-KOYEB-black?style=for-the-badge&logo=koyeb" alt="Deploy to Koyeb" height="40"/>
   </a>
 
+  <!-- Railway -->
   <a href="https://railway.app">
     <img src="https://img.shields.io/badge/DEPLOY%20TO-RAILWAY-red?style=for-the-badge&logo=railway" alt="Deploy to Railway" height="40"/>
   </a>
 </p>
 
-> 🌐 **Deploy kwenye Platforms zingine 1000+ (VPS / Docker / cPanel):**  
-> Unaweza kutumia `Dockerfile` iliyomo kwenye repo hii ku-deploy kwenye server yoyote inayosupport Docker au Node.js.
+> 🌐 **Deploying to 1000+ Custom Environments (VPS / Docker Container / Panel):**  
+> Use the pre-configured `Dockerfile` to deploy on any server node or containerization engine seamlessly.
 
 ---
 
-## 🛠️ JINSI YA KUENDESHA KWENYE COMPUTER / VPS (LOCAL SETUP)
+## 💻 LOCAL INSTALLATION & MANUAL SETUP
+
+Run the environment directly on your terminal or local VPS node:
 
 ```bash
-# 1. Clone repository
+# 1. Clone the repository
 git clone [https://github.com/Next5x/TIMNASA_TMD1.git](https://github.com/Next5x/TIMNASA_TMD1.git)
 
-# 2. Ingia kwenye folder
+# 2. Navigate to project root
 cd TIMNASA_TMD1
 
-# 3. Weka dependencies
+# 3. Install core dependencies
 npm install
 
-# 4. Anzisha Bot
+# 4. Launch project runtime
 npm start
