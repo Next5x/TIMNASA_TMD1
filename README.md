@@ -1,7 +1,7 @@
 # 🚀 TIMNASA_TMD1 WHATSAPP BOT
 
 <p align="center">
-  <img src="https://telegra.ph/file/dc50346d2bea06f3b0203.jpg" alt="TIMNASA-TMD Logo" width="300" style="border-radius: 15px;"/>
+  <img src="https://raw.githubusercontent.com/timnasax/All-updates/refs/heads/main/img_timoth/IMG_3281.jpeg" alt="TIMNASA-TMD Logo" width="300" style="border-radius: 15px;"/>
 </p>
 
 <p align="center">
