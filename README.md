@@ -41,7 +41,7 @@
 Generate your session string or scan directly to connect your WhatsApp account:
 
 <p align="left">
-  <a href="https://your-pairing-site.render.com">
+  <a href="https://timoth-timnasa.onrender.com">
     <img src="https://img.shields.io/badge/GET%20PAIRING%20CODE-🧑‍💻-brightgreen?style=for-the-badge&logo=whatsapp" alt="Pairing Code"/>
   </a>
   <a href="https://your-qr-site.render.com">
@@ -58,7 +58,7 @@ Deploy seamlessly to popular cloud providers or your custom server infrastructur
 ### ⚡ Popular Cloud Platforms:
 <p align="left">
   <!-- Heroku -->
-  <a href="https://heroku.com/deploy?template=https://github.com/Next5x/TIMNASA_TMD1">
+  <a href="https://heroku.com/deploy?template=https://github.com/timnasax/all-updates">
     <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heroku" height="40"/>
   </a>
   
